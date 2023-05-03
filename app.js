@@ -15,6 +15,9 @@ app.get('/', (req, res) => {
 app.get('/menu', (req, res)=>{
   res.render('menu')
 })
+app.get("/contact", (req, res) => {
+  res.render("contact");
+});
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${PORT}`)
 })
