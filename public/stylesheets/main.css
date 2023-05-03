@@ -1,0 +1,45 @@
+@font-face {
+  font-family:'ChenYuluoyan';
+  src: url('../fonts/ChenYuluoyan-Thin.woff')format("woff");
+}
+html,
+body {
+  font-family: "Lora", "Roboto", "Lato", sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 101%;
+  box-sizing: border-box;
+}
+.navbar-brand {
+  letter-spacing: 3px;
+  color: 	#06716e;
+
+}
+
+.navbar-brand:hover,.navbar-scroll .nav-link:hover {
+	color: #9e2224;
+}
+
+.navbar-scroll {
+  background-color: #7CEECE;
+  -webkit-box-shadow: 0 8px 6px -6px #999;
+    -moz-box-shadow: 0 8px 6px -6px #999;
+    box-shadow: 0 8px 6px -6px #999;
+}
+
+.navbar-scroll .nav-link,
+.navbar-scroll .fa-bars {
+  color: #06716e;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+footer {
+  text-align: center;
+  background-color: #cff0e6;
+  font-family:  "Lato", sans-serif;
+}
+
+
+
+
