@@ -1,48 +1,59 @@
 <div id="contact" class="contact-area section-padding">
-	<div class="container">										
+	<div class="container">
 		<div class="section-title text-center">
 			<h1>Contact Us</h1>
-		</div>	
-    {{!-- Contact form  --}}
+		</div>
 		<div class="row d-flex justify-content-center">
-			<div class="col-lg-10 col-12">	
+			<div class="col-lg-10 col-12">
+				{{> message}}
+			</div>
+		</div>
+		{{!-- Contact form --}}
+		<div class="row d-flex justify-content-center">
+			<div class="col-lg-10 col-12">
 				<div class="contact">
-					<form class="form" name="enq" method="post" action="/" onsubmit="return validation();">
+					<form class="form" method="POST" action="/contact" onsubmit="return
+						validation();">
 						<div class="row">
 							<div class="form-group col-md-6 my-3">
-								<input type="text" name="name" class="form-control" placeholder="Name" required>
+								<input type="text" name="name" class="form-control" placeholder="Name"
+									required>
 							</div>
 							<div class="form-group col-md-6 my-3">
-								<input type="email" name="email" class="form-control" placeholder="Email" required>
+								<input type="email" name="email" class="form-control"
+									placeholder="Email" required>
 							</div>
 							<div class="form-group col-md-12 my-3">
-								<input type="text" name="subject" class="form-control" placeholder="Subject" required>
+								<input type="text" name="subject" class="form-control"
+									placeholder="Subject" required>
 							</div>
 							<div class="form-group col-md-12 my-3">
-								<textarea rows="6" name="message" class="form-control" placeholder="Your Message" required></textarea>
+								<textarea rows="6" name="message" class="form-control" placeholder="Your
+									Message" required></textarea>
 							</div>
 							<div class="col-md-12 text-center my-3">
-								<button type="submit" value="Send message" name="submit" id="submitButton" class="btn btn-contact fs-5" title="Submit Your Message!">Send Message</button>
+								<button type="submit" value="Send message" name="submit" class="btn
+									btn-contact fs-5" title="Submit Your Message!">Send Your Message!</button>
 							</div>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
-    <hr>
-    {{!-- social media  --}}
-    <div class="row d-flex justify-content-center">
-      <div class="col-lg-10 col-12 ">
+		<hr>
+		{{!-- social media --}}
+		<div class="row d-flex justify-content-center">
+			<div class="col-lg-10 col-12 ">
 				<div class="social-media row d-flex ">
-          <div class="col-12 text-center"><h3 class="my-3">Or find us on：</h3></div>
-          <div class="col-12 d-flex justify-content-center">
-            <i class="fab fa-instagram"></i>
-          <i class="fab fa-facebook"></i>
-          <i class="fab fa-twitter"></i>
-          </div>
-          
-				</div>					
-    </div>
+					<div class="col-12 text-center"><h3 class="my-3">Or find us on：</h3></div>
+					<div class="col-12 d-flex justify-content-center">
+						<i class="fab fa-instagram"></i>
+						<i class="fab fa-facebook"></i>
+						<i class="fab fa-twitter"></i>
+					</div>
+
+				</div>
 			</div>
+		</div>
 	</div>
 </div>
