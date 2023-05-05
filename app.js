@@ -8,7 +8,7 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const path = require('path')
 const bcrypt = require('bcryptjs')
-const nodemailer = require('nodemailer')
+const contactFormSend = require('./helpers/email-helpers')
 const app = express()
 const PORT = process.env.PORT || 3000
 
@@ -37,35 +37,21 @@ app.get('/menu', (req, res) => {
   res.render('menu')
 })
 app.get('/contact', (req, res) => {
-  res.render('contact')
+  return res.render('contact')
 })
 
 // send email from contact form
 app.post('/contact', (req, res) => {
-  const { name, email, subject, message } = req.body
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.APP_PASSWORD
-    }
-  })
-  const mailOptions = {
-    from: process.env.EMAIL,
-    to: process.env.EMAIL,
-    subject,
-    html: `<h3>Name: ${name}</h3><br/><h3>Email: ${email}</h3><br/><h3>Message:</h3><br/><p>${message}</p>`
+  try {
+    const { name, email, subject, message } = req.body
+    contactFormSend(name, email, subject, message)
+    req.flash('success_msg', `Thank you ${name}, your message has been sent!`)
+    return res.redirect('/contact')
+  } catch (error) {
+    console.log(error)
+    req.flash('warning_msg', 'Message could not be sent!')
+    return res.redirect('/contact')
   }
-  return transporter.sendMail(mailOptions, (error, response) => {
-    if (error) {
-      console.log(error)
-      req.flash('warning_msg', 'Message could not be sent!')
-      return res.redirect('/contact')
-    } else {
-      req.flash('success_msg', `Thank you ${name}, your message has been sent!`)
-      return res.redirect('/contact')
-    }
-  })
 })
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${PORT}`)
