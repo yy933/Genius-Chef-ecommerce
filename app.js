@@ -5,13 +5,14 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
 const axios = require('axios')
+
 const session = require('express-session')
 const flash = require('connect-flash')
 const path = require('path')
 const bcrypt = require('bcryptjs')
 const contactFormSend = require('./helpers/email-helpers')
 const app = express()
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 8080
 
 app.engine('hbs', exphbs.engine({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('views', path.join(__dirname, 'views'))
@@ -35,13 +36,12 @@ app.get('/', (req, res) => {
   res.render('index')
 })
 
-app.get('/recipe', (req, res) => {
-  res.render('recipe')
-})
 app.get('/contact', (req, res) => {
   return res.render('contact')
 })
-
+app.get('/menu', (req, res) => {
+  res.render('menu')
+})
 // send email from contact form
 app.post('/contact', (req, res) => {
   try {
@@ -55,22 +55,41 @@ app.post('/contact', (req, res) => {
     return res.redirect('/contact')
   }
 })
-app.get('/menu', async (req, res) => {
+
+app.get('/recipe', async (req, res) => {
   try {
-    const response = await axios.get('https://api.spoonacular.com/recipes/random', {
+    const recipes = await axios({
+      method: 'get',
+      url: 'https://api.spoonacular.com/recipes/random',
+      headers: { 'Content-Type': 'application/json' },
       params: {
-        apiKey: '03fc4a9e3f1d4b6891a0cb8385ccd640',
         limitLicense: true,
-        number: 3
+        number: 1,
+        tags: 'chicken',
+        apiKey: process.env.API_KEY
       }
     })
-    const recipes = response.data.recipes
-    console.log(recipes)
-    res.status(200).json(recipes)
-  } catch (err) {
-    res.status(500).json({ message: err })
+    const recipesdata = recipes.data.recipes.map(recipe => ({
+      dishName: recipe.title,
+      summary: recipe.summary,
+      vegetarian: recipe.vegetarian,
+      glutenFree: recipe.glutenFree,
+      dairyFree: recipe.dairyFree,
+      cookingTime: recipe.readyInMinutes,
+      servings: recipe.servings,
+      image: recipe.image,
+      // cuisine: recipe.cuisine[0],
+      instruction: recipe.instructions
+    }))
+    res.render('recipe', {
+      recipesdata
+    })
+  } catch (error) {
+    console.error('Request failed:', error)
+    res.render('recipe', { error_message: 'Could not find the recipe' })
   }
 })
+
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${PORT}`)
 })

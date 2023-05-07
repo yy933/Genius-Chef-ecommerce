@@ -1,38 +1,31 @@
+<h1>{{error_message}}</h1>
 <div class="row mb-5">
-
+{{#each recipesdata}}
   <div class="col-md-4">
-    <img class="img-responsive center-block mb-5" src="https://cdn.pixabay.com/photo/2017/03/19/18/22/italian-food-2157246_1280.jpg" alt="..." style="width: 250px; transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;">
-    image
-    
+    <img class="img-responsive center-block mb-5" src=" {{this.image}}" alt="..." style="width: 250px; transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;">
     <div class="well">
       <ul class="list-unstyled">
-        <li><strong>Time:</strong> readyInMinutes(num) min</li>
-        <li><strong>Servings:</strong>servings(num)</li>
-        <li><strong>Vegetarians:</strong>vegetarian.true</li>
-        <li><strong>Gluten free:</strong>glutenFree.true</li>
-        <li><strong>Dairy free:</strong>dairyFree.true</li>
+        <li><strong>Time:</strong> {{this.cookingTime}} min</li>
+        <li><strong>Servings:</strong>{{this.servings}}</li>
+        {{#if vegetarian}}<li><span class="badge rounded-pill bg-success">Vegetarian</span></li>{{/if}}
+        {{#if glutenFree}}<li><span class="badge rounded-pill bg-warning text-dark">Gluten Free</span></li>{{/if}}
+        {{#if dairyFree}}<li><span class="badge rounded-pill bg-primary">Dairy Free</span></li>{{/if}}
       </ul>
     </div>
-     <div class="well">
+    <div class="well">
       <h3>Ingredients</h3>
       <ul class="list-unstyled">
         <li><strong>extendedIngredients[index].name</strong> extendedIngredients[index].amount (num)extendedIngredients[index].unit (string)</li>
-        <li><strong>Egg</strong>2</li>
-        <li><strong>Coffee</strong>100ml</li>
       </ul>
     </div>
   </div>
   <div class="col-md-8">
-    <h3>Description</h3>
-    <h5>title(string)</h5>
-    <p style="white-space: break-spaces;">summary (string)</p>
-    <a class="btn btn-primary" href="/">Dashboard</a>
-   
-      <form action="#" method="POST" style="display: contents;">
-        <button type="submit" class="btn btn-danger">移除最愛</button>
-      </form>
+    <h3>{{this.dishName}}</h3>
+    <p style="white-space: break-spaces;">{{{this.summary}}}</p>
+
   </div>
   <hr>
   <h3>Cooking Instructions</h3>
-  <p>instructions(string)</p>
+  <p>{{{this.instruction}}}</p>
+  {{/each}}
 </div>
