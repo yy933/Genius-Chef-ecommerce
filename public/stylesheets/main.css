@@ -95,7 +95,19 @@ nav{
   font-size: 1.3rem;
   font-weight: 600;
 }
+/* menu tab  */
+.menu-tab .nav-item{
+  border-bottom: #666666 1px solid;
+}
 
+
+/* card  */
+.menu-cards{
+  display: grid;
+  width:100%;
+  grid-template-columns: repeat(1fr);
+  grid-template-rows: repeat(auto-fit, minmax(250px, 1fr));
+}
 .card{
   overflow: hidden;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -209,17 +221,6 @@ footer {
 }
 .social-media i:hover{
   color: #232434;
-}
-/* card  */
-.menu-cards{
-  display: grid;
-  width:100%;
-  grid-template-columns: repeat(1fr);
-  grid-template-rows: repeat(auto-fit, minmax(250px, 1fr));
-}
-.menu-cards div{
-  flex-grow: 1;
-
 }
 
 
