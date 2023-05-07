@@ -60,6 +60,9 @@ a {
   background-repeat: no-repeat;
 }
 
+.container{
+  width: 90%;
+}
 header{
   width: 100%;
   z-index: 999;
@@ -207,8 +210,30 @@ footer {
 .social-media i:hover{
   color: #232434;
 }
+/* card  */
+.menu-cards{
+  display: grid;
+  width:100%;
+  grid-template-columns: repeat(1fr);
+  grid-template-rows: repeat(auto-fit, minmax(250px, 1fr));
+}
+.menu-cards div{
+  flex-grow: 1;
+
+}
 
 
+@media screen and (min-width: 600px) {
+  .menu-cards{
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+@media screen and (min-width: 960px)  {
+  .menu-cards{
+    grid-template-columns: repeat(3,1fr);
+  }
+  
+}
 
 
 
