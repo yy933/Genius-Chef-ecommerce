@@ -3,9 +3,9 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const express = require('express')
 const exphbs = require('express-handlebars')
+require('handlebars-helpers')(exphbs)
 const methodOverride = require('method-override')
 const axios = require('axios')
-
 const session = require('express-session')
 const flash = require('connect-flash')
 const path = require('path')
@@ -19,6 +19,7 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'hbs')
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
+
 app.use(express.json())
 app.use(
   session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false })
@@ -39,9 +40,7 @@ app.get('/', (req, res) => {
 app.get('/contact', (req, res) => {
   return res.render('contact')
 })
-app.get('/menu', (req, res) => {
-  res.render('menu')
-})
+
 // send email from contact form
 app.post('/contact', (req, res) => {
   try {
@@ -56,7 +55,7 @@ app.post('/contact', (req, res) => {
   }
 })
 
-app.get('/recipe', async (req, res) => {
+app.get('/menu', async (req, res) => {
   try {
     const recipes = await axios({
       method: 'get',
@@ -64,12 +63,13 @@ app.get('/recipe', async (req, res) => {
       headers: { 'Content-Type': 'application/json' },
       params: {
         limitLicense: true,
-        number: 1,
+        number: 15,
         tags: 'chicken',
         apiKey: process.env.API_KEY
       }
     })
     const recipesdata = recipes.data.recipes.map(recipe => ({
+      id: recipe.id,
       dishName: recipe.title,
       summary: recipe.summary,
       vegetarian: recipe.vegetarian,
@@ -78,15 +78,17 @@ app.get('/recipe', async (req, res) => {
       cookingTime: recipe.readyInMinutes,
       servings: recipe.servings,
       image: recipe.image,
-      // cuisine: recipe.cuisine[0],
-      instruction: recipe.instructions
+      instruction: Object.assign({}, recipe.analyzedInstructions[0].steps.map(s => s.step)),
+      ingredient: Object.assign({}, recipe.extendedIngredients.map(i => i.original)),
+      fullDetailsUrl: recipe.spoonacularSourceUrl
     }))
-    res.render('recipe', {
+    res.render('menu', {
       recipesdata
     })
   } catch (error) {
     console.error('Request failed:', error)
-    res.render('recipe', { error_message: 'Could not find the recipe' })
+    req.flash('warning_msg', 'Could not find the recipe')
+    return res.render('menu')
   }
 })
 

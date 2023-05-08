@@ -1,39 +1,81 @@
-{{!-- menu tabs --}}
-<ul class="menu-tabs nav nav-tabs nav-fill nav-justified mb-4">
-  <li class="nav-item fs-5 fw-bold" >
-    <a class="nav-link active" style="color:#06716e" href="/menu"><i class="fa-solid fa-utensils mx-3"></i>Classic</a>
-  </li>
-  <li class="nav-item fs-5 fw-bold">
-    <a class="nav-link" style="color:#06716e" href="/menu"><i
-          class="fa-solid fa-leaf mx-3"
-        ></i>Vegetarian</a>
-  </li>
-  
-</ul>
-<div class="menu-cards" >
+	<div class="section-title text-center">
+			<h1 class="fw-bold" style="color: #06716e;">Weekly Menu</h1>
+		</div>
+{{> message}}
+{{!-- menu  --}}
+<div class="menu-cards container" >
 {{! menu item }}
-<div class="my-3 mx-2">
-<a href="/recipe">
-  <div class="card" >
+{{#each recipesdata}}
+<div class=" card my-3 mx-2">
   <div class="card-img">
     <img
-      alt="<tiramisu>"
+      alt="{{this.dishName}}"
       class=" img-responsive center-block mb-2 card-img-top"
-      src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1232&q=80"
+      src="{{this.image}}"
     />
   </div>
-  <div class="card-body">
-    <h5 class="card-title">Pasta
-      <span class="badge rounded-pill bg-success"><i
-          class="fa-solid fa-leaf"
-        ></i></span></h5>
-    <p class="card-text"></p>
-    <ul class="cardContent-list">
-      <li><i class="fa-solid fa-signal m-2"></i>Level:&nbsp;Beginner</li>
-      <li><i class="fa-regular fa-clock m-2"></i>Time:&nbsp;30 min</li>
+  <div class="card-body d-flex flex-column">
+    <span class="card-title fs-4 fw-bold m-2" style="color: #06716e;">{{this.dishName}}</span>
+    <ul class="dietary-needs d-flex m-2 ">
+      {{#if vegetarian}}<li class="mx-2"><span class="badge rounded-pill bg-success">Vegetarian</span></li>{{/if}}
+        {{#if glutenFree}}<li class="mx-2"><span class="badge rounded-pill bg-warning text-dark">Gluten Free</span></li>{{/if}}
+        {{#if dairyFree}}<li class="mx-2"><span class="badge rounded-pill bg-primary">Dairy Free</span></li>{{/if}}
     </ul>
+    <ul class="cardContent-list m-2 ">
+      <li class="mx-2 my-1 px-2 fs-6"><i class="fa-solid fa-users mx-2"></i></i>Servings:&nbsp;{{this.servings}}</li>
+      <li class="mx-2 my-1 px-2 fs-6"><i class="fa-regular fa-clock mx-2"></i>Cooking Time:&nbsp;{{this.cookingTime}} min</li>
+    </ul>
+    <!-- Button trigger modal of menu card -->
+    <div class="mt-auto">
+      <button type="button" class="btn btn-success btn-sm d-flex ms-auto" data-bs-toggle="modal" data-bs-target="#{{camelcase this.dishName}}">
+      See more
+    </button>
+    </div>
+    
+  </div>
+<!-- Modal -->
+<div class="modal fade" id="{{camelcase this.dishName}}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title fw-bold" id="exampleModalLabel" style="color: #06716e;">{{this.dishName}}</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <div class="container-fluid">
+        
+        <div class="card-img">
+        <img alt="{{this.dishName}}" class=" img-responsive center-block mb-2 card-img-top" src="{{this.image}}"/>
+        </div>
+        <span class="d-flex" style="color: #06716e;"> <i class="fa-solid fa-basket-shopping me-2"></i><h4>Ingredients</h4>  </span>
+        <ul class="ingredients-name list-group list-group-flush my-2">
+        {{#each this.ingredient}}
+        <li class="list-group-item"> {{{this}}}</li>        
+        {{/each}}
+        </ul>      
+        <span class="d-flex" style="color: #06716e;"><i class="fa-regular fa-rectangle-list me-2" ></i><h4>Instructions</h4></span>
+        <ol class="instruction-list list-group list-group-flush list-group-numbered my-2">
+        {{#each this.instruction}}
+        <li class="list-group-item"> {{{this}}}</li>        
+        {{/each}}
+        </ol>
+        </div>
+      
+        
+      </div>
+      <div class="modal-footer">
+        <a href="{{this.fullDetailsUrl}}" target="_blank"><button type="button" class="btn btn-outline-success btn-sm">Full Recipe</button></a>
+        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
 </div>
-</a>
+
 </div>
+
+{{/each}}
+</div>
+<div class="back text-center">
+  <button type="button" class="btn btn-success" onclick="javascript:history.back()">Go Back</button> 
+  <a href="/"><button class="btn btn-secondary">Home Page</button></a>
 </div>

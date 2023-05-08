@@ -121,21 +121,15 @@ nav{
   display: block;
   width: 100%;
   height: auto;
-  transition: 0.5s ease;
-  backface-visibility: hidden;
-}
-
-.card-img:hover .card-img-top {
-  opacity: 0.5;
-}
-
-.card-img:hover .details {
-  opacity: 1;
 }
 
 .cardContent-list {
   margin: 0;
   padding: 0;
+}
+
+.instruction-list{
+  list-style-type: decimal;
 }
 /* footer */
 footer {
