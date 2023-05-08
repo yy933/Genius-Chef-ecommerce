@@ -78,17 +78,16 @@ app.get('/menu', async (req, res) => {
       cookingTime: recipe.readyInMinutes,
       servings: recipe.servings,
       image: recipe.image,
-      instruction: Object.assign({}, recipe.analyzedInstructions[0].steps.map(s => s.step)),
-      ingredient: Object.assign({}, recipe.extendedIngredients.map(i => i.original)),
-      fullDetailsUrl: recipe.spoonacularSourceUrl
+      instruction: Object.assign({}, recipe.analyzedInstructions[0].steps.map(s => s.step)) || {},
+      ingredient: Object.assign({}, recipe.extendedIngredients.map(i => i.original)) || {},
+      fullDetailsUrl: recipe.spoonacularSourceUrl || '/'
     }))
     res.render('menu', {
       recipesdata
     })
   } catch (error) {
     console.error('Request failed:', error)
-    req.flash('warning_msg', 'Could not find the recipe')
-    return res.render('menu')
+    return res.render('menu', {message: 'Could not find the recipe!'})
   }
 })
 
