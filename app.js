@@ -78,8 +78,8 @@ app.get('/menu', async (req, res) => {
       cookingTime: recipe.readyInMinutes,
       servings: recipe.servings,
       image: recipe.image,
-      instruction: Object.assign({}, recipe.analyzedInstructions[0].steps.map(s => s.step)) || {},
-      ingredient: Object.assign({}, recipe.extendedIngredients.map(i => i.original)) || {},
+      instruction: Object.assign({}, recipe.analyzedInstructions[0].steps.map(s => s.step)) || { 0: 'Instructions are currently unavailable, please check full recipe below for more details.' },
+      ingredient: Object.assign({}, recipe.extendedIngredients.map(i => i.original)) || { 0: 'Ingredients are currently unavailable, please check full recipe below for more details.' },
       fullDetailsUrl: recipe.spoonacularSourceUrl || '/'
     }))
     res.render('menu', {
@@ -87,11 +87,11 @@ app.get('/menu', async (req, res) => {
     })
   } catch (error) {
     console.error('Request failed:', error)
-    return res.render('menu', {message: 'Could not find the recipe!'})
+    return res.render('menu', { message: 'Could not find the recipe!' })
   }
 })
 
-app.get('/plans', (req, res)=>{
+app.get('/plans', (req, res) => {
   res.render('plans')
 })
 app.listen(PORT, () => {
