@@ -63,15 +63,13 @@ app.get('/menu', async (req, res) => {
       headers: { 'Content-Type': 'application/json' },
       params: {
         limitLicense: true,
-        number: 15,
-        tags: 'chicken',
+        number: 18,
         apiKey: process.env.API_KEY
       }
     })
     const recipesdata = recipes.data.recipes.map(recipe => ({
       id: recipe.id,
       dishName: recipe.title,
-      summary: recipe.summary,
       vegetarian: recipe.vegetarian,
       glutenFree: recipe.glutenFree,
       dairyFree: recipe.dairyFree,
@@ -87,7 +85,8 @@ app.get('/menu', async (req, res) => {
     })
   } catch (error) {
     console.error('Request failed:', error)
-    return res.render('menu', { message: 'Could not find the recipe!' })
+    req.flash('warning_msg', 'Could not find the recipe, please try again.')
+    return res.render('menu')
   }
 })
 
