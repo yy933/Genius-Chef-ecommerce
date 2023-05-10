@@ -14,7 +14,7 @@ const contactFormSend = require('./helpers/email-helpers')
 const app = express()
 const PORT = process.env.PORT || 8080
 
-app.engine('hbs', exphbs.engine({ defaultLayout: 'main', extname: '.hbs' }))
+app.engine('hbs', exphbs.engine({ defaultLayout: 'main', extname: '.hbs'}))
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'hbs')
 app.use(express.static('public'))
@@ -54,20 +54,30 @@ app.post('/contact', (req, res) => {
     return res.redirect('/contact')
   }
 })
-
-app.get('/menu', async (req, res) => {
+app.get('/menu', (req, res) => {
+  return res.redirect('/menu/classic')
+})
+app.get('/menu/:preference', async (req, res) => {
   try {
+    let tags
+    const preference = req.params.preference
+    if (preference === 'classic') {
+      tags = ''
+    } else {
+      tags = preference
+    }
     const recipes = await axios({
       method: 'get',
       url: 'https://api.spoonacular.com/recipes/random',
       headers: { 'Content-Type': 'application/json' },
       params: {
         limitLicense: true,
-        number: 18,
+        number: 30,
+        tags,
         apiKey: process.env.API_KEY
       }
     })
-    const recipesdata = recipes.data.recipes.map(recipe => ({
+    const recipesData = recipes.data.recipes.map(recipe => ({
       id: recipe.id,
       dishName: recipe.title,
       vegetarian: recipe.vegetarian,
@@ -76,17 +86,18 @@ app.get('/menu', async (req, res) => {
       cookingTime: recipe.readyInMinutes,
       servings: recipe.servings,
       image: recipe.image,
-      instruction: Object.assign({}, recipe.analyzedInstructions[0].steps.map(s => s.step)) || { 0: 'Instructions are currently unavailable, please check full recipe below for more details.' },
-      ingredient: Object.assign({}, recipe.extendedIngredients.map(i => i.original)) || { 0: 'Ingredients are currently unavailable, please check full recipe below for more details.' },
+      instruction: Object.assign({}, recipe.analyzedInstructions[0]?.steps.map(s => s.step) || ['Instructions are currently unavailable, please check the full recipe below for more details.']),
+      ingredient: Object.assign({}, recipe.extendedIngredients?.map(i => i.original) || ['Ingredients are currently unavailable, please check the full recipe below for more details.']),
       fullDetailsUrl: recipe.spoonacularSourceUrl || '/'
     }))
+    console.log(recipesData)
     res.render('menu', {
-      recipesdata
+      recipesData,
+      path: `/menu/${preference}`
     })
   } catch (error) {
     console.error('Request failed:', error)
-    req.flash('warning_msg', 'Could not find the recipe, please try again.')
-    return res.render('menu')
+    return res.render('menu', { message: 'Please refresh your page for the menu!' })
   }
 })
 
