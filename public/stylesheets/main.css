@@ -54,12 +54,6 @@ a {
   cursor: pointer;
 }
 
-.background-image {
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
 .container{
   width: 90%;
 }
@@ -132,6 +126,54 @@ nav{
 .instruction-list{
   list-style-type: decimal;
 }
+/* form */
+.plan-form{
+  width: 95%;
+  height: auto;
+  position: relative;
+}
+.form-image {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-image: url('https://cdn.pixabay.com/photo/2017/03/14/08/37/wood-2142310_960_720.jpg');
+  width: 100%;
+  height: 20%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px ;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+.form-image::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #b1cdc5;
+    opacity: 0.4;
+  }
+.form-image-title {
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: #022928;
+  font-size: 220%;
+  font-weight: 700;
+  font-family:  'ChenYuluoyan', "Lora", "Roboto", sans-serif;
+  padding-top: 20px;
+  }
+.preference-form{
+  background-color: #cff0e6;
+  padding: 10px;
+}
+
 /* footer */
 footer {
   width: 100%;
@@ -227,6 +269,9 @@ footer {
 @media screen and (min-width: 960px)  {
   .menu-cards{
     grid-template-columns: repeat(3,1fr);
+  }
+  .form-image-title{
+    font-size: 250%;
   }
   
 }
