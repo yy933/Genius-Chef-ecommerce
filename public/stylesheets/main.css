@@ -129,7 +129,6 @@ nav{
 /* form */
 .plan-form{
   width: 95%;
-  height: auto;
   position: relative;
 }
 .form-image {
@@ -163,16 +162,23 @@ nav{
   display: block;
   width: 100%;
   text-align: center;
-  color: #022928;
-  font-size: 220%;
+  color: #0d0d0d;
+  font-size: 160%;
   font-weight: 700;
-  font-family:  'ChenYuluoyan', "Lora", "Roboto", sans-serif;
+  font-family:  'Roboto', sans-serif;
   padding-top: 20px;
   }
 .preference-form{
   background-color: #cff0e6;
   padding: 10px;
 }
+.preference-form h4{
+  font-family: 'Roboto', sans-serif;
+}
+.preference-row span{
+  white-space: nowrap;
+}
+
 
 /* footer */
 footer {
