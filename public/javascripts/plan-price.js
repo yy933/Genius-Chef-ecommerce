@@ -19,5 +19,5 @@ function calculateTotal () {
   totalAmount.textContent = total
   pricePerMeal.textContent = singleMealPrice
 }
-document.querySelector('.servings').addEventListener('change', calculateTotal)
-document.querySelector('.meals').addEventListener('change', calculateTotal)
+servings.addEventListener('change', calculateTotal)
+meals.addEventListener('change', calculateTotal)
