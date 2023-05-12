@@ -1,0 +1,53 @@
+<div class="section-title text-center">
+    <h1 class="fw-bold" style="color: #06716e;">Shopping Cart</h1>
+</div>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Menu</th>
+      <th scope="col">Servings</th>
+      <th scope="col">Meals per week</th>
+      <th scope="col">Total</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">3</th>
+      <td>Larry the Bird</td>
+      <td>@twitter</td>
+      <td>@twitter</td>
+      <td>edit/delete</td>
+    </tr>
+  </tbody>
+</table>
+{{!-- Recurring subscription --}}
+<h4 class="text-muted">Recurring subscription </h4>
+<h6 class="text-muted font-monospace">Automatically renew the subscription when your plans end. Don't worry, you can cancel anytime!</h6>
+                <div class="col-md-4 vw-100 my-4">
+                    <div class="preference-row mb-2 fs-5">
+                        <span class="preference-item">
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="dairyfree"
+                            />
+                        <label class="form-check-label" for="dairyfree">
+                        Yes
+                        </label>
+                        </span>
+                         <span class="preference-item">
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="dairyfree"
+                            />
+                        <label class="form-check-label" for="dairyfree">
+                        No
+                        </label>
+                        </span>
+                    </div>
+                </div>
+{{> goBack-btn-group}}
