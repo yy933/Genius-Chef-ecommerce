@@ -11,13 +11,14 @@
                 <div class="col-md-4 my-4 ">
                     <div class="menu-row mb-2 fs-5">
                         <div class="form-check">
+                          
                             <input
                                 class="form-check-input"
                                 type="radio"
                                 name="menu"
                                 id="classic"
                                 value="classic"
-                                />
+                                required/>
                             <label class="form-check-label" for="classic">Classic</label>
                         </div>
                         <div class="form-check ">
@@ -27,12 +28,14 @@
                                 name="menu"
                                 id="vegetarian"
                                 value="vegetarian"
-                                />
+                                required/>
                             <label class="form-check-label" for="vegetarian">Vegetarian</label>
+                            <div class="invalid-feedback">Please choose a menu.</div>
                         </div>
                     </div>
                 </div>
-                <h4 class="text-muted">2. Tell us your preference </h4>
+                <h4 class="text-muted">2. Tell us your preference (Optional) </h4>
+                <h5 class="text-muted">We'll do our best to fit your needs! </h5>
                 <div class="col-md-4 vw-100 my-4">
                     <div class="preference-row mb-2 fs-5">
                         <span class="preference-item">
@@ -65,7 +68,7 @@
                             id="pescatarian"
                             />
                         <label class="form-check-label" for="pescatarian">
-                        Pescatarian
+                        Lacto-ovo vegetarian
                         </label>
                         </span>
                     </div>
@@ -78,7 +81,7 @@
                             id="strictvegan"
                             />
                         <label class="form-check-label" for="strictvegan">
-                        Strict vegan
+                        Nutritious and healthy
                         </label>
                         </span>
                         <span class="preference-item">
@@ -89,7 +92,7 @@
                             id="lactoovovegetarian"
                             />
                         <label class="form-check-label" for="lactoovovegetarian">
-                        Lacto-ovo vegetarian
+                        Pescatarian
                         </label>
                         </span>
                         <span class="preference-item">
@@ -105,33 +108,41 @@
                         </span>
                     </div>
                 </div>
-                <h4 class="text-muted">3. Servings </h4>
+                <div class="plans-price-calculation">
+                  <h4 class="text-muted">3. Servings </h4>
                 <div class="col-md-4 my-4">
                     <div class="servings-row mb-2">
-                        <select class="form-select form-select-sm fs-5" aria-label="servings">
-                            <option disabled>Servings</option>
+                        <select name="servings" class="form-select form-select-sm fs-5 servings" aria-label="servings" required>
+                            <option value="" disabled selected>Servings</option>
                             <option value="2">2</option>
                             <option value="4">4</option>
                             <option value="6">6</option>
                         </select>
+                        <div class="invalid-feedback">Please select a valid number.</div>
                     </div>
                 </div>
                 <h4 class="text-muted">4. How many meals do you cook every week? </h4>
                 <div class="col-md-4 my-4">
                     <div class="mealsPerWeek-row mb-2">
-                        <select class="form-select form-select-sm  fs-5"  aria-label="servings">
-                            <option disabled>Meals per week</option>
+                        <select name="meals" class="form-select form-select-sm fs-5 meals"  aria-label="meals" required>
+                            <option value="" disabled selected>Meals per week</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
                             <option value="4">4</option>
                             <option value="5">5</option>
                             <option value="6">6</option>
                         </select>
+                        <div class="invalid-feedback">Please select a valid number.</div>
                     </div>
                 </div>
-                <div class="col-12">
+                </div>
+                <div class="plan-price">
+                <h4 class="mb-3">Total: $<span id="total-amount">--</span></h4>
+                <h5 class="my-2">Price per meal: $<span id="price-per-meal">--</span></h5>
+                </div>
+                <div class="continue-btn col-12">
                     <button class="btn btn-success" type="submit">Continue</button>
                 </div>
             </form>
-        </div>
+        </div>      
     </div>
