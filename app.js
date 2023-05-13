@@ -9,6 +9,7 @@ const axios = require('axios')
 const session = require('express-session')
 const flash = require('connect-flash')
 const path = require('path')
+const priceRule = require('./helpers/price-calculation')
 const bcrypt = require('bcryptjs')
 const contactFormSend = require('./helpers/email-helpers')
 const app = express()
@@ -108,16 +109,18 @@ app.get('/cart', (req, res) => {
 })
 app.post('/cart', (req, res) => {
   try {
-    const { menu, preference, servings, meals, mealTotal} = req.body
+    let { menu, preference, servings, meals, mealTotal } = req.body
     console.log(req.body)
+    if (!mealTotal) {
+      mealTotal = priceRule(servings, meals)
+    }
     res.render('user/cart', {
-      menu, 
+      menu,
       preference,
       servings,
       meals,
       mealTotal
     })
-
   } catch (error) {
     console.log(error)
     req.flash('warning_msg', 'Plans could not be added to cart, please try again!')
