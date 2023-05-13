@@ -179,6 +179,25 @@ nav{
 .preference-row span{
   white-space: nowrap;
 }
+/* cart  */
+.reselect-plan, .accordion-header{
+  color: #06716e;
+  font-size: 1.3rem;
+  font-family: 'Roboto', sans-serif;
+}
+.accordion{
+  width: 100%;
+  display: table;
+}
+.accordion-button{
+  font-size: large;
+}
+table tr{
+  vertical-align: middle;
+}
+table th{
+  font-size: large;
+}
 
 
 /* footer */

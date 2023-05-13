@@ -14,7 +14,7 @@ const contactFormSend = require('./helpers/email-helpers')
 const app = express()
 const PORT = process.env.PORT || 8080
 
-app.engine('hbs', exphbs.engine({ defaultLayout: 'main', extname: '.hbs'}))
+app.engine('hbs', exphbs.engine({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'hbs')
 app.use(express.static('public'))
@@ -90,22 +90,39 @@ app.get('/menu/:preference', async (req, res) => {
       ingredient: Object.assign({}, recipe.extendedIngredients?.map(i => i.original) || ['Ingredients are currently unavailable, please check the full recipe below for more details.']),
       fullDetailsUrl: recipe.spoonacularSourceUrl || '/'
     }))
-    console.log(recipesData)
     res.render('menu', {
       recipesData,
       path: `/menu/${preference}`
     })
   } catch (error) {
     console.error('Request failed:', error)
-    return res.render('menu', { message: 'Please refresh your page for the menu!' })
+    return res.render('menu', { message: 'Could not find the menu!' })
   }
 })
 
 app.get('/plans', (req, res) => {
   res.render('plans')
 })
-app.get('/cart', (req, res)=>{
+app.get('/cart', (req, res) => {
   res.render('user/cart')
+})
+app.post('/cart', (req, res) => {
+  try {
+    const { menu, preference, servings, meals, mealTotal} = req.body
+    console.log(req.body)
+    res.render('user/cart', {
+      menu, 
+      preference,
+      servings,
+      meals,
+      mealTotal
+    })
+
+  } catch (error) {
+    console.log(error)
+    req.flash('warning_msg', 'Plans could not be added to cart, please try again!')
+    return res.redirect('/plans')
+  }
 })
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${PORT}`)

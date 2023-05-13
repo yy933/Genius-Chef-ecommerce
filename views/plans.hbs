@@ -16,7 +16,7 @@
                                 type="radio"
                                 name="menu"
                                 id="classic"
-                                value="classic"
+                                value="Classic"
                                 required/>
                             <label class="form-check-label" for="classic">Classic</label>
                         </div>
@@ -26,7 +26,7 @@
                                 type="radio"
                                 name="menu"
                                 id="vegetarian"
-                                value="vegetarian"
+                                value="Vegetarian"
                                 required/>
                             <label class="form-check-label" for="vegetarian">Vegetarian</label>
                             <div class="invalid-feedback">Please choose a menu.</div>
@@ -39,9 +39,10 @@
                     <div class="preference-row mb-2 fs-5">
                         <span class="preference-item">
                         <input
+                            name="preference"
                             class="form-check-input"
                             type="checkbox"
-                            value=""
+                            value="Dairy free"
                             id="dairyfree"
                             />
                         <label class="form-check-label" for="dairyfree">
@@ -50,9 +51,10 @@
                         </span>
                         <span class="preference-item"> 
                         <input
+                            name="preference"
                             class="form-check-input"
                             type="checkbox"
-                            value=""
+                            value="Gluten free"
                             id="glutenfree"
                             />
                         <label class="form-check-label" for="glutenfree">
@@ -61,12 +63,13 @@
                         </span>
                         <span class="preference-item">
                         <input
+                            name="preference"
                             class="form-check-input"
                             type="checkbox"
-                            value=""
-                            id="pescatarian"
+                            value="Lacto-ovo vegetarian"
+                            id="lactoovo"
                             />
-                        <label class="form-check-label" for="pescatarian">
+                        <label class="form-check-label" for="lactoovo">
                         Lacto-ovo vegetarian
                         </label>
                         </span>
@@ -74,31 +77,34 @@
                     <div class="preference-row mb-2 fs-5">
                         <span class="preference-item">
                         <input
+                            name="preference"
                             class="form-check-input"
                             type="checkbox"
-                            value=""
-                            id="strictvegan"
+                            value="Nutritious and healthy"
+                            id="nutri"
                             />
-                        <label class="form-check-label" for="strictvegan">
+                        <label class="form-check-label" for="nutri">
                         Nutritious and healthy
                         </label>
                         </span>
                         <span class="preference-item">
                         <input
+                            name="preference"
                             class="form-check-input"
                             type="checkbox"
-                            value=""
-                            id="lactoovovegetarian"
+                            value="Pescatarian"
+                            id="pescatarian"
                             />
-                        <label class="form-check-label" for="lactoovovegetarian">
+                        <label class="form-check-label" for="pescatarian">
                         Pescatarian
                         </label>
                         </span>
                         <span class="preference-item">
                         <input
+                            name="preference"
                             class="form-check-input"
                             type="checkbox"
-                            value=""
+                            value="Quick and easy"
                             id="quickandEasy"
                             />
                         <label class="form-check-label" for="quickandEasy">
@@ -136,7 +142,7 @@
                 </div>
                 </div>
                 <div class="plan-price">
-                <h4 class="mb-3">Total: $<span id="total-amount">--</span></h4>
+                <h4 class="mb-3">Total: $<span id="total-amount">--</span><input type="hidden" name="mealTotal" id="meal-total" value="" required></h4>
                 <h5 class="my-2">Price per meal: $<span id="price-per-meal">--</span></h5>
                 </div>
                 <div class="continue-btn col-12">
