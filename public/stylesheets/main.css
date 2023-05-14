@@ -192,6 +192,14 @@ nav{
 .accordion-button{
   font-size: large;
 }
+.accordion-item h4{
+  font-family: 'Roboto', sans-serif;
+  margin-bottom: 1rem;
+}
+.accordion-item select{
+  font-family:  "Lato", sans-serif;
+  font-size: 1rem;
+}
 table tr{
   vertical-align: middle;
 }

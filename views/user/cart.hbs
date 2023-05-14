@@ -30,17 +30,28 @@
                     <tr>
                         <td scope="row">
                           {{menu}}
+                          <input type="hidden" name="menu" value={{menu}}>
                         </td>
                         <td><div class="cart-preference">{{#if preference}}
                           <ul>
                             {{join preference}}
                             <li>{{else}}No special preference</li>
+                            <input type="hidden" name="preference" value={{preference}}>
                           </ul>
                           {{/if}}
                           </div></td>
-                        <td>{{servings}}</td>
-                        <td>{{meals}}</td>
-                        <td> <strong>$</strong> {{mealTotal}}</td>
+                        <td>
+                          {{servings}}
+                          <input type="hidden" name="servings" value={{servings}}>
+                        </td>
+                        <td>
+                          {{meals}}
+                        <input type="hidden" name="meals" value={{meals}}>
+                        </td>
+                        <td> 
+                          <strong>$</strong> {{mealTotal}}
+                          <input type="hidden" name="mealTotal" value={{mealTotal}}>
+                        </td>
                         <td><i class="fa-solid fa-trash"></i></td>
                     </tr>
                 </tbody>
@@ -53,37 +64,47 @@
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingTwo">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-        <strong>Recurring subscription</strong> 
+        <strong>Duration</strong> 
       </button>
     </h2>
     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
       <div class="accordion-body">
-        <span class="text-muted font-monospace">Automatically renew the subscription when your plans end. Don't worry, you can cancel anytime!</span>
-        <div class="col-md-4 my-4">
-            <div class="preference-row mb-2 fs-5">
-                <span class="recurSub-item">
-                <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="recurSubYes"
-                    />
-                <label class="form-check-label" for="recurSubYes">
-                Yes
-                </label>
-                </span>
-                <span class="recurSub-item">
-                <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="recurSubNo"
-                    />
-                <label class="form-check-label" for="recurSubNo">
-                No
-                </label>
-                </span>
+        {{!-- Duration  --}}
+        <div class="duration">
+          <h4 class="text-muted">Duration </h4>
+          <span class="text-muted my-2">How long do you want to subscribe?</span>
+          <div class="col-md-4 my-4">
+              <div class="duration-row mb-2 fs-5">
+                  <span class="duration-item">
+                    <select name="duration" class="form-select form-select-sm fs-5"  aria-label="duration" required>
+                      <option value="" disabled selected>Duration</option>
+                      <option value="1 week">1 week</option>
+                      <option value="2 weeks">2 weeks</option>
+                      <option value="1 month">1 month</option>
+                      <option value="2 months">2 months</option>
+                      <option value="3 months">3 months</option>
+                    </select>
+                    <div class="invalid-feedback">Please select a valid number.</div>
+                  </span>
+              </div>
+          </div>
+        </div>
+        {{!-- Recurring Subscription  --}}
+        <div class="recurSub">
+          <h4 class="text-muted">Recurring Subscription </h4>
+          <span class="text-muted my-2">Automatically renew the subscription when your plans end. Don't worry, you can cancel anytime!</span>
+          <div class="col-md-4 my-4">
+            <div class="recurSub-row mb-2 fs-5">
+                  <span class="recurSub-item">
+                    <select name="recurSub" class="form-select form-select-sm fs-5"  aria-label="recurSub" required>
+                      <option value="" disabled selected>Please select</option>
+                      <option value="Yes">Yes</option>
+                      <option value="No">No</option>
+                    </select>
+                    <div class="invalid-feedback">Please select an option.</div>
+                  </span>
             </div>
+          </div>
         </div>
       </div>
     </div>
