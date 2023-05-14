@@ -287,6 +287,9 @@ footer {
 }
 
 @media screen and (min-width: 600px) {
+  .btn-contact{
+    width: 50%;
+  } 
   .menu-cards{
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
