@@ -126,6 +126,9 @@ app.post('/cart', (req, res) => {
     return res.redirect('/plans')
   }
 })
+app.post('/order', (req,res)=>{
+  res.render('confirm')
+})
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${PORT}`)
 })

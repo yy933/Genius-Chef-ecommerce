@@ -207,7 +207,19 @@ nav{
 .scroll-body li{
   margin-bottom: 0.3rem;
 }
-
+/* confirm order */
+.order-confirm > *{
+  margin-top: 1.5rem;
+}
+.order-confirm .confirm-title{
+  font-family:'ChenYuluoyan', sans-serif;
+  font-size: 250%;
+  font-weight: bold;
+}
+.order-confirm h4{
+  line-height: 1.5rem;
+  font-family: 'Lato', sans-serif;
+}
 
 
 /* footer */
@@ -326,6 +338,9 @@ footer {
   .preference-form form{
     padding-left: 20px;
   }
+  .order-confirm .confirm-title{
+  font-size: 300%;
+}
  
 }
 @media screen and (min-width: 960px)  {
@@ -344,6 +359,9 @@ footer {
   .preference-form form{
     padding-left: 40px;
   }
+    .order-confirm .confirm-title{
+  font-size: 350%;
+}
   
 }
 
