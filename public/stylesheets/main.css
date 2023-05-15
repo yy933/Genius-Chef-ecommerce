@@ -183,13 +183,18 @@ nav{
 }
 /* cart  */
 .reselect-plan, .scroll-title, .scroll-body strong, .scroll-body select{
-   font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif;
 
 }
 .reselect-plan{
   color: #06716e;
   font-size: 1.3rem;
- 
+}
+.cart-form-container{
+  overflow-y:scroll;
+  overflow-x:hidden;
+  height:100%; 
+  width: 100%; 
 }
 .scroll-title{
   margin-bottom: 0.8rem;
