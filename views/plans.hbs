@@ -1,43 +1,45 @@
 <div class="section-title text-center">
     <h1 class="fw-bold" style="color: #06716e;">Our Plans</h1>
 </div>
-    <div class="form-container min-vh-75">
-        <div class="form-image">
-            <span class="form-image-title">Enjoy fresh food from us with just a few clicks away!</span>
-        </div>
-        <div class="preference-form">
-            <form class="row g-3 needs-validation" action="/cart" method="post" novalidate>
-                <h4 class="text-muted mt-4">1. Choose your menu </h4>
-                <div class="col-md-4 my-4 ">
-                    <div class="menu-row mb-2 fs-5">
-                        <div class="form-check">
-                            <input
-                                class="form-check-input"
-                                type="radio"
-                                name="menu"
-                                id="classic"
-                                value="Classic"
-                                required/>
-                            <label class="form-check-label" for="classic">Classic</label>
-                        </div>
-                        <div class="form-check ">
-                            <input
-                                class="form-check-input"
-                                type="radio"
-                                name="menu"
-                                id="vegetarian"
-                                value="Vegetarian"
-                                required/>
-                            <label class="form-check-label" for="vegetarian">Vegetarian</label>
-                            <div class="invalid-feedback">Please choose a menu.</div>
-                        </div>
+<div class="form-container min-vh-75">
+    <div class="form-image">
+        <span class="form-image-title">Enjoy fresh food from us with just a few
+            clicks away!</span>
+    </div>
+    <div class="preference-form">
+        <form class="row g-3 needs-validation" action="/cart" method="post"
+            novalidate>
+            <h4 class="text-muted mt-4">1. Choose your menu </h4>
+            <div class="col-md-4 my-4 ">
+                <div class="menu-row mb-2 fs-5">
+                    <div class="form-check">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            name="menu"
+                            id="classic"
+                            value="Classic"
+                            required/>
+                        <label class="form-check-label" for="classic">Classic</label>
+                    </div>
+                    <div class="form-check ">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            name="menu"
+                            id="vegetarian"
+                            value="Vegetarian"
+                            required/>
+                        <label class="form-check-label" for="vegetarian">Vegetarian</label>
+                        <div class="invalid-feedback">Please choose a menu.</div>
                     </div>
                 </div>
-                <h4 class="text-muted">2. Tell us your preference (Optional) </h4>
-                <h5 class="text-muted">We'll do our best to fit your needs! </h5>
-                <div class="col-md-4 vw-100 my-4">
-                    <div class="preference-row mb-2 fs-5">
-                        <span class="preference-item">
+            </div>
+            <h4 class="text-muted">2. Tell us your preference (Optional) </h4>
+            <h5 class="text-muted">We'll do our best to fit your needs! </h5>
+            <div class="col-md-4 vw-100 my-4">
+                <div class="preference-row mb-2 fs-5">
+                    <span class="preference-item">
                         <input
                             name="preference"
                             class="form-check-input"
@@ -46,10 +48,10 @@
                             id="dairyfree"
                             />
                         <label class="form-check-label" for="dairyfree">
-                        Dairy Free
+                            Dairy Free
                         </label>
-                        </span>
-                        <span class="preference-item"> 
+                    </span>
+                    <span class="preference-item">
                         <input
                             name="preference"
                             class="form-check-input"
@@ -58,10 +60,10 @@
                             id="glutenfree"
                             />
                         <label class="form-check-label" for="glutenfree">
-                        Gluten Free
+                            Gluten Free
                         </label>
-                        </span>
-                        <span class="preference-item">
+                    </span>
+                    <span class="preference-item">
                         <input
                             name="preference"
                             class="form-check-input"
@@ -70,12 +72,12 @@
                             id="lactoovo"
                             />
                         <label class="form-check-label" for="lactoovo">
-                        Lacto-ovo vegetarian
+                            Lacto-ovo vegetarian
                         </label>
-                        </span>
-                    </div>
-                    <div class="preference-row mb-2 fs-5">
-                        <span class="preference-item">
+                    </span>
+                </div>
+                <div class="preference-row mb-2 fs-5">
+                    <span class="preference-item">
                         <input
                             name="preference"
                             class="form-check-input"
@@ -84,10 +86,10 @@
                             id="nutri"
                             />
                         <label class="form-check-label" for="nutri">
-                        Nutritious and healthy
+                            Nutritious and healthy
                         </label>
-                        </span>
-                        <span class="preference-item">
+                    </span>
+                    <span class="preference-item">
                         <input
                             name="preference"
                             class="form-check-input"
@@ -96,10 +98,10 @@
                             id="pescatarian"
                             />
                         <label class="form-check-label" for="pescatarian">
-                        Pescatarian
+                            Pescatarian
                         </label>
-                        </span>
-                        <span class="preference-item">
+                    </span>
+                    <span class="preference-item">
                         <input
                             name="preference"
                             class="form-check-input"
@@ -108,28 +110,33 @@
                             id="quickandEasy"
                             />
                         <label class="form-check-label" for="quickandEasy">
-                        Quick and easy
+                            Quick and easy
                         </label>
-                        </span>
-                    </div>
+                    </span>
                 </div>
-                <div class="plans-price-calculation">
+            </div>
+            <div class="plans-price-calculation">
                 <h4 class="text-muted">3. Servings </h4>
                 <div class="col-md-4 my-4">
                     <div class="servings-row mb-2">
-                        <select name="servings" class="form-select form-select-sm fs-5 servings" aria-label="servings" required>
+                        <select name="servings" class="form-select
+                            form-select-sm fs-5 servings" aria-label="servings"
+                            required>
                             <option value="" disabled selected>Servings</option>
                             <option value="2">2</option>
                             <option value="4">4</option>
                             <option value="6">6</option>
                         </select>
-                        <div class="invalid-feedback">Please select a valid number.</div>
+                        <div class="invalid-feedback">Please select a valid
+                            number.</div>
                     </div>
                 </div>
-                <h4 class="text-muted">4. How many meals do you cook every week? </h4>
+                <h4 class="text-muted">4. How many meals do you cook every week?
+                </h4>
                 <div class="col-md-4 my-4">
                     <div class="mealsPerWeek-row mb-2">
-                        <select name="meals" class="form-select form-select-sm fs-5 meals"  aria-label="meals" required>
+                        <select name="meals" class="form-select form-select-sm
+                            fs-5 meals" aria-label="meals" required>
                             <option value="" disabled selected>Meals per week</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -137,18 +144,21 @@
                             <option value="5">5</option>
                             <option value="6">6</option>
                         </select>
-                        <div class="invalid-feedback">Please select a valid number.</div>
+                        <div class="invalid-feedback">Please select a valid
+                            number.</div>
                     </div>
                 </div>
-                </div>
-                <div class="plan-price">
-                <h4 class="mb-3">Total: $<span id="total-amount">--</span><input type="hidden" name="mealTotal" id="meal-total" value="" required></h4>
+            </div>
+            <div class="plan-price">
+                <h4 class="mb-3">Total: $<span id="total-amount">--</span><input
+                        type="hidden" name="mealTotal" id="meal-total" value=""
+                        required></h4>
                 <h5 class="my-2">Price per meal: $<span id="price-per-meal">--</span></h5>
-                </div>
-                <div class="continue-btn col-12">
-                    <button class="btn btn-success" type="submit">Continue</button>
-                    <button class="btn btn-outline-light" type="reset">Reset</button>
-                </div>
-            </form>
-        </div>      
+            </div>
+            <div class="continue-btn col-12">
+                <button class="btn btn-success" type="submit">Continue</button>
+                <button class="btn btn-outline-secondary" type="reset">Reset</button>
+            </div>
+        </form>
     </div>
+</div>
