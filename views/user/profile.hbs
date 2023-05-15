@@ -1,0 +1,71 @@
+<div class="profile-container p-2">
+  <div class="nav nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+    <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">My Plans</button>
+    <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</button>
+  </div>
+  <div class="tab-content" id="v-pills-tabContent">
+    {{!-- My plans  --}}
+    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+      <div class="profile-item">
+      <ol class="my-3">
+        <h4 class="font-monospace">Order details</h3> 
+        <li><strong>Order id:</strong> {{menu}}<input type="hidden" name="orderId"
+            value={{menu}}></li>
+        <li><strong>Ordered at:</strong> {{menu}}<input type="hidden" name="orderAt"
+            value={{menu}}></li>
+        <li><strong>Status:</strong> {{menu}}<input type="hidden" name="status"
+            value={{menu}}></li>
+            <h4 class="font-monospace">Plans</h3> 
+        <li><strong>Menu:</strong> {{menu}}<input type="hidden" name="menu"
+            value={{menu}}></li>
+        <li><strong>Preference:</strong><br> {{#if preference}}{{join
+          preference}}<input type="hidden" name="preference"
+            value={{preference}}>{{else}}No special
+          preference<input type="hidden" name="preference"
+            value="N/A">{{/if}}</li>
+        <li> <strong>Servings:</strong> {{servings}}<input type="hidden"
+            name="servings"
+            value={{servings}}></li>
+        <li> <strong>Meals:</strong> {{meals}}<input type="hidden" name="meals"
+            value={{meals}}></li>
+            <li> <strong>Duration:</strong> {{meals}}<input type="hidden" name="duration"
+            value={{meals}}></li>
+        <li> <strong>Total: $</strong> {{mealTotal}} <input type="hidden"
+            name="mealTotal"
+            value={{mealTotal}}></li>
+            <h4 class="font-monospace">Delivery Details</h3> 
+        <li> <strong>Name: </strong> {{mealTotal}} <input type="hidden"
+            name="mealTotal"
+            value={{mealTotal}}></li>
+        <li> <strong>Email: </strong> {{mealTotal}} <input type="hidden"
+            name="mealTotal"
+            value={{mealTotal}}></li>
+        <li> <strong>Phone: </strong> {{mealTotal}} <input type="hidden"
+            name="mealTotal"
+            value={{mealTotal}}></li>
+        <li> <strong>Address: </strong> {{mealTotal}} <input type="hidden"
+            name="mealTotal"
+            value={{mealTotal}}></li>
+        <li> <strong>Preferred delivery: </strong> {{mealTotal}} <input type="hidden"
+            name="mealTotal"
+            value={{mealTotal}}></li>
+      </ol>
+      </div>
+    </div>
+    {{!-- Settings  --}}
+    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+      <div class="profile-item">
+        <ol class="my-3">
+          <li><strong>Name:</strong> {{menu}}<input type="hidden" name="orderId"
+              value={{menu}}></li>
+          <li><strong>Email:</strong> {{menu}}<input type="hidden" name="orderAt"
+              value={{menu}}></li>
+          <li><strong>Recurring subscription:</strong> {{menu}}<input type="hidden" name="status"
+              value={{menu}}></li>
+          <li><strong>Change password</strong> {{menu}}<input type="hidden" name="status"
+              value={{menu}}></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>

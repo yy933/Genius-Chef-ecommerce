@@ -230,6 +230,11 @@ height: 1px;
 background: #eee;
 }
 
+/* profile  */
+.profile-container .nav{
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
 /* footer */
 footer {
   width: 100%;
@@ -349,7 +354,13 @@ footer {
   .order-confirm .confirm-title{
   font-size: 300%;
 }
- 
+.profile-container{
+  display:flex; 
+  align-items: flex-start;
+}
+ .profile-container .nav{
+  flex-direction: column;
+}
 }
 @media screen and (min-width: 960px)  {
   .menu-cards{
