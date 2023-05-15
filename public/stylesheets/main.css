@@ -15,6 +15,8 @@ body {
   width:100%;
   height: 100%;
   box-sizing: border-box;
+  position: relative;
+  overflow-y: scroll;
 }
 
 html {
@@ -180,32 +182,27 @@ nav{
   white-space: nowrap;
 }
 /* cart  */
-.reselect-plan, .accordion-header{
+.reselect-plan, .scroll-title, .scroll-body strong, .scroll-body select{
+   font-family: 'Roboto', sans-serif;
+
+}
+.reselect-plan{
   color: #06716e;
   font-size: 1.3rem;
-  font-family: 'Roboto', sans-serif;
+ 
 }
-.accordion{
-  width: 100%;
-  display: table;
+.scroll-title{
+  margin-bottom: 0.8rem;
+  color: #06716e;
 }
-.accordion-button{
-  font-size: large;
+.scroll-body strong, .scroll-body select{
+  margin-bottom: 0.85rem;
+  font-size: 1.18rem;
 }
-.accordion-item h4{
-  font-family: 'Roboto', sans-serif;
-  margin-bottom: 1rem;
+.scroll-body li{
+  margin-bottom: 0.3rem;
 }
-.accordion-item select{
-  font-family:  "Lato", sans-serif;
-  font-size: 1rem;
-}
-table tr{
-  vertical-align: middle;
-}
-table th{
-  font-size: large;
-}
+
 
 
 /* footer */
