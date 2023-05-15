@@ -1,48 +1,46 @@
-<div class="section-title text-center">
-  <h1 class="fw-bold" style="color: #06716e;">Log in</h1>
-</div>
 {{!-- sign in form  --}}
 <section class="vh-100">
-  <div class="container py-5 h-100">
-    <div class="row d-flex align-items-center justify-content-center h-100">
-      <div class="col-md-8 col-lg-7 col-xl-6">
-        <img src="https://images.unsplash.com/photo-1610452220299-5edf90b8a6ed?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-          class="img-fluid" alt="Phone image">
-      </div>
-      <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-        <form class="needs-validation" action="/login" method="post" novalidate>
-          <!-- Email input -->
-          <div class="form-outline mb-4">
-            <label class="form-label" for="email">Email</label>
-            <input type="email" id="email" name="email" class="form-control form-control-lg" required>
-            <div class="invalid-feedback">Please enter a valid email.</div>
-          </div>
-          <!-- Password input -->
-          <div class="form-outline mb-4">
-            <label class="form-label" for="password">Password</label>
-            <input type="password" id="password" name="password" class="form-control form-control-lg" required>
-            <div class="invalid-feedback">Please enter your password.</div>
-          </div>
-          <div class="d-flex justify-content-around align-items-center mb-4">
-            <p>Don't have an account? <a href="/signup" class="fw-bold">Create one</a></p>
-            <a href="#!">Forgot password?</a>
-          </div>
-          <!-- Submit button -->
-          <div class="signin-btn text-center">
-            <button type="submit" class="btn btn-success btn-block">Sign in</button>
-          </div>
-          <!-- Divider -->
-          <div class="divider d-flex align-items-center my-4">
-            <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
-          </div>
-          <!-- SSO signin -->
-          <div class="sso-sigin d-flex justify-content-center text-center mt-4 pt-1">
-                <a href="#!" class="text-muted"><i class="fab fa-facebook-f fa-lg"></i></a>
-                <a href="#!" class="text-muted"><i class="fab fa-twitter fa-lg mx-4 px-2"></i></a>
-                <a href="#!" class="text-muted"><i class="fab fa-google fa-lg"></i></a>
-          </div>
-        </form>
-      </div>
+    <div class="container py-5 h-100">
+        <div class="row d-flex align-items-center justify-content-center h-100">
+            <div class="col-md-8 col-lg-7 col-xl-6 mb-2">
+                <img src="https://images.unsplash.com/photo-1610452220299-5edf90b8a6ed?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
+                    class="img-fluid" alt="food">
+            </div>
+            <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+                <form class="needs-validation" action="/login" method="post" novalidate>
+                    <h1 class="fw-bold mb-3 pb-3" style="letter-spacing: 1px;">Log in</h1>
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="email">Email</label>
+                        <input type="email" id="email" name="email" class="form-control form-control-lg" required>
+                        <div class="invalid-feedback">Please enter a valid email.</div>
+                    </div>
+                    <!-- Password input -->
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="password">Password</label>
+                        <input type="password" id="password" name="password" class="form-control form-control-lg" required>
+                        <div class="invalid-feedback">Please enter your password.</div>
+                    </div>
+                    <div class="d-flex justify-content-around align-items-center mb-4">
+                        <p>Don't have an account? <a href="/signup" class="link-info">Create one</a></p>
+                        <a href="#!">Forgot password?</a>
+                    </div>
+                    <!-- Submit button -->
+                    <div class="signin-btn text-center">
+                        <button type="submit" class="btn btn-success btn-block">Log in</button>
+                    </div>
+                    <!-- Divider -->
+                    <div class="divider d-flex align-items-center my-4">
+                        <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
+                    </div>
+                    <!-- SSO signin -->
+                    <div class="sso-sigin d-flex justify-content-center text-center mt-4 pt-1">
+                        <a href="#!" class="text-muted"><i class="fab fa-facebook-f fa-lg"></i></a>
+                        <a href="#!" class="text-muted"><i class="fab fa-twitter fa-lg mx-4 px-2"></i></a>
+                        <a href="#!" class="text-muted"><i class="fab fa-google fa-lg"></i></a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
