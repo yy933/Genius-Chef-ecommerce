@@ -36,13 +36,13 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
   res.render('index')
 })
-app.get('/login', (req, res)=>{
+app.get('/login', (req, res) => {
   res.render('login')
 })
-app.get('/signup', (req, res)=>{
+app.get('/signup', (req, res) => {
   res.render('signup')
 })
-app.get('/profile', (req, res)=>{
+app.get('/profile', (req, res) => {
   res.render('user/profile')
 })
 app.get('/contact', (req, res) => {
@@ -134,7 +134,7 @@ app.post('/cart', (req, res) => {
     return res.redirect('/plans')
   }
 })
-app.post('/order', (req,res)=>{
+app.post('/order', (req, res) => {
   res.render('confirm')
 })
 app.listen(PORT, () => {

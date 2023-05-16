@@ -47,9 +47,11 @@
       </div>
       {{!-- Recurring Subscription --}}
       <div class="recurSub">
-        <h4 class="scroll-title">Recurring Subscription </h4>
-        <span class="text-muted my-2">Automatically renew the subscription
+      
+          <h4 class="scroll-title">Recurring Subscription </h4>
+          <span class="text-muted my-2">Automatically renew the subscription
           when your plans end. Don't worry, you can cancel anytime!</span>
+      
         <div class="col-md-4 my-4">
           <div class="recurSub-row mb-2 fs-5">
             <span class="recurSub-item">
@@ -100,12 +102,13 @@
             <div class="invalid-feedback">Please provide a valid address.</div>
           </div>
           <div class="form-group col-md-12 my-3">
-            <span>Preferred delivery time:</span>
-            <p style="font-size:0.85rem;font-family:" Lato", sans-serif;">We'll
-              do our best to delivered in specified time. However
+            <details>
+              <summary> <span>Preferred delivery time:</span></summary>
+              <p style="font-size:0.9rem;font-family:" Lato", sans-serif;">We'll
+              do our best to deliver in the specified time. However
               sometimes there might be uncertainties caused by varied
-              reasons,
-              please understand. </p>
+              reasons, please understand. Thank you.</p>
+            </details>
             <select name="preferredDeliveryDate" class="form-select
               form-select-sm fs-5 my-2"
               aria-label="preferredDeliveryDate" required>
