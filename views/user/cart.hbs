@@ -22,36 +22,13 @@
             value={{mealTotal}}></li>
       </ol>
     </div>
-    <h4 class="scroll-title">Duration</h4>
+    {{!-- Recurring Subscription --}}
+    <h4 class="scroll-title">Recurring Subscription </h4>
     <div class="scroll-body">
-      {{!-- Duration --}}
-      <div class="duration">
-        <span class="text-muted my-2">How long do you want to subscribe?</span>
-        <div class="col-md-4 my-4">
-          <div class="duration-row mb-2 fs-5">
-            <span class="duration-item">
-              <select name="duration" class="form-select form-select-sm
-                fs-5"
-                aria-label="duration" required>
-                <option value="" disabled selected>Please select</option>
-                <option value="1 week">1 week</option>
-                <option value="2 weeks">2 weeks</option>
-                <option value="1 month">1 month</option>
-                <option value="2 months">2 months</option>
-                <option value="3 months">3 months</option>
-              </select>
-              <div class="invalid-feedback">Please select a valid number.</div>
-            </span>
-          </div>
-        </div>
-      </div>
-      {{!-- Recurring Subscription --}}
       <div class="recurSub">
-      
-          <h4 class="scroll-title">Recurring Subscription </h4>
-          <span class="text-muted my-2">Automatically renew the subscription
+        <span class="text-muted my-2">Automatically renew the subscription
           when your plans end. Don't worry, you can cancel anytime!</span>
-      
+
         <div class="col-md-4 my-4">
           <div class="recurSub-row mb-2 fs-5">
             <span class="recurSub-item">
@@ -68,15 +45,13 @@
         </div>
       </div>
     </div>
+    {{!-- Delivery details --}}
     <h4 class="scroll-title">Delivery Details</h4>
     <div class="scroll-body">
-      {{!-- Delivery details --}}
       <div class="delivery-details">
-
         <div class="row mb-2 fs-5">
           <div class="form-group col-md-6 my-3">
             <label for="name" class="me-2">Name:</label>
-
             <input type="text" name="name" id="name" class="form-control"
               required>
             <div class="invalid-feedback">This field is required.</div>
@@ -105,11 +80,12 @@
             <details>
               <summary> <span>Preferred delivery time:</span></summary>
               <p style="font-size:0.9rem;font-family:" Lato", sans-serif;">We'll
-              do our best to deliver in the specified time. However
-              sometimes there might be uncertainties caused by varied
-              reasons, please understand. Thank you.</p>
+                do our best to deliver in the specified time. However
+                sometimes there might be uncertainties caused by varied
+                reasons, please understand. Thank you.</p>
             </details>
-            <select name="preferredDeliveryDate" class="form-select
+            <div class="col-md-6 preferred-date">
+              <select name="preferredDeliveryDate" class="form-select
               form-select-sm fs-5 my-2"
               aria-label="preferredDeliveryDate" required>
               <option value="" disabled selected>Day</option>
@@ -117,7 +93,9 @@
               <option value="Weekend">Weekend</option>
             </select>
             <div class="invalid-feedback">Please select an option.</div>
-            <select name="preferredDeliveryTime" class="form-select
+            </div>
+            <div class="col-md-6 preferred-time">
+              <select name="preferredDeliveryTime" class="form-select
               form-select-sm fs-5 my-2"
               aria-label="preferredDeliveryTime" required>
               <option value="" disabled selected>Time</option>
@@ -127,17 +105,14 @@
               <option value="18-20">18-20</option>
             </select>
             <div class="invalid-feedback">Please select an option.</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="continue-btn col-12 text-center my-2">
-      <button class="btn btn-outline-success" type="submit">Confirm Order</button>
-      <button class="btn btn-outline-secondary" type="reset">Reset</button>
-    </div>
+    <button class="btn btn-outline-success" type="submit">Confirm Order</button>
+    <button class="btn btn-outline-secondary" type="reset">Reset</button>
+  </div>
 </form>
-
-
-
-

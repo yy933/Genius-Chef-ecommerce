@@ -181,8 +181,8 @@ nav{
 .preference-row span{
   white-space: nowrap;
 }
-/* cart  */
-.reselect-plan, .scroll-title, .scroll-body strong, .scroll-body select{
+/* cart and profile */
+.reselect-plan, .scroll-title, .scroll-body strong, .scroll-body select, .profile-subtitle{
   font-family: 'Roboto', sans-serif;
 
 }
@@ -196,17 +196,35 @@ nav{
   height:85%; 
   width: 100%; 
 }
-.scroll-title{
+.scroll-title, .profile-subtitle{
   margin-bottom: 0.8rem;
   color: #06716e;
 }
-.scroll-body strong, .scroll-body select{
+.scroll-body strong, .scroll-body select, .profile-item strong{
   margin-bottom: 0.85rem;
   font-size: 1.18rem;
 }
 .scroll-body li{
   margin-bottom: 0.3rem;
 }
+.profile-container details{
+  margin-bottom: 40px;
+}
+.profile-container .nav-link, .profile-container .nav-link.active{
+  width: 150px;
+  font-size: 1.3rem;
+}
+.profile-container .nav-link{
+  color: #0d0d0d;
+}
+.profile-container .nav-link.active{
+  background-color: #6fd0b5;
+}
+.profile-item li{
+  font-family: 'Lato', sans-serif;
+  margin-top: 18px ;
+}
+
 /* confirm order */
 .order-confirm > *{
   margin-top: 1.5rem;
