@@ -93,7 +93,7 @@ app.get('/menu/:preference', async (req, res) => {
       dairyFree: recipe.dairyFree,
       cookingTime: recipe.readyInMinutes,
       servings: recipe.servings,
-      image: recipe.image,
+      image: recipe.image || 'https://images.unsplash.com/photo-1633878353697-f751870d1d76?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
       instruction: Object.assign({}, recipe.analyzedInstructions[0]?.steps.map(s => s.step) || ['Instructions are currently unavailable, please check the full recipe below for more details.']),
       ingredient: Object.assign({}, recipe.extendedIngredients?.map(i => i.original) || ['Ingredients are currently unavailable, please check the full recipe below for more details.']),
       fullDetailsUrl: recipe.spoonacularSourceUrl || '/'
