@@ -219,6 +219,7 @@ nav{
 }
 .profile-container .nav-link.active{
   background-color: #6fd0b5;
+  opacity: 0.9;
 }
 .profile-item li{
   font-family: 'Lato', sans-serif;
@@ -380,6 +381,7 @@ footer {
   flex-direction: column;
 }
 }
+
 @media screen and (min-width: 960px)  {
   .menu-cards{
     grid-template-columns: repeat(3,1fr);
@@ -396,9 +398,9 @@ footer {
   .preference-form form{
     padding-left: 40px;
   }
-    .order-confirm .confirm-title{
+  .order-confirm .confirm-title{
   font-size: 350%;
-}
+  }
   
 }
 
