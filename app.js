@@ -11,7 +11,9 @@ const flash = require('connect-flash')
 const path = require('path')
 const priceRule = require('./helpers/price-calculation')
 const bcrypt = require('bcryptjs')
+const validator = require('email-validator')
 const contactFormSend = require('./helpers/email-helpers')
+const { User } = require('./models')
 const app = express()
 const PORT = process.env.PORT || 8080
 
@@ -31,7 +33,7 @@ app.use((req, res, next) => {
   res.locals.user = req.user
   res.locals.success_msg = req.flash('success_msg')
   res.locals.warning_msg = req.flash('warning_msg')
-  next()
+  return next()
 })
 app.get('/', (req, res) => {
   res.render('index')
@@ -41,6 +43,56 @@ app.get('/login', (req, res) => {
 })
 app.get('/signup', (req, res) => {
   res.render('signup')
+})
+app.post('/signup', async (req, res) => {
+  try {
+    const { name, email, password, confirmPassword } = req.body
+    const errors = []
+    if (!name || !email || !password || !confirmPassword) {
+      errors.push({ message: 'All fields are required.' })
+    }
+    if (!validator.validate(email)) {
+      errors.push({ message: 'Please provide a valid email.' })
+    }
+    if (password !== confirmPassword) {
+      errors.push({ message: 'Make sure password and confirm password match.' })
+    }
+    if (errors.length) {
+      console.log(errors)
+      return res.render('signup', {
+        errors,
+        name,
+        email,
+        password,
+        confirmPassword
+      })
+    }
+    const user = await User.findOne({ where: { email } })
+    if (user) {
+      errors.push({ message: 'This email has already been registered.' })
+      return res.render('signup', {
+        errors,
+        name,
+        email,
+        password,
+        confirmPassword
+      })
+    }
+    bcrypt
+      .genSalt(10)
+      .then(salt => bcrypt.hash(password, salt))
+      .then(hash => User.create({
+        name,
+        email,
+        password: hash
+      }))
+    req.flash('success_msg', 'Successfully created an account!')
+    return res.redirect('/login')
+  } catch (error) {
+    console.log(error)
+    req.flash('warning_msg', 'Something went wrong, please try again!')
+    return res.render('signup')
+  }
 })
 app.get('/profile', (req, res) => {
   res.render('user/profile')

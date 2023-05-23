@@ -1,16 +1,32 @@
+{{#if errors}}
+  {{#each errors}}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <div class="d-flex align-items-center">
+        <i class="fa-solid fa-triangle-exclamation fa-lg fa-fw me-1" style="color: #dd4b5a;"></i>
+        <span>{{ this.message }}</span>
+        </div>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+      </button>
+    </div>
+  {{/each}}
+{{/if}}
 {{#if success_msg}}
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-  {{{success_msg}}}
-  <button type="button" class="btn-close" data-bs-dismiss="alert"
-    aria-label="Close">
-  </button>
-</div>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+     <div class="d-flex align-items-center">
+        <i class="fa-sharp fa-solid fa-circle-check fa-lg fa-fw me-1" style="color: #198754;"></i>
+        <span>{{success_msg}}</span>
+      </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
 {{/if}}
 {{#if warning_msg}}
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-  {{{warning_msg}}}
-  <button type="button" class="btn-close" data-bs-dismiss="alert"
-    aria-label="Close">
-  </button>
-</div>
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <div class="d-flex align-items-center">
+        <i class="fa-solid fa-lightbulb fa-lg fa-fw me-1" style="color: #edb50c;"></i>
+        <span>{{warning_msg}}</span>
+      </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
 {{/if}}
+
+
