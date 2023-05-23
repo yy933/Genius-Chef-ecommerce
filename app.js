@@ -111,6 +111,10 @@ app.post('/signup', async (req, res) => {
     return res.render('signup')
   }
 })
+
+app.get('/resetPassword', (req, res)=>{
+  return res.render('reset-password')
+})
 app.get('/profile', (req, res) => {
   res.render('user/profile')
 })
