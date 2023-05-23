@@ -7,11 +7,14 @@ require('handlebars-helpers')(exphbs)
 const methodOverride = require('method-override')
 const axios = require('axios')
 const session = require('express-session')
+const usePassport = require('./config/passport')
+const passport = require('passport')
 const flash = require('connect-flash')
 const path = require('path')
 const priceRule = require('./helpers/price-calculation')
 const bcrypt = require('bcryptjs')
 const validator = require('email-validator')
+const {authenticator} = require('./middleware/auth')
 const contactFormSend = require('./helpers/email-helpers')
 const { User } = require('./models')
 const app = express()
@@ -24,8 +27,10 @@ app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(
-  session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false })
+  session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true })
 )
+usePassport(app)
+
 app.use(methodOverride('_method'))
 app.use(flash())
 app.use((req, res, next) => {
@@ -35,12 +40,14 @@ app.use((req, res, next) => {
   res.locals.warning_msg = req.flash('warning_msg')
   return next()
 })
-app.get('/', (req, res) => {
-  res.render('index')
-})
+
 app.get('/login', (req, res) => {
   res.render('login')
 })
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login'
+}))
 app.get('/signup', (req, res) => {
   res.render('signup')
 })
@@ -188,6 +195,9 @@ app.post('/cart', (req, res) => {
 })
 app.post('/order', (req, res) => {
   res.render('confirm')
+})
+app.get('/', authenticator, (req, res) => {
+  res.render('index')
 })
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${PORT}`)
