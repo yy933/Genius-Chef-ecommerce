@@ -15,9 +15,9 @@ const priceRule = require('./helpers/price-calculation')
 const bcrypt = require('bcryptjs')
 const validator = require('email-validator')
 const { authenticator } = require('./middleware/auth')
-const contactFormSend = require('./helpers/email-helpers')
+const mailService = require('./helpers/email-helpers')
 const { User } = require('./models')
-const { error } = require('console')
+
 const app = express()
 const PORT = process.env.PORT || 8080
 
@@ -112,8 +112,30 @@ app.post('/signup', async (req, res) => {
   }
 })
 
-app.get('/resetPassword', (req, res)=>{
+app.get('/resetPassword', (req, res) => {
   return res.render('reset-password')
+})
+app.post('/resetPassword', async (req, res) => {
+  try {
+    const email = req.body.email
+    const user = await User.findOne({ where: { email } })
+    if (!user) {
+      req.flash('warning_msg', `Email ${email} is not registered. Please try again.`)
+      return res.redirect('/resetPassword')
+    }
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: email,
+      subject: 'Your password reset instruction from Genius Chef',
+      html: `<h2>Reset Password</h2><br/><h3>Dear ${user.name},</h3><br/><p>Please click the link below to reset your password</p>`
+    }
+    await mailService(mailOptions)
+    req.flash('success_msg', `An email has been sent to ${email}`)
+    return res.redirect('/login')
+  } catch (error) {
+    console.log(error)
+    return res.redirect('/resetPassword')
+  }
 })
 app.get('/profile', (req, res) => {
   res.render('user/profile')
@@ -126,7 +148,13 @@ app.get('/contact', (req, res) => {
 app.post('/contact', (req, res) => {
   try {
     const { name, email, subject, message } = req.body
-    contactFormSend(name, email, subject, message)
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: process.env.EMAIL,
+      subject,
+      html: `<h3>Name: ${name}</h3><br/><h3>Email: ${email}</h3><br/><h3>Message:</h3><br/><p>${message}</p>`
+    }
+    mailService(mailOptions)
     req.flash('success_msg', `Thank you ${name}, your message has been sent!`)
     return res.redirect('/contact')
   } catch (error) {
