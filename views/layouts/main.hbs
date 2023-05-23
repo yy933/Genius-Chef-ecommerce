@@ -23,14 +23,9 @@
   </head>
   <body>
     <header>
-
-      <nav
-        class="navbar navbar-expand-lg navbar-light fixed-top navbar-scroll shadow-0"
-      >
+      <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-scroll shadow-0">
         <div class="container-fluid">
-          <a class="navbar-brand fw-bold fs-3" href="/"><img
-              src="https://img.icons8.com/wired/50/null/chef-hat.png"
-            />Genius Chef</a>
+          <a class="navbar-brand fw-bold fs-3" href="/"><img src="https://img.icons8.com/wired/50/null/chef-hat.png">Genius Chef</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -54,13 +49,7 @@
               <li class="nav-item">
                 <a class="nav-link px-3" href="/contact">Contact</a>
               </li>
-              <li class="nav-item">
-                {{#if isAuthenticated}}
-                <form  class="d-inline" method="post" action="/logout"><a class="nav-link px-3" onclick="this.parentNode.submit()">Logout</a></form>
-                {{else}}
-                <a class="nav-link px-3" href="/login">Login</a>
-                {{/if}}
-              </li>
+              {{#if isAuthenticated}}
               <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle px-3"
@@ -82,11 +71,14 @@
                   <li><a class="dropdown-item" href="/profile"><i
                         class="fa-solid fa-user fa-fw me-1"
                       ></i>Profile</a></li>
-                  <li><a class="dropdown-item" href="#"><i
-                        class="fa-solid fa-right-from-bracket fa-fw me-1"
-                      ></i>Logout</a></li>
+                  <li><form class="d-inline" method="post" action="/logout"><a class="dropdown-item" onclick="this.parentNode.submit()"><i class="fa-solid fa-right-from-bracket fa-fw me-1"></i>Logout</a></form></li>
                 </ul>
               </li>
+              {{else}}
+              <li class="nav-item">
+                <a class="nav-link px-3 px-3" href="/login">Login</a>
+              </li>
+              {{/if}}
             </ul>
 
           </div>
