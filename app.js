@@ -14,9 +14,10 @@ const path = require('path')
 const priceRule = require('./helpers/price-calculation')
 const bcrypt = require('bcryptjs')
 const validator = require('email-validator')
-const {authenticator} = require('./middleware/auth')
+const { authenticator } = require('./middleware/auth')
 const contactFormSend = require('./helpers/email-helpers')
 const { User } = require('./models')
+const { error } = require('console')
 const app = express()
 const PORT = process.env.PORT || 8080
 
@@ -34,7 +35,7 @@ usePassport(app)
 app.use(methodOverride('_method'))
 app.use(flash())
 app.use((req, res, next) => {
-  // res.locals.isAuthenticated = req.isAuthenticated();
+  res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.user = req.user
   res.locals.success_msg = req.flash('success_msg')
   res.locals.warning_msg = req.flash('warning_msg')
@@ -48,6 +49,15 @@ app.post('/login', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login'
 }))
+app.post('/logout', (req, res, next) => {
+  req.logout((error) => {
+    if (error) {
+      return next(error)
+    }
+    req.flash('success_msg', 'Successfully logged out.')
+    return res.redirect('/login')
+  })
+})
 app.get('/signup', (req, res) => {
   res.render('signup')
 })
