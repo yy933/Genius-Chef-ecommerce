@@ -10,12 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate (models) {
-      Subscriptions.belongsTo(models.User, { foreignKey: 'user_id' })
+      Subscriptions.belongsTo(models.User, { foreignKey: 'userId' })
     }
   }
   Subscriptions.init({
     active: DataTypes.BOOLEAN,
-    recurring_sub: DataTypes.BOOLEAN
+    recurringSub: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Subscriptions',

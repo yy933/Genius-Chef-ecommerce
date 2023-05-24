@@ -196,6 +196,11 @@ app.get('/resetPassword', async (req, res) => {
 app.post('/resetPassword', async (req, res) => {
   try {
     const { password, confirmPassword, email, token } = req.body
+    const regex = /^(?=.*\d)(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,16}$/
+    if (!regex.test(password)) {
+      req.flash('warning_msg', 'The password must contain at least 8 and maximum 16 characters, including at least 1 uppercase, 1 lowercase, and one number.')
+      return res.redirect('back')
+    }
     if (password !== confirmPassword) {
       req.flash('warning_msg', 'Make sure password and confirm password match.')
       return res.redirect('back')
@@ -225,7 +230,7 @@ app.post('/resetPassword', async (req, res) => {
             email
           }
         }))])
-    req.flash('success_msg', 'Password has successfully been reset!')
+    req.flash('success_msg', 'Password has been successfully reset!')
     return res.redirect('/login')
   } catch (error) {
     console.log(error)
