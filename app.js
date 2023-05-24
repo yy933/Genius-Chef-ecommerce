@@ -71,6 +71,7 @@ app.post('/signup', async (req, res) => {
   try {
     const { name, email, password, confirmPassword } = req.body
     const errors = []
+    const regex = /^(?=.*\d)(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,16}$/
     if (!name || !email || !password || !confirmPassword) {
       errors.push({ message: 'All fields are required.' })
     }
@@ -79,6 +80,9 @@ app.post('/signup', async (req, res) => {
     }
     if (password !== confirmPassword) {
       errors.push({ message: 'Make sure password and confirm password match.' })
+    }
+    if (!regex.test(password)) {
+      errors.push({ message: 'The password must contain at least 8 and maximum 16 characters, including at least 1 uppercase, 1 lowercase, and one number.' })
     }
     if (errors.length) {
       console.log(errors)
@@ -209,7 +213,7 @@ app.post('/resetPassword', async (req, res) => {
       req.flash('warning_msg', 'Reset password link has expired. Please make a request again.')
       return res.redirect('/forgetPassword')
     }
-    Promise.all([
+    await Promise.all([
       ResetToken.update({ used: 1 }, { where: { userEmail: email } }),
       bcrypt
         .genSalt(10)
@@ -225,6 +229,7 @@ app.post('/resetPassword', async (req, res) => {
     return res.redirect('/login')
   } catch (error) {
     console.log(error)
+    return res.redirect('/forgetPassword')
   }
 })
 app.get('/profile', (req, res) => {

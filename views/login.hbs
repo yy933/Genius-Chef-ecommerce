@@ -16,7 +16,7 @@
                     <!-- Password input -->
                     <div class="form-outline mb-4">
                         <label class="form-label" for="password">Password</label>
-                        <input type="password" id="password" name="password" class="form-control form-control-lg" required>
+                        <input type="password" id="password" name="password" class="form-control form-control-lg" pattern="^(?=.*\d)(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,16}$" required>
                         <div class="invalid-feedback">Please enter your password.</div>
                     </div>
                     <div class="text-center align-items-center mb-4">
