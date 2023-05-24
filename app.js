@@ -16,7 +16,10 @@ const bcrypt = require('bcryptjs')
 const validator = require('email-validator')
 const { authenticator } = require('./middleware/auth')
 const mailService = require('./helpers/email-helpers')
-const { User } = require('./models')
+const crypto = require('crypto')
+const { User, ResetToken } = require('./models')
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
 const app = express()
 const PORT = process.env.PORT || 8080
@@ -43,6 +46,9 @@ app.use((req, res, next) => {
 })
 
 app.get('/login', (req, res) => {
+  if (req.isAuthenticated()) {
+    return res.redirect('/')
+  }
   res.render('login')
 })
 app.post('/login', passport.authenticate('local', {
@@ -112,29 +118,113 @@ app.post('/signup', async (req, res) => {
   }
 })
 
-app.get('/resetPassword', (req, res) => {
-  return res.render('reset-password')
+app.get('/forgetPassword', (req, res) => {
+  return res.render('forget-password')
 })
-app.post('/resetPassword', async (req, res) => {
+app.post('/forgetPassword', async (req, res) => {
   try {
     const email = req.body.email
     const user = await User.findOne({ where: { email } })
     if (!user) {
-      req.flash('warning_msg', `Email ${email} is not registered. Please try again.`)
-      return res.redirect('/resetPassword')
+      req.flash('warning_msg', `Email ${email} is not valid. Please try again.`)
+      return res.redirect('/forgetPassword')
     }
+    await ResetToken.update({ used: 1 }, { where: { userEmail: email } })
+    const token = crypto.randomBytes(80).toString('base64')
+    const expiration = new Date(new Date().getTime() + (60 * 10 * 1000))
+    await ResetToken.create({
+      userEmail: email,
+      expiration,
+      token,
+      used: 0
+    })
     const mailOptions = {
       from: process.env.EMAIL,
       to: email,
       subject: 'Your password reset instruction from Genius Chef',
-      html: `<h2>Reset Password</h2><br/><h3>Dear ${user.name},</h3><br/><p>Please click the link below to reset your password</p>`
+      html: `<h1 style="color:#196F3D; text-align:center">Reset Password</h1>
+      <h3>Dear ${user.name},</h3>
+      <p style="font-size: 14px">Please click the link below to reset your password:</p>
+      <a style="color:#196F3D; font-weight:bold; font-size:20px" href="${process.env.CLIENT_URL}/resetPassword?token=${encodeURIComponent(token)}&email=${email}">Reset Password</a>
+      <p style="font-size: 14px">Link will expire in 10 minutes.</p>
+      <br>
+      <p style="font-size: 14px; color:#616A6B;">If you didn't make this request, please ignore this email or <a href="${process.env.CLIENT_URL}/contact">contact us</a>.</p>
+      <br>
+      <h3>Sincerely,<br>Genius Chef Customer Service Team</h3>`
     }
     await mailService(mailOptions)
     req.flash('success_msg', `An email has been sent to ${email}`)
     return res.redirect('/login')
   } catch (error) {
     console.log(error)
-    return res.redirect('/resetPassword')
+    return res.redirect('/forgetPassword')
+  }
+})
+app.get('/resetPassword', async (req, res) => {
+  try {
+    const { token, email } = req.query
+    await ResetToken.destroy({
+      where: {
+        [Op.or]: [{ used: 1 }, { expiration: { [Op.lt]: Sequelize.fn('NOW') } }]
+      }
+    })
+    const unusedToken = await ResetToken.findOne({
+      where: {
+        userEmail: email,
+        expiration: { [Op.gt]: Sequelize.fn('NOW') },
+        token,
+        used: 0
+      }
+    })
+    if (!unusedToken) {
+      req.flash('warning_msg', 'Reset password link has expired. Please make a request again.')
+      return res.redirect('/forgetPassword')
+    }
+    return res.render('reset-password', {
+      email,
+      token
+    })
+  } catch (error) {
+    console.log(error)
+    res.redirect('/forgetPassword')
+  }
+})
+app.post('/resetPassword', async (req, res) => {
+  try {
+    const { password, confirmPassword, email, token } = req.body
+    if (password !== confirmPassword) {
+      req.flash('warning_msg', 'Make sure password and confirm password match.')
+      return res.redirect('back')
+    }
+
+    const unusedToken = await ResetToken.findOne({
+      where: {
+        userEmail: email,
+        expiration: { [Op.gt]: Sequelize.fn('NOW') },
+        token,
+        used: 0
+      }
+    })
+    if (!unusedToken) {
+      req.flash('warning_msg', 'Reset password link has expired. Please make a request again.')
+      return res.redirect('/forgetPassword')
+    }
+    Promise.all([
+      ResetToken.update({ used: 1 }, { where: { userEmail: email } }),
+      bcrypt
+        .genSalt(10)
+        .then(salt => bcrypt.hash(password, salt))
+        .then(hash => User.update({
+          password: hash
+        }, {
+          where: {
+            email
+          }
+        }))])
+    req.flash('success_msg', 'Password has successfully been reset!')
+    return res.redirect('/login')
+  } catch (error) {
+    console.log(error)
   }
 })
 app.get('/profile', (req, res) => {
