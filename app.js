@@ -7,14 +7,15 @@ require('handlebars-helpers')(exphbs)
 const methodOverride = require('method-override')
 const axios = require('axios')
 const session = require('express-session')
-const usePassport = require('./config/passport')
-const passport = require('passport')
+const passport = require('./config/passport')
+const jwt = require('jsonwebtoken')
 const flash = require('connect-flash')
 const path = require('path')
 const priceRule = require('./helpers/price-calculation')
 const bcrypt = require('bcryptjs')
 const validator = require('email-validator')
-const { authenticator } = require('./middleware/auth')
+const cookieParser = require('cookie-parser')
+const { authenticatedUser, authenticatedAdmin } = require('./middleware/auth')
 const mailService = require('./helpers/email-helpers')
 const crypto = require('crypto')
 const { User, ResetToken } = require('./models')
@@ -33,36 +34,51 @@ app.use(express.json())
 app.use(
   session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true })
 )
-usePassport(app)
+app.use(passport.initialize())
 
+app.use(cookieParser())
 app.use(methodOverride('_method'))
 app.use(flash())
 app.use((req, res, next) => {
-  res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.user = req.user
   res.locals.success_msg = req.flash('success_msg')
   res.locals.warning_msg = req.flash('warning_msg')
   return next()
 })
 
-app.get('/login', (req, res) => {
-  if (req.isAuthenticated()) {
-    return res.redirect('/')
-  }
-  res.render('login')
-})
-app.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login'
-}))
-app.post('/logout', (req, res, next) => {
-  req.logout((error) => {
-    if (error) {
-      return next(error)
+app.post('/login',
+  passport.authenticate('user-local', {
+    session: false,
+    failureFlash: true,
+    failureRedirect: '/login'
+  }),
+  async (req, res, next) => {
+    try {
+      const userData = req.user.toJSON()
+      delete userData.password
+      const token = jwt.sign(userData, process.env.JWT_KEY, { expiresIn: process.env.JWT_EXPIRATION })
+      return res.status(200).cookie('jwt', token, {
+        path: '/',
+        httpOnly: true,
+        secure: false, // set to true on production
+        sameSite: 'Lax',
+        maxAge: 2592000000
+      }).redirect('/')
+    } catch (error) {
+      console.log('Error:', error)
+      req.flash('warning_msg', 'Error')
+      res.redirect('/login')
     }
-    req.flash('success_msg', 'Successfully logged out.')
-    return res.redirect('/login')
   })
+app.post('/logout', (req, res, next) => {
+  if (req.cookies.jwt) {
+    res.clearCookie('jwt', { path: '/' }).status(200).redirect('/login')
+  } else {
+    res.status(401).json({ message: 'Invalid token.' })
+  }
+})
+app.get('/login', (req, res) => {
+  return res.render('login')
 })
 app.get('/signup', (req, res) => {
   res.render('signup')
@@ -338,7 +354,7 @@ app.post('/cart', (req, res) => {
 app.post('/order', (req, res) => {
   res.render('confirm')
 })
-app.get('/', authenticator, (req, res) => {
+app.get('/', authenticatedUser, (req, res) => {
   res.render('index')
 })
 app.listen(PORT, () => {
