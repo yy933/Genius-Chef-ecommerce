@@ -1,51 +1,34 @@
-const jwt = require('jsonwebtoken')
-const { User } = require('../models')
+const helpers = require('../req_helpers')
 
-const authenticatedUser = async (req, res, next) => {
-  try {
-    const token = req.cookies.jwt
-    const decoded = jwt.verify(token, process.env.JWT_KEY)
-    const user = await User.findByPk(decoded.id)
-    const { exp, role } = decoded
-    if (!user || Date.now() / 1000 > exp) {
-      req.flash('warning_msg', 'Please try again.')
-      return res.redirect('/login')
-    }
-    if (role !== 'user') {
-      req.flash('warning_msg', 'User not found.')
-      return res.redirect('/login')
-    }
-    req.token = token
-    req.user = user
-    res.locals.isAuthenticated = true
-    next()
-  } catch (error) {
-    req.flash('warning_msg', 'Please login to proceed. ')
-    return res.status(401).redirect('/login')
+const authenticator = (req, res, next) => {
+  if (helpers.authenticator(req)) {
+    return next()
   }
+  req.flash('warning_msg', 'Please log in to proceed.')
+  return res.redirect('/login')
 }
 
-const authenticatedAdmin = async (req, res, next) => {
-  try {
-    const token = req.cookies.jwt
-    const decoded = jwt.verify(token, process.env.JWT_KEY)
-    const user = await User.findByPk(decoded.id)
-    const { exp, role } = decoded
-    if (!user || role !== 'admin') {
-      req.flash('warning_msg', 'User not found.')
-      return res.redirect('/admin/login')
+const authenticatedUser = (req, res, next) => {
+  if (helpers.authenticator(req)) {
+    if (req.user.role === 'user') {
+      return next()
     }
-    if (Date.now() / 1000 > exp) {
-      req.flash('warning_msg', 'Please try again.')
-      return res.redirect('/admin/login')
-    }
-    req.token = token
-    req.user = user
-    next()
-  } catch (error) {
-    req.flash('warning_msg', 'Please login to proceed. ')
-    return res.status(401).redirect('/admin/login')
+    req.flash('warning_msg', 'Access denied.')
+    return res.redirect('/')
   }
+  req.flash('warning_msg', 'Please log in to proceed.')
+  return res.redirect('/login')
 }
 
-module.exports = { authenticatedUser, authenticatedAdmin }
+const authenticatedAdmin = (req, res, next) => {
+  if (helpers.authenticator(req)) {
+    if (req.user.role === 'admin') {
+      return next()
+    }
+    req.flash('warning_msg', 'Access denied.')
+    return res.redirect('/contact')
+  }
+  req.flash('warning_msg', 'Please log in to proceed.')
+  return res.redirect('/login')
+}
+module.exports = { authenticator, authenticatedUser, authenticatedAdmin }

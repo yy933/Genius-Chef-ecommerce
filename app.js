@@ -15,7 +15,7 @@ const priceRule = require('./helpers/price-calculation')
 const bcrypt = require('bcryptjs')
 const validator = require('email-validator')
 const cookieParser = require('cookie-parser')
-const { authenticatedUser, authenticatedAdmin } = require('./middleware/auth')
+const { authenticator, authenticatedUser, authenticatedAdmin } = require('./middleware/auth')
 const mailService = require('./helpers/email-helpers')
 const crypto = require('crypto')
 const { User, ResetToken } = require('./models')
@@ -32,54 +32,76 @@ app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(
-  session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true })
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      httpOnly: true,
+      secure: false, // set to true on production
+      sameSite: 'Lax'
+    }
+  })
 )
 app.use(passport.initialize())
-
+app.use(passport.session())
 app.use(cookieParser())
 app.use(methodOverride('_method'))
 app.use(flash())
 app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.user = req.user
   res.locals.success_msg = req.flash('success_msg')
   res.locals.warning_msg = req.flash('warning_msg')
   return next()
 })
-
-app.post('/login',
-  passport.authenticate('user-local', {
-    session: false,
-    failureFlash: true,
-    failureRedirect: '/login'
-  }),
-  async (req, res, next) => {
-    try {
-      const userData = req.user.toJSON()
-      delete userData.password
-      const token = jwt.sign(userData, process.env.JWT_KEY, { expiresIn: process.env.JWT_EXPIRATION })
-      return res.status(200).cookie('jwt', token, {
-        path: '/',
-        httpOnly: true,
-        secure: false, // set to true on production
-        sameSite: 'Lax',
-        maxAge: 2592000000
-      }).redirect('/')
-    } catch (error) {
-      console.log('Error:', error)
-      req.flash('warning_msg', 'Error')
-      res.redirect('/login')
-    }
-  })
-app.post('/logout', (req, res, next) => {
-  if (req.cookies.jwt) {
-    res.clearCookie('jwt', { path: '/' }).status(200).redirect('/login')
-  } else {
-    res.status(401).json({ message: 'Invalid token.' })
-  }
-})
 app.get('/login', (req, res) => {
   return res.render('login')
 })
+app.post('/login',
+  passport.authenticate('user-local', {
+    failureFlash: true,
+    successRedirect: '/',
+    failureRedirect: '/login'
+  }), (req, res) => {
+    if (req.user.role === 'admin') {
+      req.flash('warning_msg', 'Access denied.')
+      return res.redirect('/')
+    }
+  }
+  // async (req, res, next) => {
+  //   try {
+  //     const userData = req.user.toJSON()
+  //     delete userData.password
+  //     const token = jwt.sign(userData, process.env.JWT_KEY, { expiresIn: '10d' })
+  //     return res.status(200).cookie('jwt', token, {
+  //       path: '/',
+  //       httpOnly: true,
+  //       secure: false, // set to true on production
+  //       sameSite: 'Lax',
+  //       maxAge: 2592000000
+  //     }).redirect('/')
+  //   } catch (error) {
+  //     console.log('Error:', error)
+  //     req.flash('warning_msg', 'Error')
+  //     res.redirect('/login')
+  //   }
+  // }
+)
+app.post('/logout', (req, res, next) => {
+  req.logout(function (err) {
+    if (err) return next(err)
+    req.flash('success_msg', 'Successfully logged out.')
+    res.redirect('/')
+  })
+  // if (req.cookies.jwt) {
+  //   res.clearCookie('jwt', { path: '/' }).status(200).redirect('/login')
+  // } else {
+  //   res.status(401).json({ message: 'Invalid token.' })
+  // }
+})
+
+
 app.get('/signup', (req, res) => {
   res.render('signup')
 })
@@ -325,10 +347,11 @@ app.get('/menu/:preference', async (req, res) => {
   }
 })
 
-app.get('/plans', (req, res) => {
+app.get('/plans', authenticator, authenticatedUser, (req, res) => {
+  console.log(req.user)
   res.render('plans')
 })
-app.get('/cart', (req, res) => {
+app.get('/cart', authenticator, authenticatedUser, (req, res) => {
   res.render('user/cart')
 })
 app.post('/cart', (req, res) => {
@@ -354,7 +377,7 @@ app.post('/cart', (req, res) => {
 app.post('/order', (req, res) => {
   res.render('confirm')
 })
-app.get('/', authenticatedUser, (req, res) => {
+app.get('/', (req, res) => {
   res.render('index')
 })
 app.listen(PORT, () => {
