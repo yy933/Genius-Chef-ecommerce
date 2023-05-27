@@ -234,7 +234,7 @@ app.post('/resetPassword', async (req, res) => {
       req.flash('warning_msg', 'Reset password link has expired. Please make a request again.')
       return res.redirect('/forgetPassword')
     }
-    await Promise.all([
+    Promise.allSettled([
       ResetToken.update({ used: 1 }, { where: { userEmail: email } }),
       bcrypt
         .genSalt(10)

@@ -25,7 +25,6 @@ const authenticatedUser = async (req, res, next) => {
   }
 }
 
-
 const authenticatedAdmin = async (req, res, next) => {
   try {
     const token = req.cookies.jwt
