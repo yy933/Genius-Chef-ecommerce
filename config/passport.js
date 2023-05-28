@@ -1,6 +1,7 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const GoogleStrategy = require('passport-google-oauth2').Strategy
+const TwitterStrategy = require('passport-twitter').Strategy
 const passportJWT = require('passport-jwt')
 const bcrypt = require('bcryptjs')
 const { User } = require('../models')
@@ -70,6 +71,34 @@ async function (accessToken, refreshToken, profile, cb) {
   }
 }
 ))
+
+// Twitter Strategy
+passport.use(new TwitterStrategy({
+  consumerKey: process.env.TWITTER_CLIENT_ID,
+  consumerSecret: process.env.TWITTER_CLIENT_SECRET,
+  callbackURL: 'https://dcfa-36-237-210-69.ngrok-free.app/auth/twitter/callback'
+},
+async function (token, tokenSecret, profile, cb) {
+  try {
+    const { name } = profile._json
+    const email = name + '@twitter'
+    const user = await User.findOne({ where: { email } })
+    if (user) return cb(null, user)
+    const randomPassword = Math.random().toString(36).slice(-12)
+    const hashedPassword = bcrypt.hashSync(randomPassword, bcrypt.genSaltSync(10))
+    const newUser = await User.create({
+      name,
+      email,
+      password: hashedPassword
+    })
+    return cb(null, newUser)
+  } catch (err) {
+    console.log(err)
+    return cb(err, false)
+  }
+}
+))
+
 // JWT Strategy
 const cookieExtractor = req => {
   let jwt = null

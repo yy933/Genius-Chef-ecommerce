@@ -93,6 +93,15 @@ app.get('/auth/google', passport.authenticate('google', {
   scope: ['email', 'profile']
 }))
 
+app.get('/auth/twitter/callback',
+  passport.authenticate('twitter', { successRedirect: '/plans', failureRedirect: '/login', failureFlash: true }),
+  function (req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/plans')
+  })
+app.get('/auth/twitter',
+  passport.authenticate('twitter'))
+
 app.post('/logout', (req, res, next) => {
   req.logout(function (err) {
     if (err) return next(err)
