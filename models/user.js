@@ -28,7 +28,8 @@ module.exports = (sequelize, DataTypes) => {
     role: {
       type: DataTypes.STRING,
       defaultValue: 'user'
-    }
+    },
+    twitterId: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',

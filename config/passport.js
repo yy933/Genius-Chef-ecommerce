@@ -42,7 +42,12 @@ passport.serializeUser(function (user, cb) {
 })
 passport.deserializeUser((id, cb) => {
   return User.findByPk(id)
-    .then(user => cb(null, user.toJSON()))
+    .then(user => {
+      const userData = user.toJSON()
+      delete userData.password
+      cb(null, userData)
+    }
+    )
     .catch(err => cb(err))
 })
 
@@ -80,17 +85,19 @@ passport.use(new TwitterStrategy({
 },
 async function (token, tokenSecret, profile, cb) {
   try {
-    const { name } = profile._json
+    const { name, id_str } = profile._json
     const email = name + '@twitter'
-    const user = await User.findOne({ where: { email } })
+    const user = await User.findOne({ where: { twitterId: id_str } })
     if (user) return cb(null, user)
     const randomPassword = Math.random().toString(36).slice(-12)
     const hashedPassword = bcrypt.hashSync(randomPassword, bcrypt.genSaltSync(10))
     const newUser = await User.create({
       name,
       email,
-      password: hashedPassword
+      password: hashedPassword,
+      twitterId: id_str
     })
+
     return cb(null, newUser)
   } catch (err) {
     console.log(err)
