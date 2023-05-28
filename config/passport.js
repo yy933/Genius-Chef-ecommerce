@@ -1,5 +1,6 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
+const GoogleStrategy = require('passport-google-oauth2').Strategy
 const passportJWT = require('passport-jwt')
 const bcrypt = require('bcryptjs')
 const { User } = require('../models')
@@ -43,6 +44,32 @@ passport.deserializeUser((id, cb) => {
     .then(user => cb(null, user.toJSON()))
     .catch(err => cb(err))
 })
+
+// Google Strategy
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: 'http://localhost:8080/auth/google/callback'
+},
+async function (accessToken, refreshToken, profile, cb) {
+  try {
+    const { name, email } = profile._json
+    const user = await User.findOne({ where: { email } })
+    if (user) return cb(null, user)
+    const randomPassword = Math.random().toString(36).slice(-12)
+    const hashedPassword = bcrypt.hashSync(randomPassword, bcrypt.genSaltSync(10))
+    const newUser = await User.create({
+      name,
+      email,
+      password: hashedPassword
+    })
+    return cb(null, newUser)
+  } catch (err) {
+    console.log(err)
+    return cb(err, false)
+  }
+}
+))
 // JWT Strategy
 const cookieExtractor = req => {
   let jwt = null

@@ -88,6 +88,22 @@ app.post('/login',
   //   }
   // }
 )
+app.get('/auth/google/callback', passport.authenticate('google', { successRedirect: '/plans', failureRedirect: '/login', failureFlash: true }), (req, res) => {
+  // res.send({
+  //   status: true,
+  //   data: {
+  //     id: req.user.id,
+  //     name: req.user.displayName
+  //   }
+
+  // })
+
+  res.redirect('/plans')
+})
+app.get('/auth/google', passport.authenticate('google', {
+  scope: ['email', 'profile']
+}))
+
 app.post('/logout', (req, res, next) => {
   req.logout(function (err) {
     if (err) return next(err)
@@ -100,7 +116,6 @@ app.post('/logout', (req, res, next) => {
   //   res.status(401).json({ message: 'Invalid token.' })
   // }
 })
-
 
 app.get('/signup', (req, res) => {
   res.render('signup')
