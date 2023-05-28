@@ -88,18 +88,7 @@ app.post('/login',
   //   }
   // }
 )
-app.get('/auth/google/callback', passport.authenticate('google', { successRedirect: '/plans', failureRedirect: '/login', failureFlash: true }), (req, res) => {
-  // res.send({
-  //   status: true,
-  //   data: {
-  //     id: req.user.id,
-  //     name: req.user.displayName
-  //   }
-
-  // })
-
-  res.redirect('/plans')
-})
+app.get('/auth/google/callback', passport.authenticate('google', { successRedirect: '/plans', failureRedirect: '/login', failureFlash: true }))
 app.get('/auth/google', passport.authenticate('google', {
   scope: ['email', 'profile']
 }))

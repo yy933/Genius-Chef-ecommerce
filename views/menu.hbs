@@ -1,3 +1,4 @@
+<div class="container my-5 py-5">
 <div class="section-title text-center">
 	<h1 class="fw-bold" style="color: #06716e;">Weekly Menu</h1>
 </div>
@@ -10,7 +11,8 @@
   </button>
 </div>
 {{/if}}
-<ul class="menu-tab nav nav-tabs nav-justified nav-fill">
+
+  <ul class="menu-tab nav nav-tabs nav-justified nav-fill">
   <li class="nav-item">
     <a class="nav-link fs-5 fw-bold {{#is path '/menu/classic'}}active{{/is}}" aria-current="page" href="/menu/classic"><i class="fa-solid fa-utensils fa-fw"></i>Classic</a>
   </li>
@@ -18,6 +20,8 @@
     <a class="nav-link fs-5 fw-bold {{#is path '/menu/vegetarian'}}active{{/is}}" href="/menu/vegetarian"><i class="fa-solid fa-leaf fa-fw"></i>Vegetarian</a>
   </li>
 </ul>
+
+
 {{!-- menu  --}}
 <div class="menu-cards container" >
 {{! menu item }}
@@ -102,3 +106,4 @@
 {{/each}}
 </div>
 {{> goBack-btn-group}}
+</div>

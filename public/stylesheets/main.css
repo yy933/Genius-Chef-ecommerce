@@ -91,7 +91,19 @@ nav{
   font-size: 1.3rem;
   font-weight: 600;
 }
-
+/* carousel  */
+.carousel-item img{
+  opacity:0.5;
+}
+.carousel-caption{
+  top: 35%;
+  font-size: 3rem;
+  font-weight: 700;
+  font-family:  "Roboto", 'Lato', sans-serif;
+}
+.carousel-caption p{
+  color: #1b3c3b;
+}
 /* menu tab  */
 .menu-tab .nav-link{
   text-decoration: none;
@@ -400,9 +412,15 @@ footer {
     padding-left: 40px;
   }
   .order-confirm .confirm-title{
-  font-size: 350%;
+   font-size: 350%;
   }
   
+}
+@media screen and (min-width: 992px) {
+  .carousel-caption{
+    top: 25%;
+    font-size: 4rem;
+  }
 }
 
 
