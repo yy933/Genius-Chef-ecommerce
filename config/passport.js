@@ -76,7 +76,7 @@ async function (accessToken, refreshToken, profile, cb) {
 passport.use(new TwitterStrategy({
   consumerKey: process.env.TWITTER_CLIENT_ID,
   consumerSecret: process.env.TWITTER_CLIENT_SECRET,
-  callbackURL: 'https://dcfa-36-237-210-69.ngrok-free.app/auth/twitter/callback'
+  callbackURL: process.env.BASE_URL + '/auth/twitter/callback'
 },
 async function (token, tokenSecret, profile, cb) {
   try {
