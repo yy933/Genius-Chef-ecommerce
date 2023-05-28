@@ -104,6 +104,10 @@ nav{
 .carousel-caption p{
   color: #1b3c3b;
 }
+.try-it-btn a{
+  font-family: 'Lora',sans-serif;
+  font-size: 1.5rem;
+}
 /* menu tab  */
 .menu-tab .nav-link{
   text-decoration: none;
@@ -396,6 +400,10 @@ footer {
 }
 
 @media screen and (min-width: 960px)  {
+  .try-it-btn a{
+    width:19%;
+    font-size: 1.4rem;
+  }
   .menu-cards{
     grid-template-columns: repeat(3,1fr);
   }
@@ -420,6 +428,9 @@ footer {
   .carousel-caption{
     top: 25%;
     font-size: 4rem;
+  }
+  .try-it-btn a{
+    width:15%;
   }
 }
 
