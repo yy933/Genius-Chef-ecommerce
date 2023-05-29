@@ -8,12 +8,11 @@ const methodOverride = require('method-override')
 const axios = require('axios')
 const session = require('express-session')
 const passport = require('./config/passport')
-const jwt = require('jsonwebtoken')
+const router = require('./routes')
 const flash = require('connect-flash')
 const path = require('path')
 const priceRule = require('./helpers/price-calculation')
 const bcrypt = require('bcryptjs')
-const validator = require('email-validator')
 const cookieParser = require('cookie-parser')
 const { authenticator, authenticatedUser, authenticatedAdmin } = require('./middleware/auth')
 const mailService = require('./helpers/email-helpers')
@@ -21,7 +20,6 @@ const crypto = require('crypto')
 const { User, ResetToken } = require('./models')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
-
 const app = express()
 const PORT = process.env.PORT || 8080
 
@@ -55,39 +53,8 @@ app.use((req, res, next) => {
   res.locals.warning_msg = req.flash('warning_msg')
   return next()
 })
-app.get('/login', (req, res) => {
-  return res.render('login')
-})
-app.post('/login',
-  passport.authenticate('user-local', {
-    failureFlash: true,
-    successRedirect: '/',
-    failureRedirect: '/login'
-  }), (req, res) => {
-    if (req.user.role === 'admin') {
-      req.flash('warning_msg', 'Access denied.')
-      return res.redirect('/')
-    }
-  }
-  // async (req, res, next) => {
-  //   try {
-  //     const userData = req.user.toJSON()
-  //     delete userData.password
-  //     const token = jwt.sign(userData, process.env.JWT_KEY, { expiresIn: '10d' })
-  //     return res.status(200).cookie('jwt', token, {
-  //       path: '/',
-  //       httpOnly: true,
-  //       secure: false, // set to true on production
-  //       sameSite: 'Lax',
-  //       maxAge: 2592000000
-  //     }).redirect('/')
-  //   } catch (error) {
-  //     console.log('Error:', error)
-  //     req.flash('warning_msg', 'Error')
-  //     res.redirect('/login')
-  //   }
-  // }
-)
+app.use('/', router)
+
 app.get('/auth/google/callback', passport.authenticate('google', { successRedirect: '/plans', failureRedirect: '/login', failureFlash: true }))
 app.get('/auth/google', passport.authenticate('google', {
   scope: ['email', 'profile']
@@ -102,76 +69,7 @@ app.get('/auth/twitter/callback',
 app.get('/auth/twitter',
   passport.authenticate('twitter'))
 
-app.post('/logout', (req, res, next) => {
-  req.logout(function (err) {
-    if (err) return next(err)
-    req.flash('success_msg', 'Successfully logged out.')
-    res.redirect('/')
-  })
-  // if (req.cookies.jwt) {
-  //   res.clearCookie('jwt', { path: '/' }).status(200).redirect('/login')
-  // } else {
-  //   res.status(401).json({ message: 'Invalid token.' })
-  // }
-})
 
-app.get('/signup', (req, res) => {
-  res.render('signup')
-})
-app.post('/signup', async (req, res) => {
-  try {
-    const { name, email, password, confirmPassword } = req.body
-    const errors = []
-    const regex = /^(?=.*\d)(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,16}$/
-    if (!name || !email || !password || !confirmPassword) {
-      errors.push({ message: 'All fields are required.' })
-    }
-    if (!validator.validate(email)) {
-      errors.push({ message: 'Please provide a valid email.' })
-    }
-    if (password !== confirmPassword) {
-      errors.push({ message: 'Make sure password and confirm password match.' })
-    }
-    if (!regex.test(password)) {
-      errors.push({ message: 'The password must contain at least 8 and maximum 16 characters, including at least 1 uppercase, 1 lowercase, and one number.' })
-    }
-    if (errors.length) {
-      console.log(errors)
-      return res.render('signup', {
-        errors,
-        name,
-        email,
-        password,
-        confirmPassword
-      })
-    }
-    const user = await User.findOne({ where: { email } })
-    if (user) {
-      errors.push({ message: 'This email has already been registered.' })
-      return res.render('signup', {
-        errors,
-        name,
-        email,
-        password,
-        confirmPassword
-      })
-    }
-    bcrypt
-      .genSalt(10)
-      .then(salt => bcrypt.hash(password, salt))
-      .then(hash => User.create({
-        name,
-        email,
-        password: hash
-      }))
-    req.flash('success_msg', 'Successfully created an account!')
-    return res.redirect('/login')
-  } catch (error) {
-    console.log(error)
-    req.flash('warning_msg', 'Something went wrong, please try again!')
-    return res.render('signup')
-  }
-})
 
 app.get('/forgetPassword', (req, res) => {
   return res.render('forget-password')

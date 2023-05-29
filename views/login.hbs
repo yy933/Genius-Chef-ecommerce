@@ -6,7 +6,7 @@
             {{> message}}
             {{> login-image}}
             <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-                <form class="needs-validation" action="/login" method="post" novalidate>
+                <form class="needs-validation" action="/users/login" method="post" novalidate>
                     <h1 class="fw-bold mb-3 pb-3" style="letter-spacing: 1px;">Log in</h1>
                     <!-- Email input -->
                     <div class="form-outline mb-4">
@@ -21,7 +21,7 @@
                         <div class="invalid-feedback">Please enter your password. The password must contain at least 8 and maximum 16 characters, including at least 1 uppercase, 1 lowercase, and one number.</div>
                     </div>
                     <div class="text-center align-items-center mb-4">
-                        <p class="my-2">Don't have an account? <a href="/signup" class="link-info">Create one</a></p>
+                        <p class="my-2">Don't have an account? <a href="/users/signup" class="link-info">Create one</a></p>
                         <a href="/forgetPassword">Forgot password?</a>
                     </div>
                     <!-- Submit button -->

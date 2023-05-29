@@ -97,7 +97,7 @@ nav{
 }
 .carousel-caption{
   top: 35%;
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: 700;
   font-family:  "Roboto", 'Lato', sans-serif;
 }
@@ -358,6 +358,13 @@ footer {
 }
 
 @media screen and (min-width: 600px) {
+  .carousel-caption{
+    font-size: 3rem;
+  }
+  .try-it-btn a{
+    width:20%;
+    font-size: 1.1rem;
+  }
   .btn-contact{
     width: 50%;
   } 
@@ -400,6 +407,9 @@ footer {
 }
 
 @media screen and (min-width: 960px)  {
+  .carousel-caption{
+    font-size: 3.5rem;
+  }
   .try-it-btn a{
     width:19%;
     font-size: 1.4rem;

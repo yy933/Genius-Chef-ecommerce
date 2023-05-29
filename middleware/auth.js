@@ -5,7 +5,7 @@ const authenticator = (req, res, next) => {
     return next()
   }
   req.flash('warning_msg', 'Please log in to proceed.')
-  return res.redirect('/login')
+  return res.redirect('/users/login')
 }
 
 const authenticatedUser = (req, res, next) => {
@@ -14,10 +14,10 @@ const authenticatedUser = (req, res, next) => {
       return next()
     }
     req.flash('warning_msg', 'Access denied.')
-    return res.redirect('/')
+    return res.redirect('/users/login')
   }
   req.flash('warning_msg', 'Please log in to proceed.')
-  return res.redirect('/login')
+  return res.redirect('/users/login')
 }
 
 const authenticatedAdmin = (req, res, next) => {
@@ -26,9 +26,9 @@ const authenticatedAdmin = (req, res, next) => {
       return next()
     }
     req.flash('warning_msg', 'Access denied.')
-    return res.redirect('/contact')
+    return res.redirect('/users/login')
   }
   req.flash('warning_msg', 'Please log in to proceed.')
-  return res.redirect('/login')
+  return res.redirect('/users/login')
 }
 module.exports = { authenticator, authenticatedUser, authenticatedAdmin }
