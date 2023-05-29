@@ -50,6 +50,7 @@
                 <a class="nav-link px-3" href="/contact">Contact</a>
               </li>
               {{#if isAuthenticated}}
+              
               <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle px-3"
@@ -68,17 +69,19 @@
                   <li><a class="dropdown-item" href="/users/cart"><i
                         class="fa-solid fa-cart-shopping fa-fw me-1"
                       ></i>Cart</a></li>
-                  <li><a class="dropdown-item" href="/users/profile"><i
+                  <li><a class="dropdown-item" href="/users/profile/{{#if user}}{{user.id}}{{/if}}"><i
                         class="fa-solid fa-user fa-fw me-1"
                       ></i>Profile</a></li>
                   <li><form class="d-inline" method="post" action="/users/logout"><a class="dropdown-item" onclick="this.parentNode.submit()"><i class="fa-solid fa-right-from-bracket fa-fw me-1"></i>Logout</a></form></li>
                 </ul>
               </li>
+              
               {{else}}
               <li class="nav-item">
                 <a class="nav-link px-3 px-3" href="/users/login">Login</a>
               </li>
               {{/if}}
+
             </ul>
 
           </div>

@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs')
 const crypto = require('crypto')
 const mailService = require('../helpers/email-helpers')
 const priceRule = require('../helpers/price-calculation')
+const reqHelper = require('../req_helpers')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 const userController = {
@@ -228,9 +229,27 @@ const userController = {
       return res.redirect('/users/forgetPassword')
     }
   },
-  getProfile: (req, res, next) => {
+  getProfile: async (req, res, next) => {
     try {
-      return res.render('user/profile')
+      const { userId } = req.params
+      const user = await User.findOne({
+        where: {
+          id: userId
+        },
+        attributes: ['name', 'email']
+      })
+      if (!user || user.role === 'admin') {
+        req.flash('warning_msg', 'User not found!')
+        return res.redirect('/')
+      }
+      if (reqHelper.getUser(req).id.toString() !== userId) {
+        req.flash('warning_msg', 'Access denied.')
+        return res.redirect('/')
+      }
+      return res.render('user/profile', {
+        name: user.name,
+        email: user.email
+      })
     } catch (err) { next(err) }
   },
   getCart: (req, res, next) => {
