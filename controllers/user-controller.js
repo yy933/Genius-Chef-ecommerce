@@ -9,7 +9,7 @@ const Op = Sequelize.Op
 const userController = {
   getSignIn: (req, res, next) => {
     try {
-      return res.render('login')
+      return res.render('user/login')
     } catch (err) { next(err) }
   },
   signIn: (req, res, next) => {
@@ -54,7 +54,7 @@ const userController = {
   },
   getSignUp: (req, res, next) => {
     try {
-      return res.render('signup')
+      return res.render('user/signup')
     } catch (err) { next(err) }
   },
   signUp: async (req, res, next) => {
@@ -76,7 +76,7 @@ const userController = {
       }
       if (errors.length) {
         console.log(errors)
-        return res.render('signup', {
+        return res.render('user/signup', {
           errors,
           name,
           email,
@@ -87,7 +87,7 @@ const userController = {
       const user = await User.findOne({ where: { email } })
       if (user) {
         errors.push({ message: 'This email has already been registered.' })
-        return res.render('signup', {
+        return res.render('user/signup', {
           errors,
           name,
           email,
@@ -108,12 +108,12 @@ const userController = {
     } catch (error) {
       console.log(error)
       req.flash('warning_msg', 'Something went wrong, please try again!')
-      return res.render('signup')
+      return res.render('user/signup')
     }
   },
   getForgetPassword: (req, res, next) => {
     try {
-      return res.render('forget-password')
+      return res.render('user/forget-password')
     } catch (err) { next(err) }
   },
   forgetPassword: async (req, res, next) => {
@@ -122,7 +122,7 @@ const userController = {
       const user = await User.findOne({ where: { email } })
       if (!user) {
         req.flash('warning_msg', `Email ${email} is not valid. Please try again.`)
-        return res.redirect('/forgetPassword')
+        return res.redirect('/users/forgetPassword')
       }
       await ResetToken.update({ used: 1 }, { where: { userEmail: email } })
       const token = crypto.randomBytes(80).toString('base64')
@@ -175,7 +175,7 @@ const userController = {
         req.flash('warning_msg', 'Reset password link has expired. Please make a request again.')
         return res.redirect('/users/forgetPassword')
       }
-      return res.render('reset-password', {
+      return res.render('user/reset-password', {
         email,
         token
       })

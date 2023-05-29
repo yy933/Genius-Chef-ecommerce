@@ -3,14 +3,7 @@
 	<h1 class="fw-bold" style="color: #06716e;">Weekly Menu</h1>
 </div>
 
-{{#if error}}
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-  {{{message}}}
-  <button type="button" class="btn-close" data-bs-dismiss="alert"
-    aria-label="Close">
-  </button>
-</div>
-{{/if}}
+{{> message}}
 
   <ul class="menu-tab nav nav-tabs nav-justified nav-fill">
   <li class="nav-item">
