@@ -106,7 +106,7 @@ const userController = {
       req.flash('success_msg', 'Successfully created an account!')
       return res.redirect('/users/login')
     } catch (error) {
-      console.log(error)
+      next(error)
       req.flash('warning_msg', 'Something went wrong, please try again!')
       return res.render('user/signup')
     }
@@ -140,7 +140,7 @@ const userController = {
         html: `<h1 style="color:#196F3D; text-align:center">Reset Password</h1>
       <h3>Dear ${user.name},</h3>
       <p style="font-size: 14px">Please click the link below to reset your password:</p>
-      <a style="color:#196F3D; font-weight:bold; font-size:20px" href="${process.env.CLIENT_URL}/resetPassword?token=${encodeURIComponent(token)}&email=${email}">Reset Password</a>
+      <a style="color:#196F3D; font-weight:bold; font-size:20px" href="${process.env.CLIENT_URL}/users/resetPassword?token=${encodeURIComponent(token)}&email=${email}">Reset Password</a>
       <p style="font-size: 14px">Link will expire in 10 minutes.</p>
       <br>
       <p style="font-size: 14px; color:#616A6B;">If you didn't make this request, please ignore this email or <a href="${process.env.CLIENT_URL}/contact">contact us</a>.</p>
@@ -181,7 +181,7 @@ const userController = {
       })
     } catch (error) {
       next(error)
-      res.redirect('/users/forgetPassword')
+      return res.redirect('/users/forgetPassword')
     }
   },
   resetPassword: async (req, res, next) => {
@@ -233,11 +233,6 @@ const userController = {
       return res.render('user/profile')
     } catch (err) { next(err) }
   },
-  getPlans: (req, res, next) => {
-    try {
-      return res.render('plans')
-    } catch (err) { next(err) }
-  },
   getCart: (req, res, next) => {
     try {
       return res.render('user/cart')
@@ -246,7 +241,6 @@ const userController = {
   sendPlansToCart: (req, res, next) => {
     try {
       let { menu, preference, servings, meals, mealTotal } = req.body
-      console.log(req.body)
       if (!mealTotal) {
         mealTotal = priceRule(servings, meals)
       }
@@ -265,7 +259,7 @@ const userController = {
   },
   sendOrder: (req, res, next) => {
     try {
-      res.render('confirm')
+      res.render('order/confirm')
     } catch (err) { next(err) }
   }
 
