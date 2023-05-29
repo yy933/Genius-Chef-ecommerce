@@ -55,22 +55,6 @@ app.use((req, res, next) => {
 })
 app.use('/', router)
 
-app.get('/auth/google/callback', passport.authenticate('google', { successRedirect: '/plans', failureRedirect: '/login', failureFlash: true }))
-app.get('/auth/google', passport.authenticate('google', {
-  scope: ['email', 'profile']
-}))
-
-app.get('/auth/twitter/callback',
-  passport.authenticate('twitter', { successRedirect: '/plans', failureRedirect: '/login', failureFlash: true }),
-  function (req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/plans')
-  })
-app.get('/auth/twitter',
-  passport.authenticate('twitter'))
-
-
-
 app.get('/forgetPassword', (req, res) => {
   return res.render('forget-password')
 })
