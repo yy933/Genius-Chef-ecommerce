@@ -252,6 +252,42 @@ const userController = {
       })
     } catch (err) { next(err) }
   },
+  changePassword: async (req, res, next) => {
+    try {
+      const { userId } = req.params
+      const { newPassword, confirmNewPassword } = req.body
+      const regex = /^(?=.*\d)(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,16}$/
+
+      if (reqHelper.getUser(req).id.toString() !== userId) {
+        req.flash('warning_msg', 'Access denied.')
+        return res.redirect('back')
+      }
+      if (!regex.test(newPassword)) {
+        req.flash('warning_msg', 'The password must contain at least 8 and maximum 16 characters, including at least 1 uppercase, 1 lowercase, and one number.')
+        return res.redirect('back')
+      }
+      if (newPassword !== confirmNewPassword) {
+        req.flash('warning_msg', 'Make sure password and confirm password match.')
+        return res.redirect('back')
+      }
+
+      await bcrypt
+        .genSalt(10)
+        .then(salt => bcrypt.hash(newPassword, salt))
+        .then(hash => User.update({
+          password: hash
+        }, {
+          where: {
+            id: userId
+          }
+        }))
+
+      req.flash('success_msg', 'Password has been successfully changed!')
+      return res.redirect('back')
+    } catch (err) {
+      next(err)
+    }
+  },
   getCart: (req, res, next) => {
     try {
       return res.render('user/cart')
