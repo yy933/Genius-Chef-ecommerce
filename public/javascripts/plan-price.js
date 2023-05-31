@@ -2,7 +2,6 @@ const servings = document.querySelector('.servings')
 const meals = document.querySelector('.meals')
 const totalAmount = document.getElementById('total-amount')
 const pricePerMeal = document.getElementById('price-per-meal')
-const mealTotal = document.getElementById('meal-total')
 
 const priceRule = (servings, meals) => {
   const totalMeals = servings * meals
@@ -23,7 +22,7 @@ function calculateTotal () {
   const discountTotal = priceRule(servings.value, meals.value)
   const singleMealPrice = discountTotal / (meals.value * servings.value)
   totalAmount.textContent = discountTotal
-  mealTotal.value = discountTotal
+  totalAmount.value = discountTotal
   pricePerMeal.textContent = singleMealPrice.toFixed(2)
 }
 

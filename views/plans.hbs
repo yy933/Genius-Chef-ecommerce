@@ -8,8 +8,10 @@
             clicks away!</span>
     </div>
     <div class="preference-form">
+        
         <form class="row g-3 needs-validation" action="/users/cart" method="post"
             novalidate>
+            {{#if user}}<input type="hidden" name="userId" value={{user.id}}>{{/if}}
             <h4 class="text-muted mt-4">1. Choose your menu </h4>
             <div class="col-md-4 my-4 ">
                 <div class="menu-row mb-2 fs-5">
@@ -152,7 +154,7 @@
             </div>
             <div class="plan-price">
                 <h4 class="mb-3">Total: $<span id="total-amount">--</span><input
-                        type="hidden" name="mealTotal" id="meal-total" value=""
+                        type="hidden" name="totalAmount" id="total-amount" value=""
                         required></h4>
                 <h5 class="my-2">Price per meal: $<span id="price-per-meal">--</span></h5>
             </div>
@@ -161,6 +163,7 @@
                 <button class="btn btn-outline-secondary" type="reset">Reset</button>
             </div>
         </form>
+        
     </div>
 </div>
 </div>

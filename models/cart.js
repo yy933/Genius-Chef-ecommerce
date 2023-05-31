@@ -1,40 +1,43 @@
 'use strict'
 const {
-  Model, DATE
+  Model
 } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
-  class Order extends Model {
+  class Cart extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate (models) {
-      Order.belongsTo(models.User, { foreignKey: 'userId' })
-      Order.hasOne(models.Payment)
-      Order.hasOne(models.Delivery)
+      Cart.belongsTo(models.User, { foreignKey: 'userId' })
     }
   }
-  Order.init({
+  Cart.init({
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
       autoIncrement: true
     },
+    userId: DataTypes.INTEGER,
     menu: DataTypes.STRING,
     preference: DataTypes.TEXT,
     servings: DataTypes.INTEGER,
     meals: DataTypes.INTEGER,
-    duration: DataTypes.INTEGER,
     totalAmount: DataTypes.FLOAT,
-    status: DataTypes.STRING,
-    showId: DataTypes.STRING
+    name: DataTypes.STRING,
+    email: DataTypes.STRING,
+    phone: DataTypes.STRING,
+    address: DataTypes.TEXT,
+    preferredDay: DataTypes.STRING,
+    preferredTime: DataTypes.STRING,
+    recurringSub: DataTypes.BOOLEAN
   }, {
     sequelize,
-    modelName: 'Order',
-    tableName: 'Orders',
+    modelName: 'Cart',
+    tableName: 'Carts',
     underscored: true
   })
-  return Order
+  return Cart
 }

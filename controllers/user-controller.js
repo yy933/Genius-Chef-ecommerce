@@ -1,4 +1,4 @@
-const { User, ResetToken } = require('../models')
+const { User, ResetToken, Cart } = require('../models')
 const validator = require('email-validator')
 const bcrypt = require('bcryptjs')
 const crypto = require('crypto')
@@ -288,23 +288,55 @@ const userController = {
       next(err)
     }
   },
-  getCart: (req, res, next) => {
+  getCart: async (req, res, next) => {
     try {
+      const userId = req.user.id
+      const cart = await Cart.findByPk(userId)
+      if (cart) {
+        return res.render('user/cart', {
+          userId: cart.userId,
+          menu: cart.menu,
+          preference: cart.preference,
+          servings: cart.servings,
+          meals: cart.meals,
+          totalAmount: cart.totalAmount
+        })
+      }
       return res.render('user/cart')
     } catch (err) { next(err) }
   },
-  sendPlansToCart: (req, res, next) => {
+  sendPlansToCart: async (req, res, next) => {
     try {
-      let { menu, preference, servings, meals, mealTotal } = req.body
-      if (!mealTotal) {
-        mealTotal = priceRule(servings, meals)
+      let { userId, menu, preference, servings, meals, totalAmount } = req.body
+      if (!totalAmount) {
+        totalAmount = priceRule(servings, meals)
+      }
+      console.log(preference)
+      const oldCart = await Cart.findByPk(userId)
+      if (oldCart) {
+        await Cart.update({
+          menu,
+          preference: preference?.toString() || 'No special preference',
+          servings,
+          meals,
+          totalAmount
+        }, { where: { userId } })
+      } else {
+        Cart.create({
+          menu,
+          preference: preference?.toString() || 'No special preference',
+          servings,
+          meals,
+          totalAmount
+        })
       }
       res.render('user/cart', {
+        userId,
         menu,
         preference,
         servings,
         meals,
-        mealTotal
+        totalAmount
       })
     } catch (err) {
       next(err)
