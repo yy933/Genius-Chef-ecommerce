@@ -290,11 +290,13 @@ const userController = {
   },
   getCart: async (req, res, next) => {
     try {
-      const userId = req.user.id
+      const { userId } = req.params
+      if (req.user.id.toString() !== userId) {
+        return res.redirect('/')
+      }
       const cart = await Cart.findByPk(userId)
       if (cart) {
         return res.render('user/cart', {
-          userId: cart.userId,
           menu: cart.menu,
           preference: cart.preference,
           servings: cart.servings,
@@ -307,11 +309,14 @@ const userController = {
   },
   sendPlansToCart: async (req, res, next) => {
     try {
-      let { userId, menu, preference, servings, meals, totalAmount } = req.body
+      const { userId } = req.params
+      if (req.user.id.toString() !== userId) {
+        return res.redirect('/')
+      }
+      let { menu, preference, servings, meals, totalAmount } = req.body
       if (!totalAmount) {
         totalAmount = priceRule(servings, meals)
       }
-      console.log(preference)
       const oldCart = await Cart.findByPk(userId)
       if (oldCart) {
         await Cart.update({
@@ -331,7 +336,6 @@ const userController = {
         })
       }
       res.render('user/cart', {
-        userId,
         menu,
         preference,
         servings,
