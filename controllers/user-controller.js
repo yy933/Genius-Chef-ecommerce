@@ -352,6 +352,7 @@ const userController = {
     }
   },
   sendOrder: async (req, res, next) => {
+    const t = await sequelize.transaction()
     try {
       const { userId } = req.params
       if (req.user.id.toString() !== userId) {
@@ -368,40 +369,42 @@ const userController = {
         recurringSub = false
       }
       const showId = Date.now().toString() + userId
-      const order = await Order.create({
-        menu,
-        preference: preference.toString(),
-        servings,
-        meals,
-        totalAmount,
-        status: 'Order received',
-        userId,
-        showId
-      })
-
-      await Delivery.create({
-        orderId: order.id,
-        name,
-        email,
-        phone,
-        address,
-        preferredDay,
-        preferredTime,
-        status: 'Payment not confirmed'
-      })
-      await Cart.destroy({
-        where: { userId }
-      })
-
+      await Promise.all([
+        Order.create({
+          menu,
+          preference: preference.toString(),
+          servings,
+          meals,
+          totalAmount,
+          status: 'Order received',
+          userId,
+          showId
+        }, { transaction: t })
+          .then(order => Delivery.create({
+            orderId: order.id,
+            name,
+            email,
+            phone,
+            address,
+            preferredDay,
+            preferredTime,
+            status: 'Payment not confirmed'
+          }, { transaction: t })),
+        Cart.destroy({
+          where: { userId }
+        }, { transaction: t })
+      ])
+      await t.commit()
       return res.render('order/confirm', {
         email,
         showId,
         userId
       })
     } catch (err) {
+      await t.rollback()
       next(err)
       req.flash('warning_msg', 'Something went wrong. Please try again.')
-      res.redirect('back')
+      return res.redirect('back')
     }
   }
 
