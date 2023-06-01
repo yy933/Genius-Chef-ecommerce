@@ -92,6 +92,27 @@
           <li> <strong>Email:</strong> {{email}}</li>
           <li>
             <strong>Recurring subscription: </strong>
+            <div class="scroll-body">
+              <div class="recurSub">
+                <span class="text-muted my-2">Automatically renew the subscription
+                  when your plans end. Don't worry, you can cancel anytime!</span>
+
+                <div class="col-md-4 my-4">
+                  <div class="recurSub-row mb-2 fs-5">
+                    <span class="recurSub-item">
+                      <select name="recurringSub" class="form-select form-select-sm
+                        fs-5"
+                        aria-label="recurringSub" required>
+                        <option value="" disabled selected>Please select</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                      </select>
+                      <div class="invalid-feedback">Please select an option.</div>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </li>
           <!-- change password button -->
           <li> <button data-bs-toggle="modal" data-bs-target="#changePassword">Change

@@ -9,7 +9,7 @@
     </div>
     <div class="preference-form">
         
-        <form class="row g-3 needs-validation" action="/users/cart" method="post"
+        <form class="row g-3 needs-validation" action="/users/cart/{{#if user}}{{user.id}}{{/if}}" method="post"
             novalidate>
             <h4 class="text-muted mt-4">1. Choose your menu </h4>
             <div class="col-md-4 my-4 ">

@@ -1,4 +1,4 @@
-const { User, ResetToken, Cart } = require('../models')
+const { User, ResetToken, Cart, Order, Delivery, Payment, Subscriptions, sequelize } = require('../models')
 const validator = require('email-validator')
 const bcrypt = require('bcryptjs')
 const crypto = require('crypto')
@@ -7,6 +7,7 @@ const priceRule = require('../helpers/price-calculation')
 const reqHelper = require('../req_helpers')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
+
 const userController = {
   getSignIn: (req, res, next) => {
     try {
@@ -348,10 +349,56 @@ const userController = {
       return res.redirect('/plans')
     }
   },
-  sendOrder: (req, res, next) => {
+  sendOrder: async (req, res, next) => {
     try {
-      res.render('order/confirm')
-    } catch (err) { next(err) }
+      const { userId } = req.params
+      if (req.user.id.toString() !== userId) {
+        return res.redirect('/')
+      }
+      let { menu, preference, servings, meals, totalAmount, recurringSub, name, phone, email, address, preferredDay, preferredTime } = req.body
+      if (!req.body) {
+        req.flash('warning_msg', 'All fields are required!')
+        res.redirect(`/users/cart/${userId}`)
+      }
+      if (recurringSub === 'yes') {
+        recurringSub = true
+      } else {
+        recurringSub = false
+      }
+      const showId = Date.now().toString() + userId
+      console.log(preference)
+      const order = await Order.create({
+        menu,
+        preference: preference.toString(),
+        servings,
+        meals,
+        totalAmount,
+        status: 'Order received',
+        userId,
+        showId
+      })
+
+
+      await Delivery.create({
+        orderId: order.id,
+        name,
+        email,
+        phone,
+        address,
+        preferredDay,
+        preferredTime,
+        status: 'Payment not confirmed'
+      })
+
+      return res.render('order/confirm', {
+        email,
+        showId,
+        userId
+      })
+    } catch (err) {
+      next(err)
+      res.redirect('back')
+    }
   }
 
 }
