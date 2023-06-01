@@ -328,7 +328,8 @@ const userController = {
           totalAmount
         }, { where: { userId } })
       } else {
-        Cart.create({
+        await Cart.create({
+          userId,
           menu,
           preference: preference?.toString() || 'No special preference',
           servings,
@@ -336,7 +337,8 @@ const userController = {
           totalAmount
         })
       }
-      res.render('user/cart', {
+      res.locals.cart = true
+      return res.render('user/cart', {
         menu,
         preference,
         servings,
@@ -366,7 +368,6 @@ const userController = {
         recurringSub = false
       }
       const showId = Date.now().toString() + userId
-      console.log(preference)
       const order = await Order.create({
         menu,
         preference: preference.toString(),
@@ -378,7 +379,6 @@ const userController = {
         showId
       })
 
-
       await Delivery.create({
         orderId: order.id,
         name,
@@ -389,6 +389,9 @@ const userController = {
         preferredTime,
         status: 'Payment not confirmed'
       })
+      await Cart.destroy({
+        where: { userId }
+      })
 
       return res.render('order/confirm', {
         email,
@@ -397,6 +400,7 @@ const userController = {
       })
     } catch (err) {
       next(err)
+      req.flash('warning_msg', 'Something went wrong. Please try again.')
       res.redirect('back')
     }
   }
