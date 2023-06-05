@@ -213,6 +213,9 @@ nav{
   height:85%; 
   width: 100%; 
 }
+.empty-cart-container{
+  height: 75%;
+}
 .scroll-title, .profile-subtitle{
   margin-bottom: 0.8rem;
   color: #06716e;

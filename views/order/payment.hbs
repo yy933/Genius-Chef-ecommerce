@@ -1,0 +1,27 @@
+<div class="container my-5 py-5">
+  {{> message}}
+  <form class="needs-validation" action="/" method="post" novalidate>
+    {{!-- Current Plan info --}}
+    <h4 class="scroll-title">Current Plan</h4>
+    <div class="scroll-body">
+      <ol class="my-3">
+        <li><strong>Order number: </strong> #{{showId}}</li>
+        <li><strong>Order at:</strong> {{orderAt}}</li>
+        <li><strong>Total amount:</strong> $ {{totalAmount}}</li>
+      </ol>
+    </div>
+    {{!-- Payment Details --}}
+    <h4 class="scroll-title">Payment Details</h4>
+    <div class="scroll-body">
+      <ol class="my-3">
+        <li>
+          <strong>Payment method:</strong>
+        </li>
+      </ol>
+    </div>
+    <div class="continue-btn col-12 text-center my-2">
+      <button class="btn btn-outline-success" type="submit">Confirm</button>
+      <button class="btn btn-outline-secondary" type="reset">Reset</button>
+    </div>
+  </form>
+</div>

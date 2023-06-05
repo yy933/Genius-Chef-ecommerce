@@ -296,16 +296,17 @@ const userController = {
         return res.redirect('/')
       }
       const cart = await Cart.findByPk(userId)
-      if (cart) {
-        return res.render('user/cart', {
-          menu: cart.menu,
-          preference: cart.preference,
-          servings: cart.servings,
-          meals: cart.meals,
-          totalAmount: cart.totalAmount
-        })
+      if (!cart) {
+        return res.render('user/cart')
       }
-      return res.render('user/cart')
+      const cartData = {
+        menu: cart.menu,
+        preference: cart.preference,
+        servings: cart.servings,
+        meals: cart.meals,
+        totalAmount: cart.totalAmount
+      }
+      return res.render('user/cart', cartData)
     } catch (err) { next(err) }
   },
   sendPlansToCart: async (req, res, next) => {
@@ -320,13 +321,13 @@ const userController = {
       }
       const oldCart = await Cart.findByPk(userId)
       if (oldCart) {
-        await Cart.update({
+        await oldCart.update({
           menu,
           preference: preference?.toString() || 'No special preference',
           servings,
           meals,
           totalAmount
-        }, { where: { userId } })
+        })
       } else {
         await Cart.create({
           userId,
@@ -337,7 +338,6 @@ const userController = {
           totalAmount
         })
       }
-      res.locals.cart = true
       return res.render('user/cart', {
         menu,
         preference,
@@ -369,33 +369,34 @@ const userController = {
         recurringSub = false
       }
       const showId = Date.now().toString() + userId
-      await Promise.all([
-        Order.create({
-          menu,
-          preference: preference.toString(),
-          servings,
-          meals,
-          totalAmount,
-          status: 'Order received',
-          userId,
-          showId
-        }, { transaction: t })
-          .then(order => Delivery.create({
-            orderId: order.id,
-            name,
-            email,
-            phone,
-            address,
-            preferredDay,
-            preferredTime,
-            status: 'Payment not confirmed'
-          }, { transaction: t })),
-        Cart.destroy({
-          where: { userId }
-        }, { transaction: t })
-      ])
+
+      const order = await Order.create({
+        menu,
+        preference: preference.toString(),
+        servings,
+        meals,
+        totalAmount,
+        status: 'Payment not confirmed',
+        userId,
+        showId
+      }, { transaction: t })
+      await Delivery.create({
+        orderId: order.id,
+        name,
+        email,
+        phone,
+        address,
+        preferredDay,
+        preferredTime,
+        status: 'Payment not confirmed'
+      }, { transaction: t })
+      await Cart.destroy({
+        where: { userId }
+      }, { transaction: t })
+
       await t.commit()
       return res.render('order/confirm', {
+        orderId: order.id,
         email,
         showId,
         userId
