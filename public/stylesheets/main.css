@@ -274,6 +274,13 @@ background: #eee;
   justify-content: center;
   margin-bottom: 1.5rem;
 }
+
+/* payments */
+.accepted-cards img{
+  height: 3.5rem;
+  width: auto;
+  margin: 1%;
+}
 /* footer */
 footer {
   width: 100%;

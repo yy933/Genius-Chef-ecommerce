@@ -24,6 +24,7 @@
     "express": "^4.18.2",
     "express-handlebars": "^7.0.7",
     "express-session": "^1.17.3",
+    "express-validator": "^7.0.1",
     "googleapis": "^118.0.0",
     "handlebars-helpers": "^0.10.0",
     "jsonwebtoken": "^9.0.0",

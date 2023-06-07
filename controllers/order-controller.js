@@ -9,13 +9,13 @@ const orderController = {
       const order = await Order.findOne({
         where: { showId },
         include: [
-          { model: User, attributes: ['id', 'name', 'email'] }],
+          { model: User, attributes: ['id'] }],
         raw: true,
         nest: true
       })
-      if (!order) {
+      if (!order || order.User.id.toString() !== userId) {
         req.flash('warning_msg', 'Order does not exist!')
-        return res.redirect('back')
+        return res.redirect(`/users/profile/${req.user.id}`)
       }
       if (req.user.id.toString() !== userId) {
         req.flash('warning_msg', 'User not found!')
