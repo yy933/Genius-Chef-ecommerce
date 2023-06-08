@@ -276,11 +276,25 @@ background: #eee;
 }
 
 /* payments */
+.payment-container{
+  font-size: large;
+}
+.payment-container ol{
+  padding-left: 0.5rem;
+}
+.payment-container label{
+  display: block;
+}
+.payment-container input{
+  width: 75%;
+  height: 2.3rem;
+}
 .accepted-cards img{
   height: 3.5rem;
   width: auto;
   margin: 1%;
 }
+
 /* footer */
 footer {
   width: 100%;
@@ -414,6 +428,12 @@ footer {
  .profile-container .nav{
   flex-direction: column;
 }
+}
+@media screen and (min-width: 768px) {
+  .payment-container{
+    flex-direction: row-reverse;
+  }
+  
 }
 
 @media screen and (min-width: 960px)  {

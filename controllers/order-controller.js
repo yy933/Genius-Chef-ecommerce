@@ -9,7 +9,7 @@ const orderController = {
       const order = await Order.findOne({
         where: { showId },
         include: [
-          { model: User, attributes: ['id'] }],
+          { model: User, attributes: ['id'] }, Delivery],
         raw: true,
         nest: true
       })
@@ -27,8 +27,18 @@ const orderController = {
       }
       return res.render('order/payment', {
         showId: order.showId,
+        orderAt: dayjs(order.createdAt).format('MMM D, YYYY HH:mm:ss'),
+        menu: order.menu,
+        preference: order.preference,
+        servings: order.servings,
+        meals: order.meals,
         totalAmount: order.totalAmount,
-        orderAt: dayjs(order.createdAt).format('MMM D, YYYY HH:mm:ss')
+        name: order.Delivery.name,
+        email: order.Delivery.email,
+        phone: order.Delivery.phone,
+        address: order.Delivery.address,
+        preferredDay: order.Delivery.preferredDay,
+        preferredTime: order.Delivery.preferredTime
       })
     } catch (err) { next(err) }
   }
