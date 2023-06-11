@@ -2,59 +2,35 @@
   {{> message}}
   <div class="profile-container pt-5">
     {{!-- Edit profile tab --}}
-    <div class="nav nav-pills me-3" id="v-pills-tab" role="tablist"
-      aria-orientation="vertical">
-      <button class="nav-link active" id="v-pills-home-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#v-pills-home" type="button" role="tab"
-        aria-controls="v-pills-home" aria-selected="true">My Plans</button>
-      <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill"
-        data-bs-target="#v-pills-settings" type="button" role="tab"
-        aria-controls="v-pills-settings" aria-selected="false">Settings</button>
-    </div>
+    <ul class="nav nav-pills flex-columns me-3">
+      <li class="nav-item">
+        <a class="nav-link text-center {{#is path 'plans'}} active {{/is}}"
+          aria-current="page" href="/users/profile/{{userId}}/plans">My Plans</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-center {{#is path 'settings'}} active {{/is}}"
+          href="/users/profile/{{userId}}/settings">Settings</a>
+      </li>
+
+    </ul>
     <div class="tab-content ms-3" id="v-pills-tabContent">
       {{!-- My plans --}}
-      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
-        aria-labelledby="v-pills-home-tab">
+      {{#is path 'plans'}}
+      <div class="profile-section">
         {{!-- Order Details --}}
         <details>
           <summary>
-            <h4 class="profile-subtitle d-inline">Order details</h4>
+            <h4 class="profile-subtitle d-inline">Current Plan details</h4>
           </summary>
           <ul class="profile-item my-3">
-            <li><strong>Order id:</strong> <input type="hidden"
-                name="orderId"
-                value=></li>
-            <li><strong>Ordered at:</strong> <input type="hidden"
-                name="orderAt"
-                value=></li>
-            <li><strong>Status:</strong><input type="hidden"
-                name="status"
-                value=></li>
-          </ul>
-        </details>
-        {{!-- Plans --}}
-        <details>
-          <summary>
-            <h4 class="profile-subtitle d-inline">Plans</h4>
-          </summary>
-          <ul class="profile-item my-3">
-            <li><strong>Menu:</strong> <input type="hidden" name="menu"
-                value=></li>
-            <li><strong>Preference:</strong><br> <input type="hidden"
-                name="preference"
-                value=>No special
-              preference<input type="hidden" name="preference"
-                value="N/A"></li>
-            <li> <strong>Servings:</strong><input type="hidden"
-                name="servings"
-                value=></li>
-            <li> <strong>Meals:</strong> <input type="hidden"
-                name="meals"
-                value=></li>
-            <li> <strong>Total: $</strong> <input type="hidden"
-                name="mealTotal"
-                value=></li>
+            <li><strong>Order id:</strong>#{{showId}}</li>
+            <li><strong>Ordered at:</strong>{{orderAt}}</li>
+            <li><strong>Status:</strong>{{status}}</li>
+            <li><strong>Menu:</strong>{{menu}}</li>
+            <li><strong>Preference:</strong> <p>{{preference}}</p> </li>
+            <li> <strong>Servings:</strong>{{servings}}</li>
+            <li> <strong>Meals:</strong>{{meals}} </li>
+            <li> <strong>Total: $</strong>{{totalAmount}}</li>
           </ul>
         </details>
         {{!-- Delivery Details --}}
@@ -63,57 +39,24 @@
             <h4 class="profile-subtitle d-inline">Delivery Details</h4>
           </summary>
           <ul class="profile-item my-3">
-            <li> <strong>Name: </strong> <input type="hidden"
-                name="mealTotal"
-                value=></li>
-            <li> <strong>Email: </strong> <input type="hidden"
-                name="mealTotal"
-                value=></li>
-            <li> <strong>Phone: </strong> <input type="hidden"
-                name="mealTotal"
-                value=></li>
-            <li> <strong>Address: </strong> <input type="hidden"
-                name="mealTotal"
-                value=></li>
-            <li> <strong>Preferred delivery: </strong> <input
-                type="hidden"
-                name="mealTotal"
-                value=></li>
+            <li> <strong>Name: </strong> {{name}}</li>
+            <li> <strong>Email: </strong>{{email}}</li>
+            <li> <strong>Phone: </strong>{{phone}}</li>
+            <li> <strong>Address: </strong> {{address}}</li>
+            <li> <strong>Preferred day: </strong> {{preferredDay}}</li>
+            <li> <strong>Preferred day: </strong> {{preferredTime}}</li>
           </ul>
         </details>
       </div>
+      {{/is}}
       {{!-- Settings --}}
-      <div class="tab-pane fade" id="v-pills-settings" role="tabpanel"
-        aria-labelledby="v-pills-settings-tab">
-        <h4 class="profile-subtitle d-inline"><i class="fa-solid fa-gear fa-lg
-            fa-fw mx-1"></i>Settings</h4>
+      {{#is path 'settings'}}
+      <div class="profile-section">
+        <h4 class="profile-subtitle d-inline">Settings</h4>
         <ul class="profile-item my-3">
           <li> <strong>Name:</strong> {{name}}</li>
           <li> <strong>Email:</strong> {{email}}</li>
-          <li>
-            <strong>Recurring subscription: </strong>
-            <div class="scroll-body">
-              <div class="recurSub">
-                <span class="text-muted my-2">Automatically renew the subscription
-                  when your plans end. Don't worry, you can cancel anytime!</span>
-
-                <div class="col-md-4 my-4">
-                  <div class="recurSub-row mb-2 fs-5">
-                    <span class="recurSub-item">
-                      <select name="recurringSub" class="form-select form-select-sm
-                        fs-5"
-                        aria-label="recurringSub" required>
-                        <option value="" disabled selected>Please select</option>
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                      </select>
-                      <div class="invalid-feedback">Please select an option.</div>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
+          <li><strong>Recurring subscription: </strong> {{#is recurringSub false}} No {{else}} Yes {{/is}} </li>
           <!-- change password button -->
           <li> <button data-bs-toggle="modal" data-bs-target="#changePassword">Change
               Password</button></li>
@@ -171,6 +114,7 @@
           </div>
         </ul>
       </div>
+      {{/is}}
     </div>
 
   </div>

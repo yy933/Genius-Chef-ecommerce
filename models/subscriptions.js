@@ -15,7 +15,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   Subscriptions.init({
     active: DataTypes.BOOLEAN,
-    recurringSub: DataTypes.BOOLEAN
+    recurringSub: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Subscriptions',

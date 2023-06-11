@@ -1,4 +1,4 @@
-const { User, ResetToken, Cart, Order, Delivery, Payment, Subscriptions, sequelize } = require('../models')
+const { User, ResetToken, Cart, Order, Delivery, Subscriptions, sequelize } = require('../models')
 const validator = require('email-validator')
 const bcrypt = require('bcryptjs')
 const crypto = require('crypto')
@@ -7,6 +7,8 @@ const priceRule = require('../helpers/price-calculation')
 const reqHelper = require('../req_helpers')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
+const dayjs = require('dayjs')
+dayjs().format()
 
 const userController = {
   getSignIn: (req, res, next) => {
@@ -230,14 +232,23 @@ const userController = {
       return res.redirect('/users/forgetPassword')
     }
   },
-  getProfile: async (req, res, next) => {
+  getProfileMain: (req, res, next) => {
     try {
       const { userId } = req.params
+      return res.redirect(`/users/profile/${userId}/plans`)
+    } catch (error) { next(error) }
+  },
+  getProfile: async (req, res, next) => {
+    try {
+      const { userId, section } = req.params
       const user = await User.findOne({
         where: {
           id: userId
         },
-        attributes: ['name', 'email']
+        attributes: ['name', 'email', 'id'],
+        include: { model: Subscriptions, attributes: ['active', 'recurringSub'] },
+        raw: true,
+        nest: true
       })
       if (!user || user.role === 'admin') {
         req.flash('warning_msg', 'User not found!')
@@ -247,11 +258,46 @@ const userController = {
         req.flash('warning_msg', 'Access denied.')
         return res.redirect('/')
       }
+      if (section === 'plans') {
+        const order = await Order.findOne({
+          where: { userId },
+          limit: 1,
+          order: [['createdAt', 'DESC']],
+          include: { model: Delivery, attributes: ['name', 'email', 'phone', 'address', 'preferredDay', 'preferredTime'] },
+          raw: true,
+          nest: true
+        })
+        return res.render('user/profile', {
+          path: `${section}`,
+          userId: user.id,
+          showId: order.showId,
+          orderAt: dayjs(order.createdAt).format('MMM D, YYYY HH:mm:ss'),
+          status: order.status,
+          menu: order.menu,
+          preference: order.preference,
+          servings: order.servings,
+          meals: order.meals,
+          totalAmount: order.totalAmount,
+          name: order.Delivery.name,
+          email: order.Delivery.email,
+          phone: order.Delivery.phone,
+          address: order.Delivery.address,
+          preferredDay: order.Delivery.preferredDay,
+          preferredTime: order.Delivery.preferredTime
+        })
+      }
+
       return res.render('user/profile', {
+        path: `${section}`,
+        userId: user.id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        recurringSub: user.Subscription.recurringSub
       })
-    } catch (err) { next(err) }
+    } catch (err) {
+      console.log(err)
+      next(err)
+    }
   },
   changePassword: async (req, res, next) => {
     try {
