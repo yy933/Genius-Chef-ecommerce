@@ -235,7 +235,7 @@ const userController = {
   getProfileMain: (req, res, next) => {
     try {
       const { userId } = req.params
-      return res.redirect(`/users/profile/${userId}/plans`)
+      return res.redirect(`/users/profile/${userId}/settings`)
     } catch (error) { next(error) }
   },
   getProfile: async (req, res, next) => {
@@ -267,7 +267,15 @@ const userController = {
           raw: true,
           nest: true
         })
+        if (!order) {
+          return res.render('user/profile', {
+            isEmpty: true,
+            path: `${section}`,
+            userId: user.id
+          })
+        }
         return res.render('user/profile', {
+          isEmpty: false,
           path: `${section}`,
           userId: user.id,
           showId: order.showId,

@@ -22,7 +22,10 @@
           <summary>
             <h4 class="profile-subtitle d-inline">Current Plan details</h4>
           </summary>
-          <ul class="profile-item my-3">
+          {{#if isEmpty}}
+         <h5 class="my-3">No active plans! Get new plans <a href="/plans">here</a>.</h5>
+          {{else}}
+           <ul class="profile-item my-3">
             <li><strong>Order id:</strong>#{{showId}}</li>
             <li><strong>Ordered at:</strong>{{orderAt}}</li>
             <li><strong>Status:</strong>{{status}}</li>
@@ -32,12 +35,18 @@
             <li> <strong>Meals:</strong>{{meals}} </li>
             <li> <strong>Total: $</strong>{{totalAmount}}</li>
           </ul>
+           
+          {{/if}}
+          
         </details>
         {{!-- Delivery Details --}}
         <details>
           <summary>
             <h4 class="profile-subtitle d-inline">Delivery Details</h4>
           </summary>
+          {{#if isEmpty}}
+          <h5 class="my-3">No active plans! Get new plans <a href="/plans">here</a>.</h5>
+          {{else}}
           <ul class="profile-item my-3">
             <li> <strong>Name: </strong> {{name}}</li>
             <li> <strong>Email: </strong>{{email}}</li>
@@ -46,6 +55,7 @@
             <li> <strong>Preferred day: </strong> {{preferredDay}}</li>
             <li> <strong>Preferred day: </strong> {{preferredTime}}</li>
           </ul>
+          {{/if}}
         </details>
       </div>
       {{/is}}
