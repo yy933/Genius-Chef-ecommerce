@@ -67,64 +67,15 @@
                   Manage Settings
                 </button>
               </a>
-              <button type="button" class="btn btn-outline-secondary"
-              data-bs-toggle="modal" data-bs-target="#changePassword">
+              <a href="/users/profile/{{userId}}/changePassword">
+                <button type="button" class="btn btn-outline-secondary">
                 Change Password
               </button>
+              </a>
+              
             </div>
           </li>
-          <!-- Change Password Modal -->
-          <div class="modal fade" id="changePassword" data-bs-backdrop="static"
-            data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="changePasswordLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title fw-bold" id="changePasswordLabel"
-                    style="letter-spacing: 1px;">Change Password</h5>
-                  <button type="button" class="btn-close"
-                    data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <form class="needs-validation" action="{{#if
-                    user}}/users/profile/{{user.id}}/changePassword?_method=PUT{{else}}/{{/if}}"
-                    method="post" novalidate>
-                    <!-- New Password input -->
-                    <div class="form-outline mb-4">
-                      <label class="form-label" for="newPassword">New Password</label>
-                      <input type="password" id="newPassword" name="newPassword"
-                        class="form-control form-control-lg"
-                        pattern="^(?=.*\d)(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,16}$"
-                        value="{{newPassword}}" required>
-                      <div class="invalid-feedback">Please enter your new
-                        password.
-                        The password must contain at least 8 and maximum 16
-                        characters, including at least 1 uppercase, 1 lowercase,
-                        and one number.</div>
-                    </div>
-                    <!--Confirm Password input -->
-                    <div class="form-outline mb-4">
-                      <label class="form-label" for="confirmNewPassword">Confirm
-                        New Password</label>
-                      <input type="password" id="confirmNewPassword"
-                        name="confirmNewPassword" class="form-control
-                        form-control-lg"
-                        pattern="^(?=.*\d)(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,16}$"
-                        value="{{confirmNewPassword}}" required>
-                      <div class="invalid-feedback">Please confirm your new
-                        password.</div>
-                    </div>
-                    <input type="hidden" name="email" value="{{email}}">
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary"
-                      data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Confirm</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
+
         </ul>
       </div>
       {{/is}}

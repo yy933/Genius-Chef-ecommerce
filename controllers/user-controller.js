@@ -265,9 +265,9 @@ const userController = {
         req.flash('warning_msg', 'User not found!')
         return res.redirect('/')
       }
-      if (reqHelper.getUser(req).id.toString() !== userId) {
+      if (req.user.id.toString() !== userId) {
         req.flash('warning_msg', 'Access denied.')
-        return res.redirect('/')
+        return res.redirect(`/users/profile/${req.user.id}`)
       }
       if (section === 'plans') {
         const order = await Order.findOne({
@@ -312,6 +312,13 @@ const userController = {
           name: user.name,
           email: user.email,
           recurringSub: user.Subscription.recurringSub
+        })
+      }
+      if (section === 'changePassword') {
+        return res.render('user/editPassword', {
+          path: 'settings',
+          userId,
+          email: user.email
         })
       }
 
@@ -432,7 +439,7 @@ const userController = {
       }
       const cart = await Cart.findByPk(userId)
       if (!cart) {
-        return res.render('user/cart',{
+        return res.render('user/cart', {
           isEmpty: true
         })
       }

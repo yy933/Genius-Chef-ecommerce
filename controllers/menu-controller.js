@@ -1,5 +1,4 @@
 const axios = require('axios')
-
 const menuController = {
   getMenuMain: (req, res, next) => {
     try {
@@ -21,7 +20,7 @@ const menuController = {
         headers: { 'Content-Type': 'application/json' },
         params: {
           limitLicense: true,
-          number: 100,
+          number: 50,
           tags,
           apiKey: process.env.API_KEY
         }
@@ -39,6 +38,7 @@ const menuController = {
         ingredient: Object.assign({}, recipe.extendedIngredients?.map(i => i.original) || ['Ingredients are currently unavailable, please check the full recipe below for more details.']),
         fullDetailsUrl: recipe.spoonacularSourceUrl || '/menu'
       }))
+      console.log(recipesData)
       res.render('menu', {
         recipesData,
         path: `/menu/${preference}`
