@@ -432,9 +432,12 @@ const userController = {
       }
       const cart = await Cart.findByPk(userId)
       if (!cart) {
-        return res.render('user/cart')
+        return res.render('user/cart',{
+          isEmpty: true
+        })
       }
       const cartData = {
+        isEmpty: false,
         menu: cart.menu,
         preference: cart.preference,
         servings: cart.servings,
@@ -474,6 +477,7 @@ const userController = {
         })
       }
       return res.render('user/cart', {
+        isEmpty: false,
         menu,
         preference,
         servings,

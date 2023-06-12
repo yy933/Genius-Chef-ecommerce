@@ -7,6 +7,14 @@
     <div class="mt-3 cart-form-container" data-bs-offset="0" tabindex="0">
       <h4 class="scroll-title">Selected Plan</h4>
       <div class="scroll-body">
+        {{#if isEmpty}}
+          <div class="h-50">
+            <h4 class="my-4 ms-3" style="line-height: 2rem;word-spacing: 2px;">Your cart is empty. Get new plans <a href="/plans"
+              class="text-reset"><span style="color:rgb(240, 82, 54);
+                font-weight:700">here </span></a>!
+            </h4>
+          </div>
+        {{else}}
         <ol class="my-3">
           <li><strong>Menu:</strong> {{menu}}<input type="hidden" name="menu"
               value={{menu}}></li>
@@ -25,10 +33,17 @@
               name="totalAmount"
               value={{totalAmount}}></li>
         </ol>
+        {{/if}}
       </div>
       {{!-- Delivery details --}}
       <h4 class="scroll-title">Delivery Details</h4>
       <div class="scroll-body">
+        {{#if isEmpty}}
+          <h4 class="my-4 ms-3" style="line-height: 2rem;word-spacing: 2px;">Your cart is empty. Get new plans <a href="/plans"
+              class="text-reset"><span style="color:rgb(240, 82, 54);
+                font-weight:700">here </span></a>!
+          </h4>
+        {{else}}
         <div class="delivery-details">
           <div class="row mb-2 fs-5">
             <div class="form-group col-md-6 my-3">
@@ -90,6 +105,7 @@
             </div>
           </div>
         </div>
+        {{/if}}
       </div>
     </div>
     <div class="continue-btn col-12 text-center my-2">
