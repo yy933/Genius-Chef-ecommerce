@@ -1,0 +1,47 @@
+<div class="container my-5 py-5">
+  {{> message}}
+  <div class="profile-container pt-5">
+    {{> profile-tabs}}
+    <div class="tab-content ms-3" id="v-pills-tabContent">
+      {{!-- Manage Profile Settings --}}
+       <div class="profile-section">
+        <h4 class="profile-subtitle d-inline">Manage Settings</h4>
+      <form class="needs-validation" action="/users/profile/{{userId}}/settings?_method=PUT" method="post" novalidate>
+        <ul class="profile-item my-3">
+          <li>
+          <strong><label for="editName" class="mb-3">Name:</label></strong>
+          <input type="text" class="form-control d-inline" value={{name}} id="editName" name="name" required>
+          <div class="invalid-feedback">Please provide a valid name.</div>
+          </li>
+          <li>
+            <strong> <label for="editEmail" class="mb-3">Email:</label> </strong>
+            <input type="text" class="form-control d-inline" value={{email}} id="editEmail" name="email" required>
+            <div class="invalid-feedback">Please provide a valid email.</div>
+          </li>
+          <li>
+            <strong><label for="editRecurringSub" class="mb-3">Recurring subscription:</label></strong>
+            <div class="col-lg-9 col-sm-8 col-10 preferred-date">
+              <select name="recurringSub" id="editRecurringSub" class="form-select
+                fs-5 my-2 d-inline"
+                aria-label="editRecurringSub" required>
+                <option value="" disabled>Please Select</option>
+                <option value="Yes" {{#is recurringSub true}} selected {{/is}}>Yes</option>
+                <option value="No" {{#is recurringSub false}} selected {{/is}}>No</option>
+              </select>
+              <div class="invalid-feedback">Please select an option.</div>
+            </div>
+          </li>
+          <!-- confirm button -->
+          <li class="mt-5">
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary me-3">Confirm</button>
+              <a href="/users/profile/{{userId}}/settings"><button type="button" class="btn btn-secondary">Cancel</button></a> 
+            </div>
+          </li>
+        </ul>
+      </form>
+     </div>
+    </div>
+  </div>
+</div>  
+

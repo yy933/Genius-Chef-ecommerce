@@ -102,11 +102,22 @@ const userController = {
       bcrypt
         .genSalt(10)
         .then(salt => bcrypt.hash(password, salt))
-        .then(hash => User.create({
-          name,
-          email,
-          password: hash
-        }))
+        .then(async (hash) => {
+          const t = await sequelize.transaction()
+          try {
+            const user = await User.create({
+              name,
+              email,
+              password: hash
+            }, { transaction: t })
+            await Subscriptions.create({
+              userId: user.id,
+              active: false
+            }, { transaction: t })
+            await t.commit()
+          } catch (error) { await t.rollback() }
+        }
+        )
       req.flash('success_msg', 'Successfully created an account!')
       return res.redirect('/users/login')
     } catch (error) {
@@ -235,7 +246,7 @@ const userController = {
   getProfileMain: (req, res, next) => {
     try {
       const { userId } = req.params
-      return res.redirect(`/users/profile/${userId}/settings`)
+      return res.redirect(`/users/profile/${userId}/plans`)
     } catch (error) { next(error) }
   },
   getProfile: async (req, res, next) => {
@@ -294,6 +305,15 @@ const userController = {
           preferredTime: order.Delivery.preferredTime
         })
       }
+      if (section === 'manageSettings') {
+        return res.render('user/editProfile', {
+          path: 'settings',
+          userId: user.id,
+          name: user.name,
+          email: user.email,
+          recurringSub: user.Subscription.recurringSub
+        })
+      }
 
       return res.render('user/profile', {
         path: `${section}`,
@@ -306,6 +326,67 @@ const userController = {
       console.log(err)
       next(err)
     }
+  },
+  manageSettings: async (req, res, next) => {
+    try {
+      let { name, email, recurringSub } = req.body
+      const { userId } = req.params
+      if (req.user.id.toString() !== userId) {
+        req.flash('warning_msg', 'Access denied.')
+        return res.redirect('back')
+      }
+      const errors = []
+      const [user, checkedExistedUser] = await Promise.all([
+        User.findByPk(userId,
+          {
+            attributes: ['id', 'name', 'email'],
+            include: { model: Subscriptions, attributes: ['recurringSub'] }
+          }),
+        User.findOne({ where: { email } })
+      ])
+      if (!user) {
+        errors.push({ message: 'User not found!' })
+        return res.render('user/signup', {
+          errors
+        })
+      }
+      if (!name || !email || !recurringSub) {
+        errors.push({ message: 'All fields are required.' })
+      }
+      if (!validator.validate(email)) {
+        errors.push({ message: 'Please provide a valid email.' })
+      }
+      if (checkedExistedUser && checkedExistedUser.id !== req.user.id) {
+        errors.push({ message: 'This email has already been registered!' })
+      }
+      if (errors.length) {
+        console.log(errors)
+        return res.render('user/editProfile', {
+          errors,
+          userId,
+          path: 'settings',
+          name,
+          email,
+          recurringSub
+        })
+      }
+
+      if (recurringSub === 'Yes') {
+        recurringSub = true
+      } else {
+        recurringSub = false
+      }
+      await Promise.all([
+        user.update({
+          name,
+          email
+        }),
+        Subscriptions.update({
+          recurringSub
+        }, { where: { userId } })])
+
+      return res.redirect(`/users/profile/${userId}/settings`)
+    } catch (err) { next(err) }
   },
   changePassword: async (req, res, next) => {
     try {

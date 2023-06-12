@@ -4,7 +4,7 @@ const GoogleStrategy = require('passport-google-oauth2').Strategy
 const TwitterStrategy = require('passport-twitter').Strategy
 const passportJWT = require('passport-jwt')
 const bcrypt = require('bcryptjs')
-const { User } = require('../models')
+const { User, Subscriptions, sequelize } = require('../models')
 const JWTStrategy = passportJWT.Strategy
 
 passport.use('user-local', new LocalStrategy({ usernameField: 'email', passwordField: 'password', passReqToCallback: true }, (req, email, password, cb) => {
@@ -58,6 +58,7 @@ passport.use(new GoogleStrategy({
   callbackURL: 'http://localhost:8080/auth/google/callback'
 },
 async function (accessToken, refreshToken, profile, cb) {
+  const t = await sequelize.transaction()
   try {
     const { name, email } = profile._json
     const user = await User.findOne({ where: { email } })
@@ -68,10 +69,16 @@ async function (accessToken, refreshToken, profile, cb) {
       name,
       email,
       password: hashedPassword
-    })
+    }, { transaction: t })
+    await Subscriptions.create({
+      active: false,
+      userId: newUser.id
+    }, { transaction: t })
+    await t.commit()
     return cb(null, newUser)
   } catch (err) {
     console.log(err)
+    await t.rollback()
     return cb(err, false)
   }
 }
@@ -84,6 +91,7 @@ passport.use(new TwitterStrategy({
   callbackURL: process.env.BASE_URL + '/auth/twitter/callback'
 },
 async function (token, tokenSecret, profile, cb) {
+  const t = await sequelize.transaction()
   try {
     const { name, id_str } = profile._json
     const email = name + '@twitter'
@@ -96,11 +104,17 @@ async function (token, tokenSecret, profile, cb) {
       email,
       password: hashedPassword,
       twitterId: id_str
-    })
+    }, { transaction: t })
+    await Subscriptions.create({
+      active: false,
+      userId: newUser.id
+    }, { transaction: t })
+    await t.commit()
 
     return cb(null, newUser)
   } catch (err) {
     console.log(err)
+    await t.rollback()
     return cb(err, false)
   }
 }
