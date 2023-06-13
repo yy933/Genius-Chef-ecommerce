@@ -15,7 +15,7 @@ module.exports = {
       Array.from({ length: 11 }).map((_, index) => ({
         user_id: users[index].id,
         active: false,
-        recurring_sub: Boolean(Date.now() % 2),
+        recurring_sub: Boolean(Math.floor(Math.random() * 1000) % 2),
         created_at: new Date(),
         updated_at: new Date()
       })
