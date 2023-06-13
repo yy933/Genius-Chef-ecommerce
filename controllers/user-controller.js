@@ -331,7 +331,7 @@ const userController = {
       })
     } catch (err) {
       console.log(err)
-      next(err)
+      return next(err)
     }
   },
   manageSettings: async (req, res, next) => {
@@ -426,7 +426,7 @@ const userController = {
         }))
 
       req.flash('success_msg', 'Password has been successfully changed!')
-      return res.redirect('back')
+      return res.redirect(`/users/profile/${userId}/settings`)
     } catch (err) {
       next(err)
     }

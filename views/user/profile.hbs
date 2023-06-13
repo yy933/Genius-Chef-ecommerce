@@ -19,7 +19,14 @@
           <ul class="profile-item my-3">
             <li><strong>Order id:</strong>#{{showId}}</li>
             <li><strong>Ordered at:</strong>{{orderAt}}</li>
-            <li><strong>Status:</strong>{{status}}</li>
+            <li>
+              <strong>Status:</strong>{{status}}
+              {{#is status 'Payment not confirmed'}}
+              <a href="/orders/{{showId}}/payment/{{userId}}" class="my-2 mx-2">
+                <button class="btn btn-warning btn-sm">Pay now!</button>
+              </a>
+              {{/is}}
+            </li>
             <li><strong>Menu:</strong>{{menu}}</li>
             <li><strong>Preference:</strong> <p>{{preference}}</p> </li>
             <li> <strong>Servings:</strong>{{servings}}</li>

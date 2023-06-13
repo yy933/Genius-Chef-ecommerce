@@ -4,7 +4,7 @@ const { faker } = require('@faker-js/faker')
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return Promise.all([
+    return await Promise.all([
       queryInterface.bulkInsert('Users', [{
         name: 'Admin',
         email: process.env.ADMIN_EMAIL,
@@ -19,7 +19,7 @@ module.exports = {
         role: 'user',
         created_at: new Date(),
         updated_at: new Date()
-      }]),
+      }], {}),
       queryInterface.bulkInsert('Users',
         Array.from({ length: 10 }, () => ({
           name: faker.person.fullName(),
@@ -28,7 +28,7 @@ module.exports = {
           role: 'user',
           created_at: new Date(),
           updated_at: new Date()
-        }))
+        })), {}
       )
     ])
   },

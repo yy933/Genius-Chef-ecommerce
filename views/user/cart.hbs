@@ -1,7 +1,9 @@
 <div class="container my-5 py-5">
   {{> message}}
+  {{#unless isEmpty}}
   <a href="/plans" class="reselect-plan"><i class="fa-solid fa-angles-left"></i>
     Reselect your plan</a>
+  {{/unless}}
   <form class="needs-validation" action="/users/{{#if
     user}}{{user.id}}{{/if}}/order" method="post" novalidate>
     <div class="mt-3 cart-form-container" data-bs-offset="0" tabindex="0">
