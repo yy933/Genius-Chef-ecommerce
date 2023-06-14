@@ -1,5 +1,5 @@
 'use strict'
-
+const randomItem = require('../helpers/random-item')
 const orderOptions = {
   menu: ['Classic', 'Vegetarian'],
   preference: ['Dairy free', 'Gluten free', 'Lacto-ovo vegetarian', 'Nutritious and healthy', 'Pescatarian', 'Quick and easy', 'N/A'],
@@ -20,9 +20,7 @@ const plansPrice = [
   { servings: 4, meals: 4, totalAmount: 135.84 },
   { servings: 4, meals: 2, totalAmount: 71.92 }
 ]
-const randomItem = (array) => {
-  return array[Math.floor(Math.random() * array.length)]
-}
+
 // const randomPlanPrice = (servings, meals) => {
 //   const randomServings = randomItem(servings)
 //   const randomMeals = randomItem(meals)

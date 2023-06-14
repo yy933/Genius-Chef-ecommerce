@@ -1,13 +1,12 @@
 'use strict'
 const { faker } = require('@faker-js/faker')
+const randomItem = require('../helpers/random-item')
 const deliveryOptions = {
   preferred_day: ['Weekday', 'Weekend'],
   preferred_time: ['Not specified', '9-12', '14-17', '18-20'],
   status: ['Payment not confirmed', 'Payment confirmed', 'Ready to ship']
 }
-const randomItem = (array) => {
-  return array[Math.floor(Math.random() * array.length)]
-}
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
