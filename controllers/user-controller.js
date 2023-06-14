@@ -437,7 +437,9 @@ const userController = {
       if (req.user.id.toString() !== userId) {
         return res.redirect('/')
       }
-      const cart = await Cart.findByPk(userId)
+      const cart = await Cart.findByPk(userId, {
+        include: { model: User, attributes: ['name', 'email'] }
+      })
       if (!cart) {
         return res.render('user/cart', {
           isEmpty: true
@@ -449,7 +451,9 @@ const userController = {
         preference: cart.preference,
         servings: cart.servings,
         meals: cart.meals,
-        totalAmount: cart.totalAmount
+        totalAmount: cart.totalAmount,
+        email: cart.User.email,
+        name: cart.User.name
       }
       return res.render('user/cart', cartData)
     } catch (err) { next(err) }
