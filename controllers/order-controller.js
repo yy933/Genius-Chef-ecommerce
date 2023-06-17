@@ -1,4 +1,4 @@
-const { Order, User, Delivery } = require('../models')
+const { Order, User, Delivery, Payment, sequelize } = require('../models')
 const dayjs = require('dayjs')
 dayjs().format()
 
@@ -41,6 +41,39 @@ const orderController = {
         preferredDay: order.Delivery.preferredDay,
         preferredTime: order.Delivery.preferredTime
       })
+    } catch (err) { next(err) }
+  },
+  cancelOrder: async (req, res, next) => {
+    try {
+      const { userId, showId } = req.params
+      const order = await Order.findOne({
+        where: { showId },
+        include: [
+          { model: User, attributes: ['id'] }, Delivery, Payment],
+        raw: true,
+        nest: true
+      })
+      if (!order || order.User.id.toString() !== userId) {
+        req.flash('warning_msg', 'Order does not exist!')
+        return res.redirect(`/users/profile/${req.user.id}`)
+      }
+      if (req.user.id.toString() !== userId) {
+        req.flash('warning_msg', 'User not found!')
+        return res.redirect(`/users/profile/${req.user.id}`)
+      }
+      if (order.status !== 'Payment not confirmed') {
+        req.flash('warning_msg', "Order can't be cancelled!")
+        return res.redirect(`/users/profile/${userId}`)
+      }
+      await sequelize.transaction(async (t) => {
+        await Promise.all([
+          Order.update({ status: 'Cancelled' }, { where: { showId }, transaction: t }),
+          Delivery.update({ status: 'Cancelled' }, { where: { orderId: order.id }, transaction: t }),
+          Payment.update({ status: 'Cancelled' }, { where: { orderId: order.id }, transaction: t }),
+        ])
+      })
+      req.flash('success_msg', `Order #${showId} has been cancelled!`)
+      return res.redirect(`/users/profile/${userId}`)
     } catch (err) { next(err) }
   }
 
