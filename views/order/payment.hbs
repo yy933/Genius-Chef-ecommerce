@@ -91,15 +91,29 @@
   <!-- Third-Party Payment  -->
   <div class="d-flex justify-content-center text-center mt-2">
     <!-- PayPal Logo -->
-    <table border="0" cellpadding="10" cellspacing="0" align="center"><tr><td
-          align="center"></td></tr><tr><td align="center"><a
-            href="https://www.paypal.com/c2/webapps/mpp/home?locale.x=en_C2"
-            title="PayPal"
-            onclick="javascript:window.open('https://www.paypal.com/c2/webapps/mpp/home?locale.x=en_C2','WIPaypal','toolbar=no,
-            location=no, directories=no, status=no, menubar=no, scrollbars=yes,
-            resizable=yes, width=1060, height=700'); return false;"><img
-              src="https://www.paypalobjects.com/digitalassets/c/website/marketing/apac/C2/logos-buttons/optimize/44_Grey_PayPal_Pill_Button.png"
-              alt="PayPal" /></a></td></tr></table>
+    <table border="0" cellpadding="10" cellspacing="0" align="center">
+      <tr>
+        <td align="center">
+          <form action="/orders/{{showId}}/payment/{{userId}}/paypal" method="post">
+            <input type="hidden" name="userId" value={{userId}}>
+            <input type="hidden" name="showId" value={{showId}}>
+            <input type="hidden" name="totalAmount" value={{totalAmount}}>
+            <input type="hidden" name="orderAt" value={{orderAt}}>
+            <input type="hidden" name="menu" value={{menu}}>
+            <input type="hidden" name="servings" value={{servings}}>
+            <input type="hidden" name="meals" value={{meals}}>
+            <input type="hidden" name="preference" value={{preference}}>
+            <input type="hidden" name="name" value={{name}}>
+            <input type="hidden" name="email" value={{email}}>
+            <input type="hidden" name="phone" value={{phone}}>
+            <input type="hidden" name="address" value={{address}}>
+            <button type="submit" style="border: 0; background-color:transparent">
+              <img src="https://www.paypalobjects.com/digitalassets/c/website/marketing/apac/C2/logos-buttons/optimize/44_Grey_PayPal_Pill_Button.png" alt="PayPal" />
+            </button>
+          </form>
+        </td>
+      </tr>
+    </table>
     <!-- PayPal Logo -->
   </div>
 </div>

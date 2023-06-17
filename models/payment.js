@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.STRING,
     paymentMethod: DataTypes.STRING,
     paidAt: DataTypes.DATE,
-    totalAmount: DataTypes.FLOAT
+    totalAmount: DataTypes.FLOAT,
+    paypalPaymentId: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Payment',

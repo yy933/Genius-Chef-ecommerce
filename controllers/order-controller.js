@@ -26,6 +26,7 @@ const orderController = {
         return res.redirect(`/users/profile/${userId}`)
       }
       return res.render('order/payment', {
+        userId,
         showId: order.showId,
         orderAt: dayjs(order.createdAt).format('MMM D, YYYY HH:mm:ss'),
         menu: order.menu,

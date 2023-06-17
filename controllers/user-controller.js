@@ -1,4 +1,4 @@
-const { User, ResetToken, Cart, Order, Delivery, Subscriptions, sequelize } = require('../models')
+const { User, ResetToken, Cart, Order, Delivery, Subscriptions, Payment, sequelize } = require('../models')
 const validator = require('email-validator')
 const bcrypt = require('bcryptjs')
 const crypto = require('crypto')
@@ -540,12 +540,17 @@ const userController = {
         preferredTime,
         status: 'Payment not confirmed'
       }, { transaction: t })
+      await Payment.create({
+        orderId: order.id,
+        totalAmount,
+        status: 'Payment not confirmed'
+      }, { transaction: t })
       await Cart.destroy({
         where: { userId }
       }, { transaction: t })
 
       await t.commit()
-      return res.render('order/confirm', {
+      return res.render('order/confirmOrder', {
         orderId: order.id,
         email,
         showId,
