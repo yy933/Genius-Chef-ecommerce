@@ -57,10 +57,6 @@ const orderController = {
         req.flash('warning_msg', 'Order does not exist!')
         return res.redirect(`/users/profile/${req.user.id}`)
       }
-      if (req.user.id.toString() !== userId) {
-        req.flash('warning_msg', 'User not found!')
-        return res.redirect(`/users/profile/${req.user.id}`)
-      }
       if (order.status !== 'Payment not confirmed') {
         req.flash('warning_msg', "Order can't be cancelled!")
         return res.redirect(`/users/profile/${userId}`)
@@ -69,11 +65,11 @@ const orderController = {
         await Promise.all([
           Order.update({ status: 'Cancelled' }, { where: { showId }, transaction: t }),
           Delivery.update({ status: 'Cancelled' }, { where: { orderId: order.id }, transaction: t }),
-          Payment.update({ status: 'Cancelled' }, { where: { orderId: order.id }, transaction: t }),
+          Payment.update({ status: 'Cancelled' }, { where: { orderId: order.id }, transaction: t })
         ])
       })
       req.flash('success_msg', `Order #${showId} has been cancelled!`)
-      return res.redirect(`/users/profile/${userId}`)
+      return res.redirect(`/users/profile/${userId}/plans`)
     } catch (err) { next(err) }
   }
 

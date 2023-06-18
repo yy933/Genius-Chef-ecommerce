@@ -285,6 +285,13 @@ const userController = {
             userId: user.id
           })
         }
+        if (order.status === 'Cancelled') {
+          return res.render('user/profile', {
+            isEmpty: true,
+            path: `${section}`,
+            userId
+          })
+        }
         return res.render('user/profile', {
           isEmpty: false,
           path: `${section}`,
