@@ -1,7 +1,7 @@
 const { Order, User, Delivery, Payment, Subscriptions, sequelize } = require('../models')
 const paypal = require('paypal-rest-sdk')
 const mailService = require('../helpers/email-helpers')
-
+const ecpay = require('ECPAY_Payment_node_js')
 paypal.configure({
   mode: 'sandbox',
   client_id: process.env.PAYPAL_CLIENT_ID,
@@ -39,7 +39,7 @@ const paymentController = {
         transactions: [{
           custom: email,
           amount: {
-            currency: 'USD',
+            currency: 'TWD',
             total: totalAmount
           },
           description: 'Payment for a new plan at Genius Chef'

@@ -8,17 +8,17 @@ const orderOptions = {
   status: ['Payment not confirmed', 'Payment confirmed']
 }
 const plansPrice = [
-  { servings: 4, meals: 2, totalAmount: 71.92 },
-  { servings: 6, meals: 4, totalAmount: 198.96 },
-  { servings: 2, meals: 5, totalAmount: 84.9 },
-  { servings: 4, meals: 5, totalAmount: 165.8 },
-  { servings: 2, meals: 6, totalAmount: 101.88 },
-  { servings: 4, meals: 5, totalAmount: 165.8 },
-  { servings: 6, meals: 3, totalAmount: 149.22 },
-  { servings: 4, meals: 5, totalAmount: 165.8 },
-  { servings: 6, meals: 2, totalAmount: 101.88 },
-  { servings: 4, meals: 4, totalAmount: 135.84 },
-  { servings: 4, meals: 2, totalAmount: 71.92 }
+  { servings: 2, meals: 2, totalAmount: 992 },
+  { servings: 6, meals: 4, totalAmount: 4992 },
+  { servings: 2, meals: 5, totalAmount: 2280 },
+  { servings: 6, meals: 5, totalAmount: 5640 },
+  { servings: 2, meals: 3, totalAmount: 1488 },
+  { servings: 6, meals: 6, totalAmount: 6768 },
+  { servings: 6, meals: 3, totalAmount: 3744 },
+  { servings: 4, meals: 5, totalAmount: 4160 },
+  { servings: 6, meals: 2, totalAmount: 2736 },
+  { servings: 4, meals: 4, totalAmount: 3648 },
+  { servings: 4, meals: 2, totalAmount: 1984 }
 ]
 
 // const randomPlanPrice = (servings, meals) => {

@@ -7,15 +7,15 @@ const priceRule = (servings, meals) => {
   const totalMeals = servings * meals
   let discountTotal
   if (totalMeals >= 25) {
-    discountTotal = totalMeals * 7.99
+    discountTotal = totalMeals * 188
   } else if (totalMeals >= 17) {
-    discountTotal = totalMeals * 8.29
+    discountTotal = totalMeals * 208
   } else if (totalMeals >= 9) {
-    discountTotal = totalMeals * 8.49
+    discountTotal = totalMeals * 228
   } else {
-    discountTotal = totalMeals * 8.99
+    discountTotal = totalMeals * 248
   }
-  return discountTotal.toFixed(2)
+  return discountTotal
 }
 
 function calculateTotal () {
@@ -23,7 +23,7 @@ function calculateTotal () {
   const singleMealPrice = discountTotal / (meals.value * servings.value)
   totalAmount.textContent = discountTotal
   totalAmount.value = discountTotal
-  pricePerMeal.textContent = singleMealPrice.toFixed(2)
+  pricePerMeal.textContent = singleMealPrice
 }
 
 servings.addEventListener('change', calculateTotal)
