@@ -1,7 +1,12 @@
 const { Order, User, Delivery, Payment, Subscriptions, sequelize } = require('../models')
 const paypal = require('paypal-rest-sdk')
 const mailService = require('../helpers/email-helpers')
-const ecpay = require('ECPAY_Payment_node_js')
+const dayjs = require('dayjs')
+dayjs().format()
+const Ecpay = require('../node_modules/ECPAY_Payment_node_js')
+const options = require('ECPAY_Payment_node_js/conf/config-example')
+const { showIdGenerator } = require('../helpers/ecpay-helper')
+const { error } = require('console')
 paypal.configure({
   mode: 'sandbox',
   client_id: process.env.PAYPAL_CLIENT_ID,
@@ -9,6 +14,157 @@ paypal.configure({
 })
 
 const paymentController = {
+  getOrderPayment: async (req, res, next) => {
+    try {
+      const { userId, showId } = req.params
+      const order = await Order.findOne({
+        where: { showId },
+        include: [
+          { model: User, attributes: ['id'] }, Delivery],
+        raw: true,
+        nest: true
+      })
+      if (!order || order.User.id.toString() !== userId) {
+        req.flash('warning_msg', 'Order does not exist!')
+        return res.redirect(`/users/profile/${req.user.id}`)
+      }
+      if (req.user.id.toString() !== userId) {
+        req.flash('warning_msg', 'User not found!')
+        return res.redirect(`/users/profile/${req.user.id}`)
+      }
+      if (order.status !== 'Payment not confirmed') {
+        req.flash('warning_msg', 'Order has been paid!')
+        return res.redirect(`/users/profile/${userId}`)
+      }
+      return res.render('order/payment', {
+        userId,
+        showId: order.showId,
+        orderAt: dayjs(order.createdAt).format('MMM D, YYYY HH:mm:ss'),
+        menu: order.menu,
+        preference: order.preference,
+        servings: order.servings,
+        meals: order.meals,
+        totalAmount: order.totalAmount,
+        name: order.Delivery.name,
+        email: order.Delivery.email,
+        phone: order.Delivery.phone,
+        address: order.Delivery.address,
+        preferredDay: order.Delivery.preferredDay,
+        preferredTime: order.Delivery.preferredTime
+
+      })
+    } catch (err) { next(err) }
+  },
+  checkoutWithCreditCard: async (req, res, next) => {
+    try {
+      const { showId, userId } = req.params
+      const order = await Order.findOne({
+        where: { showId },
+        include: [{ model: User, attributes: ['id', 'email'] }, Delivery],
+        raw: true,
+        nest: true
+      })
+      if (!order || order.User.id.toString() !== userId) {
+        req.flash('warning_msg', 'Order does not exist!')
+        return res.redirect(`/users/profile/${req.user.id}`)
+      }
+      if (req.user.id.toString() !== userId) {
+        req.flash('warning_msg', 'User not found!')
+        return res.redirect(`/users/profile/${req.user.id}`)
+      }
+      if (order.status !== 'Payment not confirmed') {
+        req.flash('warning_msg', 'Order has been paid!')
+        return res.redirect(`/users/profile/${userId}`)
+      }
+      const { totalAmount, menu, servings, meals } = req.query
+
+      // 若要測試非必帶參數請將base_param內註解的參數依需求取消註解 //
+      const baseParam = {
+        MerchantTradeNo: showIdGenerator(userId),
+        MerchantTradeDate: dayjs(order.orderAt).format('YYYY/MM/DD HH:mm:ss'),
+        TotalAmount: totalAmount,
+        TradeDesc: 'menu: ' + menu + ', servings: ' + servings + ', meals: ' + meals,
+        ItemName: 'menu: ' + menu + ', servings: ' + servings + ', meals: ' + meals,
+        ReturnURL: process.env.BASE_URL + `/orders/${showId}/payment/${userId}/ecpay/returnResult`,
+        // EncryptType: 1,
+        // ChoosePayment: 'Credit'
+        // ChooseSubPayment: '',
+        OrderResultURL: process.env.BASE_URL + `/orders/${showId}/payment/${userId}/ecpay/result`
+        // NeedExtraPaidInfo: '1',
+        // ClientBackURL: process.env.BASE_URL + `orders/${showId}/payment/${userId}/ecpay/result`,
+        // ItemURL: 'http://item.test.tw',
+        // HoldTradeAMT: '1',
+        // StoreID: '',
+        // CustomField1: showId
+        // CustomField2: req.session.id
+        // CustomField3: '',
+        // CustomField4: ''
+      }
+      const createPayment = new Ecpay(options)
+      let parameters = {}
+      const html = createPayment.payment_client.aio_check_out_credit_onetime(parameters = baseParam)
+      res.render('order/ecpayPayment', {
+        result: html
+      })
+    } catch (err) { next(err) }
+  },
+  checkoutWithCreditCardReturnResult: async (req, res, next) => {
+    try {
+      const { RtnCode, RtnMsg, SimulatePaid } = req.body
+      if (RtnCode === '1' && SimulatePaid === '1') {
+        res.write('1|OK').end()
+      } else {
+        console.log(RtnMsg)
+        res.write('0|err')
+        throw error
+      }
+    } catch (err) { next(err) }
+  },
+  checkoutWithCreditCardResult: async (req, res, next) => {
+    try {
+      const { MerchantID, MerchantTradeNo, MerchantTradeDate, StoreId, TradeNo, TradeAmt, PaymentDate, PaymentType } = req.body
+      const { userId, showId } = req.params
+      const paymentParams = {
+        MerchantID,
+        MerchantTradeNo,
+        MerchantTradeDate,
+        StoreId,
+        TradeNo,
+        TradeAmt,
+        PaymentDate,
+        PaymentType
+      }
+      await sequelize.transaction(async (t) => {
+        const order = await Order.findOne({
+          attributes: ['id'],
+          where: { showId },
+          transaction: t
+        })
+        await Promise.all([
+          order.update({
+            status: 'Payment confirmed'
+          }, { where: { showId }, transaction: t }),
+          Delivery.update({
+            status: 'Payment confirmed'
+          }, { where: { orderId: order.id }, transaction: t }),
+          Payment.update({
+            status: 'Payment confirmed',
+            paymentMethod: PaymentType,
+            paidAt: PaymentDate,
+            totalAmount: TradeAmt
+          }, { where: { orderId: order.id }, transaction: t }),
+          Subscriptions.update({
+            active: true
+          }, { where: { userId }, transaction: t })
+        ])
+      })
+      res.render('order/confirmPayment', {
+        result: paymentParams,
+        userId,
+        showId
+      })
+    } catch (err) { next(err) }
+  },
   checkoutWithPaypal: async (req, res, next) => {
     try {
       const { showId, userId } = req.params
@@ -45,8 +201,8 @@ const paymentController = {
           description: 'Payment for a new plan at Genius Chef'
         }],
         redirect_urls: {
-          return_url: process.env.CLIENT_URL + `/orders/${showId}/payment/${userId}/paypal/success`,
-          cancel_url: process.env.CLIENT_URL + `/orders/${showId}/payment/${userId}/paypal/cancel`
+          return_url: process.env.BASE_URL + `/orders/${showId}/payment/${userId}/paypal/success`,
+          cancel_url: process.env.BASE_URL + `/orders/${showId}/payment/${userId}/paypal/cancel`
         },
         note_to_payer: 'Contact us for any questions on your order.'
 
@@ -62,7 +218,6 @@ const paymentController = {
           })
         }
       })
-      console.log(req.body)
     } catch (err) { next(err) }
   },
   checkoutWithPaypalSuccess: (req, res, next) => {

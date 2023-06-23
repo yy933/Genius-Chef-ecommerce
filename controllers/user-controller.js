@@ -10,6 +10,7 @@ const Op = Sequelize.Op
 const dayjs = require('dayjs')
 dayjs().format()
 
+
 const userController = {
   getSignIn: (req, res, next) => {
     try {
@@ -508,68 +509,7 @@ const userController = {
       return res.redirect('/plans')
     }
   },
-  sendOrder: async (req, res, next) => {
-    const t = await sequelize.transaction()
-    try {
-      const { userId } = req.params
-      if (req.user.id.toString() !== userId) {
-        return res.redirect('/')
-      }
-      let { menu, preference, servings, meals, totalAmount, recurringSub, name, phone, email, address, preferredDay, preferredTime } = req.body
-      if (!req.body) {
-        req.flash('warning_msg', 'All fields are required!')
-        res.redirect(`/users/cart/${userId}`)
-      }
-      if (recurringSub === 'yes') {
-        recurringSub = true
-      } else {
-        recurringSub = false
-      }
-      const showId = Date.now().toString() + userId
-
-      const order = await Order.create({
-        menu,
-        preference: preference.toString(),
-        servings,
-        meals,
-        totalAmount,
-        status: 'Payment not confirmed',
-        userId,
-        showId
-      }, { transaction: t })
-      await Delivery.create({
-        orderId: order.id,
-        name,
-        email,
-        phone,
-        address,
-        preferredDay,
-        preferredTime,
-        status: 'Payment not confirmed'
-      }, { transaction: t })
-      await Payment.create({
-        orderId: order.id,
-        totalAmount,
-        status: 'Payment not confirmed'
-      }, { transaction: t })
-      await Cart.destroy({
-        where: { userId }
-      }, { transaction: t })
-
-      await t.commit()
-      return res.render('order/confirmOrder', {
-        orderId: order.id,
-        email,
-        showId,
-        userId
-      })
-    } catch (err) {
-      await t.rollback()
-      next(err)
-      req.flash('warning_msg', 'Something went wrong. Please try again.')
-      return res.redirect('back')
-    }
-  }
+ 
 
 }
 

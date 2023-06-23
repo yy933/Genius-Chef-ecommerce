@@ -21,6 +21,7 @@ app.set('view engine', 'hbs')
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+app.set('trust proxy', 1) // trust first proxy
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -28,13 +29,15 @@ app.use(
     saveUninitialized: true,
     cookie: {
       httpOnly: true,
-      secure: false, // set to true on production
-      sameSite: 'Lax'
+      secure: true, // set to true on production
+      sameSite: 'none'
+      
     }
   })
 )
 app.use(passport.initialize())
 app.use(passport.session())
+
 app.use(cookieParser())
 app.use(methodOverride('_method'))
 app.use(flash())

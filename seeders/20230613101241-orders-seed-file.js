@@ -1,5 +1,6 @@
 'use strict'
 const randomItem = require('../helpers/random-item')
+const {showIdGenerator} = require('../helpers/ecpay-helper')
 const orderOptions = {
   menu: ['Classic', 'Vegetarian'],
   preference: ['Dairy free', 'Gluten free', 'Lacto-ovo vegetarian', 'Nutritious and healthy', 'Pescatarian', 'Quick and easy', 'N/A'],
@@ -49,7 +50,7 @@ module.exports = {
         meals: plansPrice[index % 11].meals,
         total_amount: plansPrice[index % 11].totalAmount,
         status: randomItem(orderOptions.status),
-        show_id: Date.now().toString() + users[index].id,
+        show_id: showIdGenerator(users[index].id),
         created_at: new Date(),
         updated_at: new Date()
       })

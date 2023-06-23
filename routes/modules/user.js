@@ -25,6 +25,6 @@ router.put('/profile/:userId/settings', authenticator, authenticatedUser, userCo
 router.post('/logout', authenticator, authenticatedUser, userController.logOut)
 router.get('/cart/:userId', authenticator, authenticatedUser, userController.getCart)
 router.post('/cart/:userId', authenticator, authenticatedUser, userController.sendPlansToCart)
-router.post('/:userId/order', authenticator, authenticatedUser, userController.sendOrder)
+
 
 module.exports = router
