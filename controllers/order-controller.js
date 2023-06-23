@@ -1,6 +1,5 @@
 const { Order, User, Delivery, Payment, Cart, sequelize } = require('../models')
 
-
 const orderController = {
   sendOrder: async (req, res, next) => {
     const t = await sequelize.transaction()

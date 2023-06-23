@@ -1,6 +1,6 @@
 'use strict'
 const randomItem = require('../helpers/random-item')
-const {showIdGenerator} = require('../helpers/ecpay-helper')
+const { showIdGenerator } = require('../helpers/ecpay-helper')
 const orderOptions = {
   menu: ['Classic', 'Vegetarian'],
   preference: ['Dairy free', 'Gluten free', 'Lacto-ovo vegetarian', 'Nutritious and healthy', 'Pescatarian', 'Quick and easy', 'N/A'],

@@ -86,19 +86,8 @@ const paymentController = {
         TradeDesc: 'menu: ' + menu + ', servings: ' + servings + ', meals: ' + meals,
         ItemName: 'menu: ' + menu + ', servings: ' + servings + ', meals: ' + meals,
         ReturnURL: process.env.BASE_URL + `/orders/${showId}/payment/${userId}/ecpay/returnResult`,
-        // EncryptType: 1,
-        // ChoosePayment: 'Credit'
-        // ChooseSubPayment: '',
-        OrderResultURL: process.env.BASE_URL + `/orders/${showId}/payment/${userId}/ecpay/result`
-        // NeedExtraPaidInfo: '1',
-        // ClientBackURL: process.env.BASE_URL + `orders/${showId}/payment/${userId}/ecpay/result`,
-        // ItemURL: 'http://item.test.tw',
-        // HoldTradeAMT: '1',
-        // StoreID: '',
-        // CustomField1: showId
-        // CustomField2: req.session.id
-        // CustomField3: '',
-        // CustomField4: ''
+        OrderResultURL: process.env.BASE_URL + `/orders/${showId}/payment/${userId}/ecpay/result`,
+        CustomField1: order.User.email
       }
       const createPayment = new Ecpay(options)
       let parameters = {}
@@ -122,18 +111,22 @@ const paymentController = {
   },
   checkoutWithCreditCardResult: async (req, res, next) => {
     try {
-      const { MerchantID, MerchantTradeNo, MerchantTradeDate, StoreId, TradeNo, TradeAmt, PaymentDate, PaymentType } = req.body
+      const { MerchantTradeNo, TradeNo, TradeAmt, PaymentDate, PaymentType, RtnCode, RtnMsg, SimulatePaid, CustomField1 } = req.body
       const { userId, showId } = req.params
-      const paymentParams = {
-        MerchantID,
-        MerchantTradeNo,
-        MerchantTradeDate,
-        StoreId,
-        TradeNo,
-        TradeAmt,
-        PaymentDate,
-        PaymentType
+      const mailOptions = {
+        from: process.env.EMAIL,
+        to: CustomField1,
+        subject: `Payment for order #${showId} at Genius Chef has been confirmed`,
+        html: `<h1 style="color:#196F3D; text-align:center">Payment Confirmed</h1>
+            <h3>Dear customer,</h3>
+            <p style="font-size: 14px">Thank you for cooking with us! We have confirmed your payment for order #${showId}. For order details, please check your <a href=${process.env.BASE_URL}/users/profile/${userId}>profile</a>.</p>
+            <br>
+            <p style="font-size: 14px; color:#616A6B;">Please <a href="${process.env.BASE_URL}/contact">contact us</a> if you have any questions.</p>
+            <br>
+            <h3>Sincerely,<br>Genius Chef Customer Service Team</h3>`
       }
+      console.log(req.body)
+
       await sequelize.transaction(async (t) => {
         const order = await Order.findOne({
           attributes: ['id'],
@@ -151,17 +144,25 @@ const paymentController = {
             status: 'Payment confirmed',
             paymentMethod: PaymentType,
             paidAt: PaymentDate,
-            totalAmount: TradeAmt
+            totalAmount: TradeAmt,
+            ecpayMerchantTradeNo: MerchantTradeNo,
+            ecpayTradeNo: TradeNo
           }, { where: { orderId: order.id }, transaction: t }),
           Subscriptions.update({
             active: true
-          }, { where: { userId }, transaction: t })
+          }, { where: { userId }, transaction: t }),
+          mailService(mailOptions)
         ])
       })
+      console.log(RtnCode, RtnMsg, SimulatePaid)
       res.render('order/confirmPayment', {
-        result: paymentParams,
         userId,
-        showId
+        showId,
+        email: CustomField1,
+        PaymentType: 'Credit Card',
+        PaymentDate,
+        TradeAmt,
+        status: 'Payment confirmed'
       })
     } catch (err) { next(err) }
   },
@@ -201,8 +202,8 @@ const paymentController = {
           description: 'Payment for a new plan at Genius Chef'
         }],
         redirect_urls: {
-          return_url: process.env.BASE_URL + `/orders/${showId}/payment/${userId}/paypal/success`,
-          cancel_url: process.env.BASE_URL + `/orders/${showId}/payment/${userId}/paypal/cancel`
+          return_url: `https://ac62-36-237-231-37.ngrok-free.app/orders/${showId}/payment/${userId}/paypal/success`,
+          cancel_url: `https://ac62-36-237-231-37.ngrok-free.app/orders/${showId}/payment/${userId}/paypal/cancel`
         },
         note_to_payer: 'Contact us for any questions on your order.'
 
@@ -244,9 +245,9 @@ const paymentController = {
             subject: `Payment for order #${showId} at Genius Chef has been confirmed`,
             html: `<h1 style="color:#196F3D; text-align:center">Payment Confirmed</h1>
             <h3>Dear customer,</h3>
-            <p style="font-size: 14px">Thank you for cooking with us! We have confirmed your payment for order #${showId}. For order details, please check your <a href=${process.env.CLIENT_URL}/users/profile/${userId}>profile</a>.</p>
+            <p style="font-size: 14px">Thank you for cooking with us! We have confirmed your payment for order #${showId}. For order details, please check your <a href=${process.env.BASE_URL}/users/profile/${userId}>profile</a>.</p>
             <br>
-            <p style="font-size: 14px; color:#616A6B;">Please <a href="${process.env.CLIENT_URL}/contact">contact us</a> if you have any questions.</p>
+            <p style="font-size: 14px; color:#616A6B;">Please <a href="${process.env.BASE_URL}/contact">contact us</a> if you have any questions.</p>
             <br>
             <h3>Sincerely,<br>Genius Chef Customer Service Team</h3>`
           }
@@ -278,11 +279,17 @@ const paymentController = {
               mailService(mailOptions)
             ])
           })
+          console.log(payment)
+          console.log(payment.transactions[0].amount)
 
           res.render('order/confirmPayment', {
             userId,
             showId,
-            email: payment.transactions[0].custom
+            email: payment.transactions[0].custom,
+            PaymentType: 'Credit Card',
+            PaymentDate: payment.update_time,
+            TradeAmt: payment.transactions[0].amount.total,
+            status: 'Payment confirmed'
           })
         }
       }

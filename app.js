@@ -31,7 +31,6 @@ app.use(
       httpOnly: true,
       secure: true, // set to true on production
       sameSite: 'none'
-      
     }
   })
 )

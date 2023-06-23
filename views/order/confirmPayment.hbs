@@ -4,8 +4,32 @@
   <h4 style="letter-spacing: 0.7px; line-height: 2rem;">We have confirmed your payment for order #{{showId}} and sent a confirmation email to {{email}}.</h4>
   <h1 style="height: 100px; display: flex; align-items: center;justify-content: center" ><i class="fa-sharp fa-regular fa-circle-check fa-bounce fa-2xl" style="color: #06716e"></i></h1>
   <h4 class="my-2">Your plan is active now. Check <a href="/users/profile/{{userId}}">profile</a> for details.</h4>
-</div>
-{{result}}
+  </div>
+  {{!-- Payment Details  --}}
+  <table class="table">
+  <tbody>
+    <tr>
+      <th scope="row">Order Number</th>
+      <td>#{{showId}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Total Amount</th>
+      <td>$ {{TradeAmt}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Payment Type</th>
+      <td colspan="2">{{PaymentType}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Paid At</th>
+      <td colspan="2">{{PaymentDate}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Payment Status</th>
+      <td colspan="2">{{status}}</td>
+    </tr>
+  </tbody>
+  </table>
 <div class="back text-center my-3">
   <a href="/"><button class="btn btn-sm btn-outline-secondary">Home</button></a>
 </div>

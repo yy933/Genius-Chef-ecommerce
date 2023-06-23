@@ -10,7 +10,6 @@ const Op = Sequelize.Op
 const dayjs = require('dayjs')
 dayjs().format()
 
-
 const userController = {
   getSignIn: (req, res, next) => {
     try {
@@ -508,8 +507,7 @@ const userController = {
       req.flash('warning_msg', 'Plans could not be added to cart, please try again!')
       return res.redirect('/plans')
     }
-  },
- 
+  }
 
 }
 
