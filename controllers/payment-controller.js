@@ -77,8 +77,6 @@ const paymentController = {
         return res.redirect(`/users/profile/${userId}`)
       }
       const { totalAmount, menu, servings, meals } = req.query
-
-      // 若要測試非必帶參數請將base_param內註解的參數依需求取消註解 //
       const baseParam = {
         MerchantTradeNo: showIdGenerator(userId),
         MerchantTradeDate: dayjs(order.orderAt).format('YYYY/MM/DD HH:mm:ss'),
@@ -100,7 +98,7 @@ const paymentController = {
   checkoutWithCreditCardReturnResult: async (req, res, next) => {
     try {
       const { RtnCode, RtnMsg, SimulatePaid } = req.body
-      if (RtnCode === '1' && SimulatePaid === '1') {
+      if (RtnCode === 1 && SimulatePaid === 1) {
         res.write('1|OK').end()
       } else {
         console.log(RtnMsg)
@@ -125,45 +123,88 @@ const paymentController = {
             <br>
             <h3>Sincerely,<br>Genius Chef Customer Service Team</h3>`
       }
+      const mailOptionsFailed = {
+        from: process.env.EMAIL,
+        to: CustomField1,
+        subject: `Payment for order #${showId} at Genius Chef failed`,
+        html: `<h1 style="color:#196F3D; text-align:center">Payment Failed</h1>
+            <h3>Dear customer,</h3>
+            <p style="font-size: 14px">Your payment for order #${showId} failed. For order details, please check your <a href=${process.env.BASE_URL}/users/profile/${userId}>profile</a>.</p>
+            <br>
+            <p style="font-size: 14px; color:#616A6B;">Please <a href="${process.env.BASE_URL}/contact">contact us</a> if you have any questions.</p>
+            <br>
+            <h3>Sincerely,<br>Genius Chef Customer Service Team</h3>`
+      }
       console.log(req.body)
-
-      await sequelize.transaction(async (t) => {
-        const order = await Order.findOne({
-          attributes: ['id'],
-          where: { showId },
-          transaction: t
+      if (RtnCode === 1) {
+        await sequelize.transaction(async (t) => {
+          const order = await Order.findOne({
+            attributes: ['id'],
+            where: { showId },
+            transaction: t
+          })
+          await Promise.all([
+            order.update({
+              status: 'Payment confirmed'
+            }, { where: { showId }, transaction: t }),
+            Delivery.update({
+              status: 'Payment confirmed'
+            }, { where: { orderId: order.id }, transaction: t }),
+            Payment.update({
+              status: 'Payment confirmed',
+              paymentMethod: PaymentType,
+              paidAt: PaymentDate,
+              totalAmount: TradeAmt,
+              ecpayMerchantTradeNo: MerchantTradeNo,
+              ecpayTradeNo: TradeNo
+            }, { where: { orderId: order.id }, transaction: t }),
+            Subscriptions.update({
+              active: true
+            }, { where: { userId }, transaction: t }),
+            mailService(mailOptions)
+          ])
         })
-        await Promise.all([
-          order.update({
-            status: 'Payment confirmed'
-          }, { where: { showId }, transaction: t }),
-          Delivery.update({
-            status: 'Payment confirmed'
-          }, { where: { orderId: order.id }, transaction: t }),
-          Payment.update({
-            status: 'Payment confirmed',
-            paymentMethod: PaymentType,
-            paidAt: PaymentDate,
-            totalAmount: TradeAmt,
-            ecpayMerchantTradeNo: MerchantTradeNo,
-            ecpayTradeNo: TradeNo
-          }, { where: { orderId: order.id }, transaction: t }),
-          Subscriptions.update({
-            active: true
-          }, { where: { userId }, transaction: t }),
-          mailService(mailOptions)
-        ])
-      })
+        res.render('order/confirmPayment', {
+          isSuccess: true,
+          userId,
+          showId,
+          email: CustomField1,
+          PaymentType: 'Credit Card',
+          PaymentDate: dayjs(PaymentDate).format('YYYY/MM/DD HH:mm:ss'),
+          TradeAmt,
+          status: 'Payment confirmed'
+        })
+      } else {
+        await sequelize.transaction(async (t) => {
+          const order = await Order.findOne({
+            attributes: ['id'],
+            where: { showId },
+            transaction: t
+          })
+          await Promise.all([
+            Payment.update({
+              status: 'Payment failed.',
+              paymentMethod: PaymentType,
+              paidAt: PaymentDate,
+              totalAmount: TradeAmt,
+              ecpayMerchantTradeNo: MerchantTradeNo,
+              ecpayTradeNo: TradeNo
+            }, { where: { orderId: order.id }, transaction: t }),
+            mailService(mailOptionsFailed)
+          ])
+        })
+        res.render('order/confirmPayment', {
+          isSuccess: false,
+          userId,
+          showId,
+          email: CustomField1,
+          PaymentType: 'Credit Card',
+          PaymentDate: dayjs(PaymentDate).format('YYYY/MM/DD HH:mm:ss'),
+          TradeAmt,
+          status: 'Payment failed'
+        })
+      }
       console.log(RtnCode, RtnMsg, SimulatePaid)
-      res.render('order/confirmPayment', {
-        userId,
-        showId,
-        email: CustomField1,
-        PaymentType: 'Credit Card',
-        PaymentDate,
-        TradeAmt,
-        status: 'Payment confirmed'
-      })
     } catch (err) { next(err) }
   },
   checkoutWithPaypal: async (req, res, next) => {
@@ -202,8 +243,8 @@ const paymentController = {
           description: 'Payment for a new plan at Genius Chef'
         }],
         redirect_urls: {
-          return_url: `https://ac62-36-237-231-37.ngrok-free.app/orders/${showId}/payment/${userId}/paypal/success`,
-          cancel_url: `https://ac62-36-237-231-37.ngrok-free.app/orders/${showId}/payment/${userId}/paypal/cancel`
+          return_url: process.env.BASE_URL + `/orders/${showId}/payment/${userId}/paypal/success`,
+          cancel_url: process.env.BASE_URL + `/orders/${showId}/payment/${userId}/paypal/cancel`
         },
         note_to_payer: 'Contact us for any questions on your order.'
 
@@ -227,7 +268,6 @@ const paymentController = {
     const executePaymentJson = {
       payer_id: PayerID
     }
-
     paypal.payment.execute(
       paymentId,
       executePaymentJson,
@@ -237,7 +277,6 @@ const paymentController = {
           next(error)
           res.redirect(`users/profile/${userId}`)
         } else {
-          console.log(payment)
           const shippingInfo = payment.payer.payer_info.shipping_address
           const mailOptions = {
             from: process.env.EMAIL,
@@ -269,8 +308,8 @@ const paymentController = {
               Payment.update({
                 status: 'Payment confirmed',
                 paymentMethod: 'Paypal',
-                paidAt: new Date(),
-                totalAmount: order.totalAmount,
+                paidAt: payment.update_time,
+                totalAmount: payment.transactions[0].amount,
                 paypalPaymentId: payment.id
               }, { where: { orderId: order.id }, transaction: t }),
               Subscriptions.update({
@@ -279,15 +318,13 @@ const paymentController = {
               mailService(mailOptions)
             ])
           })
-          console.log(payment)
-          console.log(payment.transactions[0].amount)
-
-          res.render('order/confirmPayment', {
+          return res.render('order/confirmPayment', {
+            isSuccess: true,
             userId,
             showId,
             email: payment.transactions[0].custom,
-            PaymentType: 'Credit Card',
-            PaymentDate: payment.update_time,
+            PaymentType: 'Paypal',
+            PaymentDate: dayjs(payment.update_time).format('YYYY/MM/DD HH:mm:ss'),
             TradeAmt: payment.transactions[0].amount.total,
             status: 'Payment confirmed'
           })
@@ -295,8 +332,22 @@ const paymentController = {
       }
     )
   },
-  checkoutWithPaypalCancel: (req, res, next) => {
-    res.send('Payment failed.')
+  checkoutWithPaypalCancel: async (req, res, next) => {
+    const { showId, userId } = req.params
+    const order = await Order.findOne({
+      attributes: ['id', 'totalAmount'],
+      where: { showId }
+    })
+
+    return res.render('order/confirmPayment', {
+      isSuccess: false,
+      userId,
+      showId,
+      PaymentType: 'Paypal',
+      PaymentDate: dayjs(new Date()).format('YYYY/MM/DD HH:mm:ss'),
+      TradeAmt: order.totalAmount,
+      status: 'Payment failed'
+    })
   }
 }
 

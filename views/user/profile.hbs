@@ -2,87 +2,152 @@
   {{> message}}
   <div class="profile-container pt-5">
     {{> profile-tabs}}
-    <div class="tab-content ms-3" id="v-pills-tabContent">
+    <div class="profile-contents ms-3 col-10" id="v-pills-tabContent">
       {{!-- My plans --}}
       {{#is path 'plans'}}
+      {{#if isEmpty}}
+      <h4 class="my-4 ms-3">No active plans. Get new plans
+        <a href="/plans" class="text-reset"><span style="color:rgb(240, 82, 54); font-weight:700">here</span></a>!
+      </h4>
+      {{else}}
+      {{!-- Order History Table --}}
       <div class="profile-section">
-        {{!-- Order Details --}}
-        <details>
-          <summary>
-            <h4 class="profile-subtitle d-inline">Current Plan details</h4>
-          </summary>
-          {{#if isEmpty}}
-          <h4 class="my-4 ms-3">No active plans. Get new plans <a href="/plans"
-              class="text-reset"><span style="color:rgb(240, 82, 54);
-                font-weight:700">here </span></a>!</h4>
-          {{else}}
-          <ul class="profile-item my-3">
-            <li><strong>Order id:</strong>#{{showId}}</li>
-            <li><strong>Ordered at:</strong>{{orderAt}}</li>
-            <li>
-              <strong>Status:</strong>{{status}}
-              {{#is status 'Payment not confirmed'}}
-              <a href="/orders/{{showId}}/payment/{{userId}}" class="my-2 mx-2">
-                <button class="btn btn-warning btn-sm">Pay now!</button>
-              </a>
-              <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#cancelOrder">Cancel Order</button>
-              <!--  Cancel Order Modal -->
-              <div class="modal fade" id="cancelOrder" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-body">
-                      <h3 style="letter-spacing: 0.5px;line-height: 4rem">Are you sure you want to cancel the order #{{showId}} ?</h3>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, keep my order.</button>
-                      <form action="/orders/{{showId}}/cancel/{{userId}}" method="post">
-                      <button type="submit" class="btn btn-primary">Yes, please cancel my order.</button>
-                      </form>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Order Number</th>
+                <th>Order At</th>
+                <th>Status</th>
+                <th>Details</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each order}}
+              <tr>
+                <td data-label="Order Number">#{{this.showId}}</td>
+                <td data-label="Order At">{{this.orderAt}}</td>
+                <td data-label="Status">{{this.status}}</td>
+                <td data-label="Details">
+                  <button type="button" class="btn btn-sm details-btn"
+                    data-bs-toggle="modal" data-bs-target="#order{{this.showId}}">
+                    Details
+                  </button>
+                </td>
+                <td data-label="Actions">
+                  {{#is status 'Payment not confirmed'}}
+                  <div class="paymentNotConfirmed-btn-group">
+                      <a href="/orders/{{this.showId}}/payment/{{this.userId}}" class="my-2 mx-2">
+                      <span class="badge bg-warning text-dark d-inline-block">Pay now!</span>
+                    </a>
+                    <span class="badge bg-secondary d-inline-block my-2 cancelOrder-btn"
+                      data-bs-toggle="modal" data-bs-target="#cancelOrder{{this.showId}}">Cancel Order</span>
+                    <!--  Cancel Order Modal -->
+                    <div class="modal fade" id="cancelOrder{{this.showId}}" tabindex="-1"
+                      aria-labelledby="cancelOrderModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-body">
+                            <h3 style="letter-spacing: 0.5px;line-height: 4rem">Are you
+                              sure you want to cancel the order #{{this.showId}} ?</h3>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, keep my order.</button>
+                            <form action="/orders/{{this.showId}}/cancel/{{this.userId}}"
+                              method="post">
+                              <button type="submit" class="btn btn-primary">Yes, please
+                                cancel my order.</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>             
-              {{/is}}
-            </li>
-            <li><strong>Menu:</strong>{{menu}}</li>
-            <li><strong>Preference:</strong> <p>{{preference}}</p> </li>
-            <li> <strong>Servings:</strong>{{servings}}</li>
-            <li> <strong>Meals:</strong>{{meals}} </li>
-            <li> <strong>Total: $</strong>{{totalAmount}}</li>
-          </ul>
-          {{/if}}
-        </details>
-        {{!-- Delivery Details --}}
-        <details>
-          <summary>
-            <h4 class="profile-subtitle d-inline">Delivery Details</h4>
-          </summary>
-          {{#if isEmpty}}
-          <h4 class="my-4 ms-3">No active plans. Get new plans <a href="/plans"
-              class="text-reset"><span style="color:rgb(240, 82, 54);
-                font-weight:700">here </span></a>!</h4>
-          {{else}}
-          <ul class="profile-item my-3">
-            <li> <strong>Name: </strong> {{name}}</li>
-            <li> <strong>Email: </strong>{{email}}</li>
-            <li> <strong>Phone: </strong>{{phone}}</li>
-            <li> <strong>Address: </strong> {{address}}</li>
-            <li> <strong>Preferred day: </strong> {{preferredDay}}</li>
-            <li> <strong>Preferred day: </strong> {{preferredTime}}</li>
-          </ul>
-          {{/if}}
-        </details>
+                  {{/is}}
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
       </div>
+      {{#each order}}
+      <!-- Details Modal -->
+      <div class="modal fade" id="order{{this.showId}}" tabindex="-1"
+        aria-labelledby="orderDetailsLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="exampleModalLabel">Plan Details</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+            </div>
+            <div class="modal-body">          
+              {{!-- Order Details --}}
+              <details>
+                <summary>
+                  <h5 class="profile-subtitle d-inline">Order details</h5>
+                </summary>
+                <ul class="profile-item my-3">
+                  <li><strong>Order number:</strong>#{{this.showId}}</li>
+                  <li><strong>Ordered at:</strong>{{this.orderAt}}</li>
+                  <li>
+                    <strong>Status:</strong>{{this.status}}
+                  </li>
+                  <li><strong>Menu:</strong>{{this.menu}}</li>
+                  <li><strong>Preference:</strong> <p>{{this.preference}}</p> </li>
+                  <li> <strong>Servings:</strong>{{this.servings}}</li>
+                  <li> <strong>Meals:</strong>{{this.meals}} </li>
+                  <li> <strong>Total: $</strong>{{this.totalAmount}}</li>
+                </ul>
+              </details>
+              {{!-- Delivery Details --}}
+              <details>
+                <summary>
+                  <h5 class="profile-subtitle d-inline">Delivery Details</h5>
+                </summary>
+                <ul class="profile-item my-3">
+                  <li> <strong>Name: </strong> {{this.name}}</li>
+                  <li> <strong>Email: </strong>{{this.email}}</li>
+                  <li> <strong>Phone: </strong>{{this.phone}}</li>
+                  <li> <strong>Address: </strong> {{this.address}}</li>
+                  <li> <strong>Preferred day: </strong> {{this.preferredDay}}</li>
+                  <li> <strong>Preferred day: </strong> {{this.preferredTime}}</li>
+                </ul>
+              </details>
+              {{!-- Payment Details --}}
+              <details>
+                <summary>
+                  <h5 class="profile-subtitle d-inline">Payment Details</h5>
+                </summary>
+                <ul class="profile-item my-3">
+                  <li> <strong>Payment status: </strong> {{this.paymentStatus}}</li>
+                  <li> <strong>Paid at: </strong>{{this.paidAt}}</li>
+                  <li> <strong>Payment method: </strong>{{this.paymentMethod}}</li>
+                </ul>
+              </details>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary"
+                data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+      {{/if}}
       {{/is}}
       {{!-- Settings --}}
       {{#is path 'settings'}}
       <div class="profile-section">
         <h4 class="profile-subtitle d-inline">Settings</h4>
         <ul class="profile-item my-3">
-          {{!-- Profile presentation mode  --}}
+          {{!-- Profile presentation mode --}}
           <li><strong>Name:</strong> {{name}}</li>
           <li><strong>Email:</strong> {{email}}</li>
-          <li><strong>Recurring subscription: </strong> {{#is recurringSub true}} Yes {{else}} No {{/is}} </li>
+          <li><strong>Recurring subscription: </strong> {{#is recurringSub
+            true}} Yes {{else}} No {{/is}} </li>
           <!-- change password button -->
           <li>
             <div class="col-12 mt-5">
@@ -93,10 +158,10 @@
               </a>
               <a href="/users/profile/{{userId}}/changePassword">
                 <button type="button" class="btn btn-outline-secondary">
-                Change Password
-              </button>
+                  Change Password
+                </button>
               </a>
-              
+
             </div>
           </li>
 

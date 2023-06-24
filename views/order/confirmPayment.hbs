@@ -1,10 +1,21 @@
 <div class="container my-5 py-5">
+  {{#if isSuccess}}
+  {{!-- Payment Confirmed  --}}
   <div class="order-confirm text-center p-2">
   <span class="confirm-title">Payment Confirmed!</span>
   <h4 style="letter-spacing: 0.7px; line-height: 2rem;">We have confirmed your payment for order #{{showId}} and sent a confirmation email to {{email}}.</h4>
   <h1 style="height: 100px; display: flex; align-items: center;justify-content: center" ><i class="fa-sharp fa-regular fa-circle-check fa-bounce fa-2xl" style="color: #06716e"></i></h1>
   <h4 class="my-2">Your plan is active now. Check <a href="/users/profile/{{userId}}">profile</a> for details.</h4>
   </div>
+  {{else}}
+  {{!-- Error Message  --}}
+  <div class="order-confirm text-center p-2">
+  <span class="confirm-title">Payment Confirmed!</span>
+  <h4 style="letter-spacing: 0.7px; line-height: 2rem;">Payment for order #{{showId}} failed. Please try again.</h4>
+  <h1 style="height: 100px; display: flex; align-items: center;justify-content: center" ><i class="fa-regular fa-circle-exclamation fa-bounce fa-2xl" style="color: #da3a3a"></i></h1>
+  <h4 class="my-2">Check <a href="/users/profile/{{userId}}">profile</a> for details.</h4>
+  </div>
+  {{/if}}
   {{!-- Payment Details  --}}
   <table class="table">
   <tbody>

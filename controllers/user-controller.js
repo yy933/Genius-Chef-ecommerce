@@ -252,12 +252,9 @@ const userController = {
   getProfile: async (req, res, next) => {
     try {
       const { userId, section } = req.params
-      const user = await User.findOne({
-        where: {
-          id: userId
-        },
+      const user = await User.findByPk(userId, {
         attributes: ['name', 'email', 'id'],
-        include: { model: Subscriptions, attributes: ['active', 'recurringSub'] },
+        include:{ model: Subscriptions, attributes: ['active', 'recurringSub'] },
         raw: true,
         nest: true
       })
@@ -270,34 +267,25 @@ const userController = {
         return res.redirect(`/users/profile/${req.user.id}`)
       }
       if (section === 'plans') {
-        const order = await Order.findOne({
+        const orders = await Order.findAll({
           where: { userId },
-          limit: 1,
-          order: [['createdAt', 'DESC']],
-          include: { model: Delivery, attributes: ['name', 'email', 'phone', 'address', 'preferredDay', 'preferredTime'] },
+          limit: 10,
+          order: [['updatedAt', 'DESC']],
+          include: [{ model: Delivery, attributes: ['name', 'email', 'phone', 'address', 'preferredDay', 'preferredTime'] }, {model: Payment, attributes: ['status', 'paidAt', 'paymentMethod']}],
           raw: true,
           nest: true
         })
-        if (!order) {
+        if (!orders) {
           return res.render('user/profile', {
             isEmpty: true,
             path: `${section}`,
             userId: user.id
           })
         }
-        if (order.status === 'Cancelled') {
-          return res.render('user/profile', {
-            isEmpty: true,
-            path: `${section}`,
-            userId
-          })
-        }
-        return res.render('user/profile', {
-          isEmpty: false,
-          path: `${section}`,
-          userId: user.id,
+        const order = orders.map(order => ({
+          userId,
           showId: order.showId,
-          orderAt: dayjs(order.createdAt).format('MMM D, YYYY HH:mm:ss'),
+          orderAt: dayjs(order.createdAt).format('MMM DD, YYYY HH:mm:ss'),
           status: order.status,
           menu: order.menu,
           preference: order.preference,
@@ -309,7 +297,17 @@ const userController = {
           phone: order.Delivery.phone,
           address: order.Delivery.address,
           preferredDay: order.Delivery.preferredDay,
-          preferredTime: order.Delivery.preferredTime
+          preferredTime: order.Delivery.preferredTime,
+          paymentStatus: order.Payment.status,
+          paidAt: dayjs(order.Payment.paidAt).format('MMM DD, YYYY HH:mm:ss'),
+          paymentMethod: order.Payment.paymentMethod
+        }))
+        return res.render('user/profile', {
+          isEmpty: false,
+          path: `${section}`,
+          userId: user.id,
+          order
+
         })
       }
       if (section === 'manageSettings') {

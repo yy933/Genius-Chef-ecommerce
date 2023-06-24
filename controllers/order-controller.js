@@ -18,7 +18,7 @@ const orderController = {
       } else {
         recurringSub = false
       }
-      const showId = new Date().getTime().toString() + userId
+      const showId = (new Date().getTime().toString() + userId + (Math.random() + 1).toString(36).substring(7)).slice(0, 18)
 
       const order = await Order.create({
         menu,
