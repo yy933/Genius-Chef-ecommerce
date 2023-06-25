@@ -254,7 +254,7 @@ const userController = {
       const { userId, section } = req.params
       const user = await User.findByPk(userId, {
         attributes: ['name', 'email', 'id'],
-        include:{ model: Subscriptions, attributes: ['active', 'recurringSub'] },
+        include: { model: Subscriptions, attributes: ['active', 'recurringSub'] },
         raw: true,
         nest: true
       })
@@ -271,7 +271,7 @@ const userController = {
           where: { userId },
           limit: 10,
           order: [['updatedAt', 'DESC']],
-          include: [{ model: Delivery, attributes: ['name', 'email', 'phone', 'address', 'preferredDay', 'preferredTime'] }, {model: Payment, attributes: ['status', 'paidAt', 'paymentMethod']}],
+          include: [{ model: Delivery, attributes: ['name', 'email', 'phone', 'address', 'preferredDay', 'preferredTime'] }, { model: Payment, attributes: ['status', 'paidAt', 'paymentMethod'] }],
           raw: true,
           nest: true
         })

@@ -96,7 +96,7 @@
                     <strong>Status:</strong>{{this.status}}
                   </li>
                   <li><strong>Menu:</strong>{{this.menu}}</li>
-                  <li><strong>Preference:</strong> <p>{{this.preference}}</p> </li>
+                  <li><strong>Preference:</strong> {{this.preference}} </li>
                   <li> <strong>Servings:</strong>{{this.servings}}</li>
                   <li> <strong>Meals:</strong>{{this.meals}} </li>
                   <li> <strong>Total: $</strong>{{this.totalAmount}}</li>
@@ -123,8 +123,10 @@
                 </summary>
                 <ul class="profile-item my-3">
                   <li> <strong>Payment status: </strong> {{this.paymentStatus}}</li>
+                  {{#is this.paymentStatus 'Payment confirmed'}}
                   <li> <strong>Paid at: </strong>{{this.paidAt}}</li>
                   <li> <strong>Payment method: </strong>{{this.paymentMethod}}</li>
+                  {{/is}}
                 </ul>
               </details>
             </div>

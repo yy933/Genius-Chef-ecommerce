@@ -263,8 +263,7 @@ td{
 }
 
 .scroll-body strong,
-.scroll-body select,
-.profile-item strong {
+.scroll-body select {
   margin-bottom: 0.85rem;
   font-size: 1.18rem;
 }
@@ -303,8 +302,14 @@ td{
   cursor: pointer;
 }
 .profile-item li {
-  font-family: "Lato", sans-serif;
+  /* font-family: "Lato", sans-serif; */
   margin-top: 18px;
+  margin-right: 5px;
+}
+
+.profile-item strong{
+  font-size: 1.1rem;
+  margin-right: 0.5rem;
 }
 
 /* confirm order */
