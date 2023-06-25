@@ -60,7 +60,7 @@ const paymentController = {
       const { showId, userId } = req.params
       const order = await Order.findOne({
         where: { showId },
-        include: [{ model: User, attributes: ['id', 'email'] }, Delivery],
+        include: [{ model: User, attributes: ['id'] }, { model: Delivery, attributes: ['email'] }],
         raw: true,
         nest: true
       })
@@ -85,7 +85,7 @@ const paymentController = {
         ItemName: 'menu: ' + menu + ', servings: ' + servings + ', meals: ' + meals,
         ReturnURL: process.env.BASE_URL + `/orders/${showId}/payment/${userId}/ecpay/returnResult`,
         OrderResultURL: process.env.BASE_URL + `/orders/${showId}/payment/${userId}/ecpay/result`,
-        CustomField1: order.User.email
+        CustomField1: order.Delivery.email
       }
       const createPayment = new Ecpay(options)
       let parameters = {}
@@ -213,7 +213,7 @@ const paymentController = {
       const { totalAmount, email } = req.body
       const order = await Order.findOne({
         where: { showId },
-        include: [{ model: User, attributes: ['id', 'email'] }, Delivery],
+        include: [{ model: User, attributes: ['id'] }, Delivery],
         raw: true,
         nest: true
       })
