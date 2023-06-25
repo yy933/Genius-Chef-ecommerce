@@ -9,7 +9,8 @@
       <h4 class="my-4 ms-3">No active plans. Get new plans
         <a href="/plans" class="text-reset"><span style="color:rgb(240, 82, 54); font-weight:700">here</span></a>!
       </h4>
-      {{else}}
+      {{/if}}
+      {{#unless isEmpty}}
       {{!-- Order History Table --}}
       <div class="profile-section">
         <div class="table-responsive">
@@ -138,7 +139,7 @@
         </div>
       </div>
       {{/each}}
-      {{/if}}
+      {{/unless}}
       {{/is}}
       {{!-- Settings --}}
       {{#is path 'settings'}}
@@ -163,10 +164,8 @@
                   Change Password
                 </button>
               </a>
-
             </div>
           </li>
-
         </ul>
       </div>
       {{/is}}

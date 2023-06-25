@@ -270,7 +270,7 @@ const userController = {
         const orders = await Order.findAll({
           where: { userId },
           limit: 10,
-          order: [['updatedAt', 'DESC']],
+          order: [['createdAt', 'DESC']],
           include: [{ model: Delivery, attributes: ['name', 'email', 'phone', 'address', 'preferredDay', 'preferredTime'] }, { model: Payment, attributes: ['status', 'paidAt', 'paymentMethod'] }],
           raw: true,
           nest: true
@@ -278,7 +278,7 @@ const userController = {
         if (!orders) {
           return res.render('user/profile', {
             isEmpty: true,
-            path: `${section}`,
+            path: 'plans',
             userId: user.id
           })
         }
@@ -307,7 +307,6 @@ const userController = {
           path: `${section}`,
           userId: user.id,
           order
-
         })
       }
       if (section === 'manageSettings') {
