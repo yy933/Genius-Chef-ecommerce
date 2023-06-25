@@ -7,13 +7,14 @@ const auth = require('./modules/auth')
 const menu = require('./modules/menu')
 const contact = require('./modules/contact')
 const order = require('./modules/order')
+const admin = require('./modules/admin')
 
 router.use('/users', user)
 router.use('/auth', auth)
 router.use('/menu', menu)
 router.use('/contact', contact)
 router.use('/orders', order)
-// router.use('/admin', admin)
+router.use('/admin', admin)
 
 router.get('/plans', (req, res, next) => {
   try {

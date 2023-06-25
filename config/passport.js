@@ -26,11 +26,11 @@ passport.use('admin-local', new LocalStrategy({ usernameField: 'email', password
   User.findOne({ where: { email, role: 'admin' } })
     .then(user => {
       if (!user) {
-        return cb(null, false, { message: 'This email is not registered!' })
+        return cb(null, false, req.flash('warning_msg', 'User not found.'))
       }
       return bcrypt.compare(password, user.password).then(isMatch => {
         if (!isMatch) {
-          return cb(null, false, { message: 'Email or Password incorrect.' })
+          return cb(null, false, req.flash('warning_msg', 'Incorrect password or email.'))
         }
         return cb(null, user)
       })
