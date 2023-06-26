@@ -1,4 +1,4 @@
-const { User, ResetToken, Order, Delivery, Payment } = require('../models')
+const { User, ResetToken, Order, Delivery, Payment, Subscriptions } = require('../models')
 const mailService = require('../helpers/email-helpers')
 const crypto = require('crypto')
 const bcrypt = require('bcryptjs')
@@ -151,60 +151,57 @@ const adminController = {
       return res.redirect('/admin/dashboard/users')
     } catch (error) { next(error) }
   },
-  getAdminDashboard: async (req, res, next) => {
+  getAdminDashboardOrders: async (req, res, next) => {
     try {
-      const { section } = req.params
-      const user = await User.findOne({
+      const admin = await User.findOne({
         where: { email: process.env.EMAIL },
         raw: true,
         nest: true
       })
-      if (!user || req.user.role === 'user') {
+      if (!admin || req.user.role === 'user') {
         req.flash('warning_msg', 'User not found!')
         return res.redirect('/users/login')
       }
-
-      if (section === 'orders') {
-        const orders = await Order.findAll({
-          limit: 10,
-          order: [['createdAt', 'DESC']],
-          include: [{ model: Delivery, attributes: ['name', 'email', 'phone', 'address', 'preferredDay', 'preferredTime'] }, { model: Payment, attributes: ['status', 'paidAt', 'paymentMethod'] },{model: User, attributes:['email', 'name']}],
-          raw: true,
-          nest: true
-        })
-        if (!orders) {
-          return res.render('admin/dashboard-orders', {
-            path: 'orders'
-          })
-        }
-        const order = orders.map(order => ({
-          id: order.id,
-          userId: order.userId,
-          userName: order.User.name,
-          userEmail: order.User.email,
-          showId: order.showId,
-          orderAt: dayjs(order.createdAt).format('MMM DD, YYYY HH:mm:ss'),
-          status: order.status,
-          menu: order.menu,
-          preference: order.preference,
-          servings: order.servings,
-          meals: order.meals,
-          totalAmount: order.totalAmount,
-          name: order.Delivery.name,
-          email: order.Delivery.email,
-          phone: order.Delivery.phone,
-          address: order.Delivery.address,
-          preferredDay: order.Delivery.preferredDay,
-          preferredTime: order.Delivery.preferredTime,
-          paymentStatus: order.Payment.status,
-          paidAt: dayjs(order.Payment.paidAt).format('MMM DD, YYYY HH:mm:ss'),
-          paymentMethod: order.Payment.paymentMethod
-        }))
+      const orders = await Order.findAll({
+        limit: 10,
+        order: [['createdAt', 'DESC']],
+        include: [{ model: Delivery, attributes: ['name', 'email', 'phone', 'address', 'preferredDay', 'preferredTime'] }, { model: Payment, attributes: ['status', 'paidAt', 'paymentMethod'] }, { model: User, attributes: ['email', 'name'] }],
+        raw: true,
+        nest: true
+      })
+      if (!orders) {
         return res.render('admin/dashboard-orders', {
-          path: `${section}`,
-          order
+          path: 'orders'
         })
       }
+      const order = orders.map(order => ({
+        id: order.id,
+        userId: order.userId,
+        userName: order.User.name,
+        userEmail: order.User.email,
+        showId: order.showId,
+        orderAt: dayjs(order.createdAt).format('MMM DD, YYYY HH:mm:ss'),
+        status: order.status,
+        menu: order.menu,
+        preference: order.preference,
+        servings: order.servings,
+        meals: order.meals,
+        totalAmount: order.totalAmount,
+        name: order.Delivery.name,
+        email: order.Delivery.email,
+        phone: order.Delivery.phone,
+        address: order.Delivery.address,
+        preferredDay: order.Delivery.preferredDay,
+        preferredTime: order.Delivery.preferredTime,
+        paymentStatus: order.Payment.status,
+        paidAt: dayjs(order.Payment.paidAt).format('MMM DD, YYYY HH:mm:ss'),
+        paymentMethod: order.Payment.paymentMethod
+      }))
+      return res.render('admin/dashboard-orders', {
+        path: 'orders',
+        order
+      })
+
       // if (section === 'manageSettings') {
       //   return res.render('user/editProfile', {
       //     path: 'settings',
@@ -214,10 +211,48 @@ const adminController = {
       //     recurringSub: user.Subscription.recurringSub
       //   })
       // }
+    } catch (err) {
+      console.log(err)
+      return next(err)
+    }
+  },
+  getAdminDashboardUsers: async (req, res, next) => {
+    try {
+      const admin = await User.findOne({
+        where: { email: process.env.EMAIL },
+        raw: true,
+        nest: true
+      })
+      if (!admin || req.user.role === 'user') {
+        req.flash('warning_msg', 'User not found!')
+        return res.redirect('/users/login')
+      }
+      const users = await User.findAll({
+        where: { role: 'user' },
+        attributes: { exclude: ['password'] },
+        limit: 10,
+        order: [['id', 'DESC']],
+        include: [{ model: Order, attributes: ['id', 'showId'] }, { model: Subscriptions, attributes: ['recurringSub', 'active'] }],
+        raw: true,
+        nest: true
+      })
+      if (!users) {
+        return res.render('admin/dashboard-users', {
+          path: 'users'
+        })
+      }
+      const user = users.map(user => ({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        createdAt: dayjs(user.createdAt).format('MMM DD, YYYY HH:mm:ss'),
+        activeSub: user.Subscription.active,
+        recurringSub: user.Subscription.recurringSub
+      }))
       
-      return res.render('admin/dashboard-orders', {
-        path: `${section}`,
-        
+      return res.render('admin/dashboard-users', {
+        path: 'users',
+        user
       })
     } catch (err) {
       console.log(err)

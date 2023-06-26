@@ -3,61 +3,53 @@
   <div class="profile-container pt-5">
     {{> admin-console-tabs}}
     <div class="profile-contents ms-3 col-10" id="v-pills-tabContent">
-      {{!-- Users Table --}}
+      {{!-- Orders Table --}}
       <div class="profile-section">
         <div class="table-responsive">
           <table class="table table-hover">
             <thead>
               <tr>
-                <th>Order Number</th>
-                <th>Order At</th>
-                <th>Status</th>
-                <th>Details</th>
+                <th>User ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Created At</th>
+                <th>Active</th>
+                <th>Recurring Subscription</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {{#each order}}
+              {{#each user}}
               <tr>
-                <td data-label="Order Number">#{{this.showId}}</td>
-                <td data-label="Order At">{{this.orderAt}}</td>
-                <td data-label="Status">{{this.status}}</td>
-                <td data-label="Details">
-                  <button type="button" class="btn btn-sm details-btn"
-                    data-bs-toggle="modal" data-bs-target="#order{{this.showId}}">
-                    Details
-                  </button>
-                </td>
+                <td data-label="User ID">{{this.id}}</td>
+                <td data-label="Name">{{this.name}}</td>
+                <td data-label="Email">{{this.email}}</td>
+                <td data-label="Created At">{{this.createdAt}}</td>
+                <td data-label="Active">{{#is this.activeSub true}}Yes{{else}}No{{/is}}</td>
+                <td data-label="Recurring Subscription">{{#is this.recurringSub true}}Yes{{else}}No{{/is}}</td>
                 <td data-label="Actions">
-                  {{#is status 'Payment not confirmed'}}
-                  <div class="paymentNotConfirmed-btn-group">
-                      <a href="/orders/{{this.showId}}/payment/{{this.userId}}" class="my-2 mx-2">
-                      <span class="badge bg-warning text-dark d-inline-block">Pay now!</span>
-                    </a>
-                    <span class="badge bg-secondary d-inline-block my-2 cancelOrder-btn"
-                      data-bs-toggle="modal" data-bs-target="#cancelOrder{{this.showId}}">Cancel Order</span>
+                  <div class="editOrder-btn-container">
+                    <span class="badge bg-secondary d-inline-block my-2 editOrder-btn"
+                      data-bs-toggle="modal" data-bs-target="#editSub{{this.showId}}">Edit</span>
                     <!--  Cancel Order Modal -->
-                    <div class="modal fade" id="cancelOrder{{this.showId}}" tabindex="-1"
-                      aria-labelledby="cancelOrderModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="editSub{{this.showId}}" tabindex="-1"
+                      aria-labelledby="editSubModalLabel" aria-hidden="true">
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-body">
-                            <h3 style="letter-spacing: 0.5px;line-height: 4rem">Are you
-                              sure you want to cancel the order #{{this.showId}} ?</h3>
+                            Edit Subscription
                           </div>
                           <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, keep my order.</button>
-                            <form action="/orders/{{this.showId}}/cancel/{{this.userId}}"
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <form action="/users/{{this.id}}?_method=PUT"
                               method="post">
-                              <button type="submit" class="btn btn-primary">Yes, please
-                                cancel my order.</button>
+                              <button type="submit" class="btn confirm-btn">Confirm</button>
                             </form>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  {{/is}}
                 </td>
               </tr>
               {{/each}}
@@ -65,72 +57,6 @@
           </table>
         </div>
       </div>
-      {{#each order}}
-      <!-- User Details Modal -->
-      <div class="modal fade" id="order{{this.showId}}" tabindex="-1"
-        aria-labelledby="orderDetailsLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title" id="exampleModalLabel">Plan Details</h4>
-              <button type="button" class="btn-close" data-bs-dismiss="modal"
-                aria-label="Close"></button>
-            </div>
-            <div class="modal-body">          
-              {{!-- Order Details --}}
-              <details>
-                <summary>
-                  <h5 class="profile-subtitle d-inline">Order details</h5>
-                </summary>
-                <ul class="profile-item my-3">
-                  <li><strong>Order number:</strong>#{{this.showId}}</li>
-                  <li><strong>Ordered at:</strong>{{this.orderAt}}</li>
-                  <li>
-                    <strong>Status:</strong>{{this.status}}
-                  </li>
-                  <li><strong>Menu:</strong>{{this.menu}}</li>
-                  <li><strong>Preference:</strong> {{this.preference}} </li>
-                  <li> <strong>Servings:</strong>{{this.servings}}</li>
-                  <li> <strong>Meals:</strong>{{this.meals}} </li>
-                  <li> <strong>Total: $</strong>{{this.totalAmount}}</li>
-                </ul>
-              </details>
-              {{!-- Delivery Details --}}
-              <details>
-                <summary>
-                  <h5 class="profile-subtitle d-inline">Delivery Details</h5>
-                </summary>
-                <ul class="profile-item my-3">
-                  <li> <strong>Name: </strong> {{this.name}}</li>
-                  <li> <strong>Email: </strong>{{this.email}}</li>
-                  <li> <strong>Phone: </strong>{{this.phone}}</li>
-                  <li> <strong>Address: </strong> {{this.address}}</li>
-                  <li> <strong>Preferred day: </strong> {{this.preferredDay}}</li>
-                  <li> <strong>Preferred day: </strong> {{this.preferredTime}}</li>
-                </ul>
-              </details>
-              {{!-- Payment Details --}}
-              <details>
-                <summary>
-                  <h5 class="profile-subtitle d-inline">Payment Details</h5>
-                </summary>
-                <ul class="profile-item my-3">
-                  <li> <strong>Payment status: </strong> {{this.paymentStatus}}</li>
-                  {{#is this.paymentStatus 'Payment confirmed'}}
-                  <li> <strong>Paid at: </strong>{{this.paidAt}}</li>
-                  <li> <strong>Payment method: </strong>{{this.paymentMethod}}</li>
-                  {{/is}}
-                </ul>
-              </details>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary"
-                data-bs-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      {{/each}}
     </div>
   </div>
 </div>
