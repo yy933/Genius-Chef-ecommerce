@@ -38,6 +38,7 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            {{!-- User Navbar  --}}
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
               <li class="nav-item">
                 <a class="nav-link px-3" href="/plans">Plans</a>
@@ -45,49 +46,46 @@
               <li class="nav-item">
                 <a class="nav-link px-3" href="/menu">Menu</a>
               </li>
-
               <li class="nav-item">
                 <a class="nav-link px-3" href="/contact">Contact</a>
               </li>
+              {{!-- User Login  --}}
               {{#if isAuthenticated}}
-              
               <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle px-3"
-                  href="#"
-                  id="navbarDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <i class="fa-solid fa-user"></i>
-                </a>
-                <ul
-                  class="dropdown-menu dropdown-menu-end"
-                  aria-labelledby="navbarDropdown"
-                >
-                  <li><a class="dropdown-item" href="/users/cart/{{#if user}}{{user.id}}{{/if}}"><i
-                        class="fa-solid fa-cart-shopping fa-fw me-1"
-                      ></i>Cart</a></li>
-                  <li><a class="dropdown-item" href="/users/profile/{{#if user}}{{user.id}}{{/if}}"><i
-                        class="fa-solid fa-user fa-fw me-1"
-                      ></i>Profile</a></li>
-                  <li><form class="d-inline" method="post" action="/users/logout"><a class="dropdown-item" onclick="this.parentNode.submit()"><i class="fa-solid fa-right-from-bracket fa-fw me-1"></i>Logout</a></form></li>
-                </ul>
+                  <a
+                    class="nav-link dropdown-toggle px-3"
+                    href="#"
+                    id="navbarDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <i class="fa-solid fa-user"></i>
+                  </a>
+                  <ul
+                    class="dropdown-menu dropdown-menu-end"
+                    aria-labelledby="navbarDropdown"
+                  >
+                   {{#is user.role 'user'}}
+                    <li><a class="dropdown-item" href="/users/cart/{{user.id}}"><i
+                          class="fa-solid fa-cart-shopping fa-fw me-1"
+                        ></i>Cart</a></li>
+                    <li><a class="dropdown-item" href="/users/profile/{{user.id}}"><i
+                          class="fa-solid fa-user fa-fw me-1"
+                        ></i>Profile</a></li>
+                    {{/is}}
+                    <li><form class="d-inline" method="post" action="/{{#is user.role 'admin'}}admin{{else}}users{{/is}}/logout"><a class="dropdown-item" onclick="this.parentNode.submit()"><i class="fa-solid fa-right-from-bracket fa-fw me-1"></i>Logout</a></form></li>
+                  </ul>
               </li>
-              
-              {{else}}
+              {{else}}            
               <li class="nav-item">
-                <a class="nav-link px-3 px-3" href="/users/login">Login</a>
+                <a class="nav-link px-3" href="/users/login">Login</a>
               </li>
               {{/if}}
-
             </ul>
-
           </div>
         </div>
       </nav>
-
     </header>
     <main>
       

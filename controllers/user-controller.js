@@ -155,10 +155,10 @@ const userController = {
         html: `<h1 style="color:#196F3D; text-align:center">Reset Password</h1>
       <h3>Dear ${user.name},</h3>
       <p style="font-size: 14px">Please click the link below to reset your password:</p>
-      <a style="color:#196F3D; font-weight:bold; font-size:20px" href="${process.env.CLIENT_URL}/users/resetPassword?token=${encodeURIComponent(token)}&email=${email}">Reset Password</a>
+      <a style="color:#196F3D; font-weight:bold; font-size:20px" href="${process.env.BASE_URL}/users/resetPassword?token=${encodeURIComponent(token)}&email=${email}">Reset Password</a>
       <p style="font-size: 14px">Link will expire in 10 minutes.</p>
       <br>
-      <p style="font-size: 14px; color:#616A6B;">If you didn't make this request, please ignore this email or <a href="${process.env.CLIENT_URL}/contact">contact us</a>.</p>
+      <p style="font-size: 14px; color:#616A6B;">If you didn't make this request, please ignore this email or <a href="${process.env.BASE_URL}/contact">contact us</a>.</p>
       <br>
       <h3>Sincerely,<br>Genius Chef Customer Service Team</h3>`
       }

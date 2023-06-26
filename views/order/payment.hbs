@@ -39,7 +39,7 @@
       <input type="hidden" name="meals" value={{meals}}>
       {{!-- Confirm buttons --}}
       <div class="continue-btn col-12 text-center mt-5">
-        <a href="" target="_blank"><button class="btn btn-outline-success fw-bold fs-6" type="submit"><i
+        <a href="" target="_blank"><button class="btn confirm-btn fw-bold fs-6" type="submit"><i
             class="fa-regular fa-credit-card"></i> Ready to Pay</button></a>
       </div>
     </div>
@@ -55,7 +55,7 @@
 
     <!-- PayPal Form Info -->
     <table border="0" cellpadding="10" cellspacing="0" align="center">
-      <tr>
+      <tr style="border: none">
         <td align="center">
           <form action="/orders/{{showId}}/payment/{{userId}}/paypal"
             method="post">

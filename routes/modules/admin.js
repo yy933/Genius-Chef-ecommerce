@@ -8,14 +8,16 @@ router.get('/login', adminController.getAdminLogin)
 router.post('/login',
   passport.authenticate('admin-local', {
     failureFlash: true,
-    successRedirect: '/',
+    successRedirect: '/admin/dashboard',
     failureRedirect: '/admin/login'
   }), adminController.adminLogin
 )
-// router.get('/forgetPassword', userController.getForgetPassword)
-// router.post('/forgetPassword', userController.forgetPassword)
-// router.get('/resetPassword', userController.getResetPassword)
-// router.put('/resetPassword', userController.resetPassword)
-// router.post('/logout', authenticator, authenticatedAdmin, adminController.adminLogOut)
+router.get('/forgetPassword', adminController.getAdminForgetPassword)
+router.post('/forgetPassword', adminController.forgetAdminPassword)
+router.get('/resetPassword', adminController.getAdminResetPassword)
+router.put('/resetPassword', adminController.resetAdminPassword)
+router.get('/dashboard/:section', authenticator, authenticatedAdmin, adminController.getAdminDashboard)
+router.get('/dashboard', authenticator, authenticatedAdmin, adminController.getAdminDashboardMain)
+router.post('/logout', authenticator, authenticatedAdmin, adminController.adminLogOut)
 
 module.exports = router

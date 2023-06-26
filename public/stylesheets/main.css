@@ -272,6 +272,12 @@ td{
   margin-bottom: 0.3rem;
 }
 
+/* profile  */
+.profile-container .nav{
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
 .profile-container details {
   margin-bottom: 40px;
 }
@@ -294,11 +300,17 @@ td{
 .profile-content {
   display: table;
 }
+
+.confirm-btn{
+  background-color: darkcyan;
+  color: #fff;
+}
+
 .details-btn{
   background-color: #76d8bd;
   border: #76d8bd;
 }
-.cancelOrder-btn{
+.cancelOrder-btn, .editOrder-btn{
   cursor: pointer;
 }
 .profile-item li {
@@ -335,12 +347,6 @@ td{
   flex: 1;
   height: 1px;
   background: #eee;
-}
-
-/* profile  */
-.profile-container .nav {
-  justify-content: center;
-  margin-bottom: 1.5rem;
 }
 
 /* payments */
@@ -471,10 +477,11 @@ footer {
     font-weight: 100;
     width: 50%;
   }
-  .details-btn{
+  .details-btn, .editOrder-btn-container{
     margin-left: auto;
     margin-right: auto;
   }
+  
 }
 
 @media screen and (min-width: 600px) {

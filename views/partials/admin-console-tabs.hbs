@@ -1,0 +1,11 @@
+    {{!-- Dashboard tabs --}}
+    <ul class="nav nav-pills flex-columns me-3">
+      <li class="nav-item">
+        <a class="nav-link text-center {{#is path 'users'}} active {{/is}}"
+          aria-current="page" href="/admin/dashboard/users">Users</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-center {{#is path 'orders'}} active {{/is}}"
+          href="/admin/dashboard/orders">Orders</a>
+      </li>
+    </ul>
