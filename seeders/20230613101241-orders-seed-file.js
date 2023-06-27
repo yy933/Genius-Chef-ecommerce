@@ -1,13 +1,21 @@
 'use strict'
 const randomItem = require('../helpers/random-item')
 const { showIdGenerator } = require('../helpers/ecpay-helper')
-const orderOptions = {
+const OptionGroup1 = {
   menu: ['Classic', 'Vegetarian'],
   preference: ['Dairy free', 'Gluten free', 'Lacto-ovo vegetarian', 'Nutritious and healthy', 'Pescatarian', 'Quick and easy', 'N/A'],
   servings: [2, 4, 6],
   meals: [2, 3, 4, 5, 6],
-  status: ['Payment not confirmed', 'Payment confirmed']
+  status: ['Payment not confirmed']
 }
+const OptionGroup2 = {
+  menu: ['Classic', 'Vegetarian'],
+  preference: ['Dairy free', 'Gluten free', 'Lacto-ovo vegetarian', 'Nutritious and healthy', 'Pescatarian', 'Quick and easy', 'N/A'],
+  servings: [2, 4, 6],
+  meals: [2, 3, 4, 5, 6],
+  status: ['Payment confirmed', 'Picking products']
+}
+
 const plansPrice = [
   { servings: 2, meals: 2, totalAmount: 992 },
   { servings: 6, meals: 4, totalAmount: 4992 },
@@ -32,29 +40,51 @@ const plansPrice = [
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    const users = await queryInterface.sequelize.query(
-      'SELECT * FROM "Users" WHERE "Users".role = :role',
+    const userGroup1 = await queryInterface.sequelize.query(
+      'SELECT "Users".*, "Subscriptions".active FROM "Users" INNER JOIN "Subscriptions" ON ("Users".id = "Subscriptions".user_id AND "Users".role = :role AND "Subscriptions".active = :active)',
       {
-        replacements: { role: 'user' },
+        replacements: { role: 'user', active: false },
         type: queryInterface.sequelize.QueryTypes.SELECT
       }
     )
-
-    await queryInterface.bulkInsert(
+    const userGroup2 = await queryInterface.sequelize.query(
+      'SELECT "Users".*, "Subscriptions".active FROM "Users" INNER JOIN "Subscriptions" ON ("Users".id = "Subscriptions".user_id AND "Users".role = :role AND "Subscriptions".active = :active)',
+      {
+        replacements: { role: 'user', active: true },
+        type: queryInterface.sequelize.QueryTypes.SELECT
+      }
+    )
+    await Promise.all([queryInterface.bulkInsert(
       'Orders',
-      Array.from({ length: 11 }).map((_, index) => ({
-        user_id: users[index].id,
-        menu: randomItem(orderOptions.menu),
-        preference: randomItem(orderOptions.preference),
+      Array.from({ length: userGroup1.length }).map((_, index) => ({
+        user_id: userGroup1[index].id,
+        menu: randomItem(OptionGroup1.menu),
+        preference: randomItem(OptionGroup1.preference),
         servings: plansPrice[index % 11].servings,
         meals: plansPrice[index % 11].meals,
         total_amount: plansPrice[index % 11].totalAmount,
-        status: randomItem(orderOptions.status),
-        show_id: showIdGenerator(users[index].id),
+        status: randomItem(OptionGroup1.status),
+        show_id: showIdGenerator(userGroup1[index].id),
+        created_at: new Date(),
+        updated_at: new Date()
+      })
+      ), {}),
+    queryInterface.bulkInsert(
+      'Orders',
+      Array.from({ length: userGroup2.length }).map((_, index) => ({
+        user_id: userGroup2[index].id,
+        menu: randomItem(OptionGroup2.menu),
+        preference: randomItem(OptionGroup2.preference),
+        servings: plansPrice[index % 11].servings,
+        meals: plansPrice[index % 11].meals,
+        total_amount: plansPrice[index % 11].totalAmount,
+        status: randomItem(OptionGroup2.status),
+        show_id: showIdGenerator(userGroup2[index].id),
         created_at: new Date(),
         updated_at: new Date()
       })
       ), {})
+    ])
   },
 
   async down (queryInterface, Sequelize) {

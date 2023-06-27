@@ -197,6 +197,7 @@ const adminController = {
         paidAt: dayjs(order.Payment.paidAt).format('MMM DD, YYYY HH:mm:ss'),
         paymentMethod: order.Payment.paymentMethod
       }))
+      console.log(order)
       return res.render('admin/dashboard-orders', {
         path: 'orders',
         order
@@ -249,7 +250,7 @@ const adminController = {
         activeSub: user.Subscription.active,
         recurringSub: user.Subscription.recurringSub
       }))
-      
+
       return res.render('admin/dashboard-users', {
         path: 'users',
         user
