@@ -453,6 +453,20 @@ footer {
 .social-media i:hover {
   color: #232434;
 }
+/* paginator */
+.nav-pagination{
+  display: flex;
+}
+.nav-pagination .pagination{
+  margin-inline: auto;
+}
+.page-item.active .page-link{
+  background-color: #06716e;
+  color:#F8F8F3;
+}
+.page-link, .page-link span{
+  color: #06716E
+}
 
 @media (max-width: 600px) {
   table thead {
@@ -465,12 +479,12 @@ footer {
     border: 3px solid white;
     padding: 1px;
   }
+  
 
   table td[data-label] {
     display: flex;
     font-weight: bold;
   }
-
   table td[data-label]::before {
     content: attr(data-label);
     color: #06716e;

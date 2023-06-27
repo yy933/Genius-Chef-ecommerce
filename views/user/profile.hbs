@@ -32,8 +32,8 @@
                   </button>
                 </td>
                 <td data-label="Actions">
-                  {{#is status 'Payment not confirmed'}}
                   <div class="paymentNotConfirmed-btn-group">
+                    {{#is status 'Payment not confirmed'}}
                       <a href="/orders/{{this.showId}}/payment/{{this.userId}}" class="my-2 mx-2">
                       <span class="badge bg-warning text-dark d-inline-block">Pay now!</span>
                     </a>
@@ -59,8 +59,9 @@
                         </div>
                       </div>
                     </div>
+                    {{/is}}
                   </div>
-                  {{/is}}
+                  
                 </td>
               </tr>
               {{/each}}

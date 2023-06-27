@@ -15,7 +15,6 @@
                 <th>Order At</th>
                 <th>Status</th>
                 <th>Details</th>
-                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -31,30 +30,6 @@
                     data-bs-toggle="modal" data-bs-target="#order{{this.showId}}">
                     Details
                   </button>
-                </td>
-                <td data-label="Actions">
-                  <div class="editOrder-btn-container">
-                    <span class="badge bg-secondary d-inline-block my-2 editOrder-btn"
-                      data-bs-toggle="modal" data-bs-target="#editOrder{{this.showId}}">Edit</span>
-                    <!--  Cancel Order Modal -->
-                    <div class="modal fade" id="editOrder{{this.showId}}" tabindex="-1"
-                      aria-labelledby="editOrderModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-body">
-                            ...
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <form action="/orders/{{this.showId}}/{{this.userId}}?_method=PUT"
-                              method="post">
-                              <button type="submit" class="btn confirm-btn">Confirm</button>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </td>
               </tr>
               {{/each}}
@@ -132,6 +107,30 @@
         </div>
       </div>
       {{/each}}
+      {{!-- Pagination  --}}
+      <nav class="mt-3 nav-pagination" aria-label="page navigation">
+        <ul class="pagination">
+          <li class="page-item {{#is pagination.currentPage 1}}disabled{{/is}}">
+            <a class="page-link" href="/admin/dashboard/users?page={{pagination.prev}}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          {{#each pagination.pages}}
+            {{#is this ../pagination.currentPage}}
+          <li class="page-item active"><a class="page-link" href="#">{{this}}</a></li>
+            {{else}}
+          <li class="page-item">
+            <a class="page-link" href="/admin/dashboard/users?page={{this}}">{{this}}</a>
+          </li>
+            {{/is}}
+          {{/each}}
+          <li class="page-item {{#is pagination.currentPage pagination.totalPage}}disabled{{/is}}">
+            <a class="page-link" href="/admin/dashboard/users?page={{pagination.next}}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </div>

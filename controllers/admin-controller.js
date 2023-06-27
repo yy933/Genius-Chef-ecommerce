@@ -2,6 +2,7 @@ const { User, ResetToken, Order, Delivery, Payment, Subscriptions } = require('.
 const mailService = require('../helpers/email-helpers')
 const crypto = require('crypto')
 const bcrypt = require('bcryptjs')
+const { getOffset, getPagination } = require('../helpers/pagination-helper')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 const dayjs = require('dayjs')
@@ -153,6 +154,10 @@ const adminController = {
   },
   getAdminDashboardOrders: async (req, res, next) => {
     try {
+      const DEFAULT_LIMIT = 10
+      const page = Number(req.query.page) || 1
+      const limit = Number(req.query.limit) || DEFAULT_LIMIT
+      const offset = getOffset(limit, page)
       const admin = await User.findOne({
         where: { email: process.env.EMAIL },
         raw: true,
@@ -162,10 +167,11 @@ const adminController = {
         req.flash('warning_msg', 'User not found!')
         return res.redirect('/users/login')
       }
-      const orders = await Order.findAll({
-        limit: 10,
+      const orders = await Order.findAndCountAll({
         order: [['createdAt', 'DESC']],
         include: [{ model: Delivery, attributes: ['name', 'email', 'phone', 'address', 'preferredDay', 'preferredTime'] }, { model: Payment, attributes: ['status', 'paidAt', 'paymentMethod'] }, { model: User, attributes: ['email', 'name'] }],
+        limit,
+        offset,
         raw: true,
         nest: true
       })
@@ -174,7 +180,7 @@ const adminController = {
           path: 'orders'
         })
       }
-      const order = orders.map(order => ({
+      const order = orders.rows.map(order => ({
         id: order.id,
         userId: order.userId,
         userName: order.User.name,
@@ -200,7 +206,8 @@ const adminController = {
       console.log(order)
       return res.render('admin/dashboard-orders', {
         path: 'orders',
-        order
+        order,
+        pagination: getPagination(limit, page, orders.count)
       })
 
       // if (section === 'manageSettings') {
@@ -219,6 +226,10 @@ const adminController = {
   },
   getAdminDashboardUsers: async (req, res, next) => {
     try {
+      const DEFAULT_LIMIT = 10
+      const page = Number(req.query.page) || 1
+    const limit = Number(req.query.limit) || DEFAULT_LIMIT
+    const offset = getOffset(limit, page)
       const admin = await User.findOne({
         where: { email: process.env.EMAIL },
         raw: true,
@@ -228,10 +239,11 @@ const adminController = {
         req.flash('warning_msg', 'User not found!')
         return res.redirect('/users/login')
       }
-      const users = await User.findAll({
+      const users = await User.findAndCountAll({
         where: { role: 'user' },
         attributes: { exclude: ['password'] },
-        limit: 10,
+        limit,
+        offset,
         order: [['id', 'DESC']],
         include: [{ model: Order, attributes: ['id', 'showId'] }, { model: Subscriptions, attributes: ['recurringSub', 'active'] }],
         raw: true,
@@ -242,7 +254,7 @@ const adminController = {
           path: 'users'
         })
       }
-      const user = users.map(user => ({
+      const user = users.rows.map(user => ({
         id: user.id,
         name: user.name,
         email: user.email,
@@ -253,7 +265,9 @@ const adminController = {
 
       return res.render('admin/dashboard-users', {
         path: 'users',
-        user
+        user,
+        pagination: getPagination(limit, page, users.count)
+
       })
     } catch (err) {
       console.log(err)
