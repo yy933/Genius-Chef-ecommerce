@@ -158,6 +158,8 @@ const adminController = {
       const page = Number(req.query.page) || 1
       const limit = Number(req.query.limit) || DEFAULT_LIMIT
       const offset = getOffset(limit, page)
+      const sortBy = req.query.sortBy || 'id'
+      const sortDir = req.query.sortDir || 'ASC'
       const admin = await User.findOne({
         where: { email: process.env.EMAIL },
         raw: true,
@@ -168,7 +170,7 @@ const adminController = {
         return res.redirect('/users/login')
       }
       const orders = await Order.findAndCountAll({
-        order: [['createdAt', 'DESC']],
+        order: [[sortBy, sortDir]],
         include: [{ model: Delivery, attributes: ['name', 'email', 'phone', 'address', 'preferredDay', 'preferredTime'] }, { model: Payment, attributes: ['status', 'paidAt', 'paymentMethod'] }, { model: User, attributes: ['email', 'name'] }],
         limit,
         offset,
@@ -203,7 +205,6 @@ const adminController = {
         paidAt: dayjs(order.Payment.paidAt).format('MMM DD, YYYY HH:mm:ss'),
         paymentMethod: order.Payment.paymentMethod
       }))
-      console.log(order)
       return res.render('admin/dashboard-orders', {
         path: 'orders',
         order,
@@ -228,8 +229,10 @@ const adminController = {
     try {
       const DEFAULT_LIMIT = 10
       const page = Number(req.query.page) || 1
-    const limit = Number(req.query.limit) || DEFAULT_LIMIT
-    const offset = getOffset(limit, page)
+      const limit = Number(req.query.limit) || DEFAULT_LIMIT
+      const offset = getOffset(limit, page)
+      const sortBy = req.query.sortBy || 'id'
+      const sortDir = req.query.sortDir || 'ASC'
       const admin = await User.findOne({
         where: { email: process.env.EMAIL },
         raw: true,
@@ -244,7 +247,7 @@ const adminController = {
         attributes: { exclude: ['password'] },
         limit,
         offset,
-        order: [['id', 'DESC']],
+        order: [[sortBy, sortDir]],
         include: [{ model: Order, attributes: ['id', 'showId'] }, { model: Subscriptions, attributes: ['recurringSub', 'active'] }],
         raw: true,
         nest: true
@@ -266,7 +269,9 @@ const adminController = {
       return res.render('admin/dashboard-users', {
         path: 'users',
         user,
-        pagination: getPagination(limit, page, users.count)
+        pagination: getPagination(limit, page, users.count),
+        sortBy,
+        sortDir
 
       })
     } catch (err) {

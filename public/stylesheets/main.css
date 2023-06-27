@@ -453,6 +453,12 @@ footer {
 .social-media i:hover {
   color: #232434;
 }
+
+/* admin dashboard  */
+.sort-btn a:first-child{
+  margin-bottom: 3px;
+}
+
 /* paginator */
 .nav-pagination{
   display: flex;
