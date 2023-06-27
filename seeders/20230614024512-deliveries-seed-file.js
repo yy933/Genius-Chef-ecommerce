@@ -1,15 +1,11 @@
 'use strict'
 const { faker } = require('@faker-js/faker')
 const randomItem = require('../helpers/random-item')
-const optionGroup1 = {
+const optionGroup = {
   preferred_day: ['Weekday', 'Weekend'],
   preferred_time: ['Not specified', '9-12', '14-17', '18-20'],
-  status: ['Payment not confirmed']
-}
-const optionGroup2 = {
-  preferred_day: ['Weekday', 'Weekend'],
-  preferred_time: ['Not specified', '9-12', '14-17', '18-20'],
-  status: ['Picking products', 'Ready to ship']
+  statusOption1: ['Payment not confirmed'],
+  statusOption2: ['Picking products', 'Ready to ship']
 }
 
 /** @type {import('sequelize-cli').Migration} */
@@ -38,9 +34,9 @@ module.exports = {
           email: faker.internet.email(),
           phone: faker.phone.number('## ### ####'),
           address: faker.location.secondaryAddress() + ' ' + faker.location.street() + ', ' + faker.location.city() + ' ' + faker.location.state({ abbreviated: true }) + ' ' + faker.location.zipCode('####'),
-          preferred_day: randomItem(optionGroup1.preferred_day),
-          preferred_time: randomItem(optionGroup1.preferred_time),
-          status: randomItem(optionGroup1.status),
+          preferred_day: randomItem(optionGroup.preferred_day),
+          preferred_time: randomItem(optionGroup.preferred_time),
+          status: randomItem(optionGroup.statusOption1),
           created_at: new Date(),
           updated_at: new Date()
         })
@@ -53,9 +49,9 @@ module.exports = {
           email: faker.internet.email(),
           phone: faker.phone.number('## ### ####'),
           address: faker.location.secondaryAddress() + ' ' + faker.location.street() + ', ' + faker.location.city() + ' ' + faker.location.state({ abbreviated: true }) + ' ' + faker.location.zipCode('####'),
-          preferred_day: randomItem(optionGroup2.preferred_day),
-          preferred_time: randomItem(optionGroup2.preferred_time),
-          status: randomItem(optionGroup2.status),
+          preferred_day: randomItem(optionGroup.preferred_day),
+          preferred_time: randomItem(optionGroup.preferred_time),
+          status: randomItem(optionGroup.statusOption2),
           created_at: new Date(),
           updated_at: new Date()
         })

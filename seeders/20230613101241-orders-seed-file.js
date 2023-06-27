@@ -1,19 +1,13 @@
 'use strict'
 const randomItem = require('../helpers/random-item')
 const { showIdGenerator } = require('../helpers/ecpay-helper')
-const OptionGroup1 = {
+const OptionGroup = {
   menu: ['Classic', 'Vegetarian'],
   preference: ['Dairy free', 'Gluten free', 'Lacto-ovo vegetarian', 'Nutritious and healthy', 'Pescatarian', 'Quick and easy', 'N/A'],
   servings: [2, 4, 6],
   meals: [2, 3, 4, 5, 6],
-  status: ['Payment not confirmed']
-}
-const OptionGroup2 = {
-  menu: ['Classic', 'Vegetarian'],
-  preference: ['Dairy free', 'Gluten free', 'Lacto-ovo vegetarian', 'Nutritious and healthy', 'Pescatarian', 'Quick and easy', 'N/A'],
-  servings: [2, 4, 6],
-  meals: [2, 3, 4, 5, 6],
-  status: ['Payment confirmed', 'Picking products']
+  statusOption1: ['Payment not confirmed'],
+  statusOption2: ['Payment confirmed', 'Picking products']
 }
 
 const plansPrice = [
@@ -58,12 +52,12 @@ module.exports = {
       'Orders',
       Array.from({ length: userGroup1.length }).map((_, index) => ({
         user_id: userGroup1[index].id,
-        menu: randomItem(OptionGroup1.menu),
-        preference: randomItem(OptionGroup1.preference),
+        menu: randomItem(OptionGroup.menu),
+        preference: randomItem(OptionGroup.preference),
         servings: plansPrice[index % 11].servings,
         meals: plansPrice[index % 11].meals,
         total_amount: plansPrice[index % 11].totalAmount,
-        status: randomItem(OptionGroup1.status),
+        status: randomItem(OptionGroup.statusOption1),
         show_id: showIdGenerator(userGroup1[index].id),
         created_at: new Date(),
         updated_at: new Date()
@@ -73,12 +67,12 @@ module.exports = {
       'Orders',
       Array.from({ length: userGroup2.length }).map((_, index) => ({
         user_id: userGroup2[index].id,
-        menu: randomItem(OptionGroup2.menu),
-        preference: randomItem(OptionGroup2.preference),
+        menu: randomItem(OptionGroup.menu),
+        preference: randomItem(OptionGroup.preference),
         servings: plansPrice[index % 11].servings,
         meals: plansPrice[index % 11].meals,
         total_amount: plansPrice[index % 11].totalAmount,
-        status: randomItem(OptionGroup2.status),
+        status: randomItem(OptionGroup.statusOption2),
         show_id: showIdGenerator(userGroup2[index].id),
         created_at: new Date(),
         updated_at: new Date()
