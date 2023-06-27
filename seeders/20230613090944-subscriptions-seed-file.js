@@ -4,7 +4,7 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     const users = await queryInterface.sequelize.query(
-      'SELECT * FROM "Users" WHERE "Users".role = :role',
+      'SELECT "Users".id FROM "Users" WHERE "Users".role = :role',
       {
         replacements: { role: 'user' },
         type: queryInterface.sequelize.QueryTypes.SELECT

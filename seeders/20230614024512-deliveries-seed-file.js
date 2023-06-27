@@ -12,14 +12,14 @@ const optionGroup = {
 module.exports = {
   async up (queryInterface, Sequelize) {
     const orderGroup1 = await queryInterface.sequelize.query(
-      'SELECT * FROM "Orders" WHERE "Orders".status = :status',
+      'SELECT "Orders".id FROM "Orders" WHERE "Orders".status = :status',
       {
         replacements: { status: 'Payment not confirmed' },
         type: queryInterface.sequelize.QueryTypes.SELECT
       }
     )
     const orderGroup2 = await queryInterface.sequelize.query(
-      'SELECT * FROM "Orders" WHERE "Orders".status NOT LIKE :status',
+      'SELECT "Orders".id FROM "Orders" WHERE "Orders".status NOT LIKE :status',
       {
         replacements: { status: 'Payment not confirmed' },
         type: queryInterface.sequelize.QueryTypes.SELECT
