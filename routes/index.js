@@ -8,7 +8,7 @@ const menu = require('./modules/menu')
 const contact = require('./modules/contact')
 const order = require('./modules/order')
 const admin = require('./modules/admin')
-
+const { generalErrorHandler } = require('../middleware/error-handler')
 router.use('/users', user)
 router.use('/auth', auth)
 router.use('/menu', menu)
@@ -24,4 +24,5 @@ router.get('/plans', (req, res, next) => {
 router.get('/', (req, res, next) => {
   try { return res.render('index') } catch (err) { next(err) }
 })
+router.use('/', generalErrorHandler)
 module.exports = router
