@@ -459,6 +459,15 @@ footer {
   margin-bottom: 3px;
 }
 
+.active-filter{
+  padding-inline: 0%;
+  padding-top: 50%;
+}
+
+.recurSub-filter{
+  padding: 0%;
+}
+
 /* paginator */
 .nav-pagination{
   display: flex;
@@ -490,6 +499,9 @@ footer {
   table td[data-label] {
     display: flex;
     font-weight: bold;
+  }
+  table td[data-label=Email]{
+    word-break: break-all;
   }
   table td[data-label]::before {
     content: attr(data-label);

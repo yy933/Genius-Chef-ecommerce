@@ -233,6 +233,8 @@ const adminController = {
       const offset = getOffset(limit, page)
       const sortBy = req.query.sortBy || 'id'
       const sortDir = req.query.sortDir || 'ASC'
+      const active = req.query.active || ''
+      const recurringSub = req.query.recurringSub || ''
       const admin = await User.findOne({
         where: { email: process.env.EMAIL },
         raw: true,
@@ -248,7 +250,17 @@ const adminController = {
         limit,
         offset,
         order: [[sortBy, sortDir]],
-        include: [{ model: Order, attributes: ['id', 'showId'] }, { model: Subscriptions, attributes: ['recurringSub', 'active'] }],
+        include: [
+          { model: Order, attributes: ['id', 'showId'] },
+          {
+            model: Subscriptions,
+            attributes: ['recurringSub', 'active'],
+            where: {
+              ...active ? { active } : {},
+              ...recurringSub ? { recurringSub } : {}
+            }
+          }
+        ],
         raw: true,
         nest: true
       })
