@@ -16,10 +16,10 @@
                     <div class="sort-btn d-flex flex-column
                       justify-content-center ms-1">
                       <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&&sortBy=id&sortDir=ASC"><i
+                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=id&sortDir=ASC&status={{statusOptions.name}}"><i
                           class="fa-solid fa-sort-up fa-2xs"></i></a>
                       <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&&sortBy=id&sortDir=DESC"><i
+                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=id&sortDir=DESC&status={{statusOptions.name}}"><i
                           class="fa-solid fa-sort-down fa-2xs"></i></a>
                     </div>
                   </div>
@@ -31,10 +31,10 @@
                     <div class="sort-btn d-flex flex-column
                       justify-content-center ms-1">
                       <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&&sortBy=show_id&sortDir=ASC"><i
+                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=show_id&sortDir=ASC&status={{statusOptions.name}}"><i
                           class="fa-solid fa-sort-up fa-2xs"></i></a>
                       <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&&sortBy=show_id&sortDir=DESC"><i
+                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=show_id&sortDir=DESC&status={{statusOptions.name}}"><i
                           class="fa-solid fa-sort-down fa-2xs"></i></a>
                     </div>
                   </div>
@@ -47,10 +47,10 @@
                     <div class="sort-btn d-flex flex-column
                       justify-content-center ms-1">
                       <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&&sortBy=created_at&sortDir=ASC"><i
+                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=created_at&sortDir=ASC&status={{statusOptions.name}}"><i
                           class="fa-solid fa-sort-up fa-2xs"></i></a>
                       <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&&sortBy=created_at&sortDir=DESC"><i
+                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=created_at&sortDir=DESC&status={{statusOptions.name}}"><i
                           class="fa-solid fa-sort-down fa-2xs"></i></a>
                     </div>
                   </div>
@@ -90,10 +90,10 @@
                     <div class="sort-btn d-flex flex-column
                       justify-content-center ms-1">
                       <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&&sortBy=id&sortDir=ASC"><i
+                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=id&sortDir=ASC&status={{statusOptions.name}}"><i
                           class="fa-solid fa-sort-up fa-2xs"></i></a>
                       <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&&sortBy=id&sortDir=DESC"><i
+                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=id&sortDir=DESC&status={{statusOptions.name}}"><i
                           class="fa-solid fa-sort-down fa-2xs"></i></a>
                     </div>
                   </div>
@@ -103,10 +103,10 @@
                     <div class="sort-btn d-flex flex-column
                       justify-content-center ms-1">
                       <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&&sortBy=show_id&sortDir=ASC"><i
+                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=show_id&sortDir=ASC&status={{statusOptions.name}}"><i
                           class="fa-solid fa-sort-up fa-2xs"></i></a>
                       <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&&sortBy=show_id&sortDir=DESC"><i
+                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=show_id&sortDir=DESC&status={{statusOptions.name}}"><i
                           class="fa-solid fa-sort-down fa-2xs"></i></a>
                     </div>
                   </div>
@@ -118,10 +118,10 @@
                     <div class="sort-btn d-flex flex-column
                       justify-content-center ms-1">
                       <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&&sortBy=created_at&sortDir=ASC"><i
+                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=created_at&sortDir=ASC"><i
                           class="fa-solid fa-sort-up fa-2xs"></i></a>
                       <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&&sortBy=created_at&sortDir=DESC"><i
+                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=created_at&sortDir=DESC&status={{statusOptions.name}}"><i
                           class="fa-solid fa-sort-down fa-2xs"></i></a>
                     </div>
                   </div>
@@ -247,7 +247,7 @@
         <ul class="pagination">
           <li class="page-item {{#is pagination.currentPage 1}}disabled{{/is}}">
             <a class="page-link"
-              href="/admin/dashboard/users?page={{pagination.prev}}&sortBy={{sortBy}}&sortDir={{sortDir}}"
+              href="/admin/dashboard/orders?page={{pagination.prev}}&sortBy={{sortBy}}&sortDir={{sortDir}}&status={{statusOptions.name}}"
               aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
             </a>
@@ -258,14 +258,14 @@
           {{else}}
           <li class="page-item">
             <a class="page-link"
-              href="/admin/dashboard/users?page={{this}}&sortBy={{../sortBy}}&sortDir={{../sortDir}}">{{this}}</a>
+              href="/admin/dashboard/orders?page={{this}}&sortBy={{../sortBy}}&sortDir={{../sortDir}}&status={{../statusOptions.name}}">{{this}}</a>
           </li>
           {{/is}}
           {{/each}}
           <li class="page-item {{#is pagination.currentPage
             pagination.totalPage}}disabled{{/is}}">
             <a class="page-link"
-              href="/admin/dashboard/users?page={{pagination.next}}&sortBy={{sortBy}}&sortDir={{sortDir}}"
+              href="/admin/dashboard/orders?page={{pagination.next}}&sortBy={{sortBy}}&sortDir={{sortDir}}&status={{statusOptions.name}}"
               aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
             </a>

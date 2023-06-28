@@ -21,7 +21,7 @@ module.exports = {
         updated_at: new Date()
       }], {}),
       queryInterface.bulkInsert('Users',
-        Array.from({ length: 9 }, () => ({
+        Array.from({ length: 31 }, () => ({
           name: faker.person.fullName(),
           email: faker.internet.email(),
           password: bcrypt.hashSync(faker.internet.password({ length: 16 }), bcrypt.genSaltSync(10), null),
