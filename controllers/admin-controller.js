@@ -160,6 +160,7 @@ const adminController = {
       const offset = getOffset(limit, page)
       const sortBy = req.query.sortBy || 'id'
       const sortDir = req.query.sortDir || 'ASC'
+      const status = req.query.status || ''
       const admin = await User.findOne({
         where: { email: process.env.EMAIL },
         raw: true,
@@ -172,11 +173,19 @@ const adminController = {
       const orders = await Order.findAndCountAll({
         order: [[sortBy, sortDir]],
         include: [{ model: Delivery, attributes: ['name', 'email', 'phone', 'address', 'preferredDay', 'preferredTime'] }, { model: Payment, attributes: ['status', 'paidAt', 'paymentMethod'] }, { model: User, attributes: ['email', 'name'] }],
+        where: { ...status ? { status } : {} },
         limit,
         offset,
         raw: true,
         nest: true
       })
+      const statusOptions = [
+        { name: 'Payment not confirmed' },
+        { name: 'Payment confirmed' },
+        { name: 'Picking products' },
+        { name: 'Ready to ship' },
+        { name: 'Cancelled' }
+      ]
       if (!orders) {
         return res.render('admin/dashboard-orders', {
           path: 'orders'
@@ -208,7 +217,8 @@ const adminController = {
       return res.render('admin/dashboard-orders', {
         path: 'orders',
         order,
-        pagination: getPagination(limit, page, orders.count)
+        pagination: getPagination(limit, page, orders.count),
+        statusOptions
       })
 
       // if (section === 'manageSettings') {
