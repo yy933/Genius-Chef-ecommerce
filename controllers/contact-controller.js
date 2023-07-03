@@ -1,7 +1,11 @@
 const mailService = require('../helpers/email-helpers')
 const contactController = {
   getContact: (req, res, next) => {
-    try { return res.render('contact') } catch (err) { next(err) }
+    try {
+      return res.render('contact')
+    } catch (err) {
+      next(err)
+    }
   },
   sendContact: (req, res, next) => {
     try {

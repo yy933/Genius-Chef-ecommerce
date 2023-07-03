@@ -482,7 +482,30 @@ footer {
 .page-link, .page-link span{
   color: #06716E
 }
-
+/* error page  */
+.error-message{
+  height: 50%;
+}
+.error-title span, .error-message span{
+  font-family: "Roboto", "Lato", sans-serif;
+}
+.error-title span:first-child, .error-message span:first-child{
+  font-size: 4.8rem;
+  font-weight: 700;
+  letter-spacing: 2.8px;
+  
+}
+.error-title span:last-child, .error-message span:last-child{
+  font-size: 2.5rem;
+  letter-spacing: 2px;
+  line-height: 1.2;
+}
+.error-title span{
+  color: #07813c
+}
+.error-message span{
+  color: orangered;
+}
 @media (max-width: 599px) {
   table thead {
     display: none;

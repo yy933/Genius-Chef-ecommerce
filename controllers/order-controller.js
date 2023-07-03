@@ -72,8 +72,8 @@ const orderController = {
       })
     } catch (err) {
       await t.rollback()
-      next(err)
       req.flash('warning_msg', 'Something went wrong. Please try again.')
+      next(err)
       return res.redirect('back')
     }
   },

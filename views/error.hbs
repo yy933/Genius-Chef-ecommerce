@@ -1,0 +1,49 @@
+<div class="container my-5 py-5">
+  {{!-- sign in form --}}
+  <section class="vh-100">
+    <div class="container py-5 h-100">
+      <div class="row d-flex align-items-center justify-content-center h-100">
+        <div class="row error-title">
+          <span>OOPS!</span>
+          <span> Something went wrong...</span>
+        </div>
+
+        <div class="col-md-8 col-lg-7 col-xl-6 mb-2">
+          <img
+            src="https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=717&q=80"
+            class="img-fluid" alt="login-page-image">
+        </div>
+        {{!-- contents --}}
+        <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+          {{!-- error messages --}}
+          <div class="row error-message">
+            <span>{{status}}</span>
+            <span>{{errName}} : {{errMessage}}</span>
+          </div>
+
+          {{!-- Go back Buttons --}}
+          {{> goBack-btn-group}}
+
+          {{!-- social media --}}
+          <div class="row d-flex justify-content-center">
+            <div class="col-lg-10 col-12 ">
+              <div class="social-media row d-flex ">
+                <div class="col-12 text-center"><h3 class="my-3">Or find us on：</h3></div>
+                <div class="col-12 d-flex justify-content-center">
+                  <i class="fab fa-instagram"></i>
+                  <i class="fab fa-facebook"></i>
+                  <i class="fab fa-twitter"></i>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+</div>

@@ -24,11 +24,13 @@ const adminController = {
     }
   },
   adminLogOut: (req, res, next) => {
-    req.logout(function (err) {
-      if (err) return next(err)
-      req.flash('success_msg', 'Successfully logged out.')
-      return res.redirect('/admin/login')
-    })
+    try {
+      req.logout(function (err) {
+        if (err) return next(err)
+        req.flash('success_msg', 'Successfully logged out.')
+        return res.redirect('/admin/login')
+      })
+    } catch (err) { next(err) }
   },
   getAdminForgetPassword: (req, res, next) => {
     try {
@@ -150,7 +152,9 @@ const adminController = {
   getAdminDashboardMain: (req, res, next) => {
     try {
       return res.redirect('/admin/dashboard/users')
-    } catch (error) { next(error) }
+    } catch (error) {
+      next(error)
+    }
   },
   getAdminDashboardOrders: async (req, res, next) => {
     try {
@@ -158,8 +162,8 @@ const adminController = {
       const page = Number(req.query.page) || 1
       const limit = Number(req.query.limit) || DEFAULT_LIMIT
       const offset = getOffset(limit, page)
-      const sortBy = req.query.sortBy || 'id'
-      const sortDir = req.query.sortDir || 'ASC'
+      const sortBy = req.query.sortBy || 'created_at'
+      const sortDir = req.query.sortDir || 'DESC'
       const status = req.query.status || ''
       const admin = await User.findOne({
         where: { email: process.env.EMAIL },
@@ -220,19 +224,8 @@ const adminController = {
         pagination: getPagination(limit, page, orders.count),
         statusOptions
       })
-
-      // if (section === 'manageSettings') {
-      //   return res.render('user/editProfile', {
-      //     path: 'settings',
-      //     userId: user.id,
-      //     name: user.name,
-      //     email: user.email,
-      //     recurringSub: user.Subscription.recurringSub
-      //   })
-      // }
     } catch (err) {
-      console.log(err)
-      return next(err)
+      next(err)
     }
   },
   getAdminDashboardUsers: async (req, res, next) => {
@@ -297,7 +290,6 @@ const adminController = {
 
       })
     } catch (err) {
-      console.log(err)
       return next(err)
     }
   }

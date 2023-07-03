@@ -45,11 +45,14 @@ const userController = {
   // }
   },
   logOut: (req, res, next) => {
-    req.logout(function (err) {
-      if (err) return next(err)
-      req.flash('success_msg', 'Successfully logged out.')
-      return res.redirect('/')
-    })
+    try {
+      req.logout(function (err) {
+        if (err) return next(err)
+        req.flash('success_msg', 'Successfully logged out.')
+        return res.redirect('/')
+      })
+    } catch (err) { next(err) }
+
   // if (req.cookies.jwt) {
   //   res.clearCookie('jwt', { path: '/' }).status(200).redirect('/login')
   // } else {
@@ -334,7 +337,6 @@ const userController = {
         recurringSub: user.Subscription.recurringSub
       })
     } catch (err) {
-      console.log(err)
       return next(err)
     }
   },

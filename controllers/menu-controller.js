@@ -3,7 +3,7 @@ const menuController = {
   getMenuMain: (req, res, next) => {
     try {
       return res.redirect('/menu/classic')
-    } catch (err) { return next(err) }
+    } catch (err) { next(err) }
   },
   getMenuPreference: async (req, res, next) => {
     try {
@@ -38,7 +38,6 @@ const menuController = {
         ingredient: Object.assign({}, recipe.extendedIngredients?.map(i => i.original) || ['Ingredients are currently unavailable, please check the full recipe below for more details.']),
         fullDetailsUrl: recipe.spoonacularSourceUrl || '/menu'
       }))
-      console.log(recipesData)
       res.render('menu', {
         recipesData,
         path: `/menu/${preference}`
