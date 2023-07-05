@@ -484,27 +484,44 @@ footer {
 }
 /* error page  */
 .error-message{
-  height: 50%;
+  height: 40%;
+  display: flex;
+  flex-direction: column;
 }
-.error-title span, .error-message span{
+.error-title{
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.error-title span, .error-message{
   font-family: "Roboto", "Lato", sans-serif;
 }
-.error-title span:first-child, .error-message span:first-child{
+.error-title span:first-child, .error-message span{
   font-size: 4.8rem;
   font-weight: 700;
   letter-spacing: 2.8px;
   
 }
-.error-title span:last-child, .error-message span:last-child{
-  font-size: 2.5rem;
+.error-title span:last-child, .error-message p{
   letter-spacing: 2px;
   line-height: 1.2;
+}
+
+.error-title span:last-child{
+  font-size: 2.5rem;
+}
+.error-message p{
+  font-size: 2rem;
+  padding-left: 1.5rem;
 }
 .error-title span{
   color: #07813c
 }
-.error-message span{
+.error-message span, .error-message p{
   color: orangered;
+}
+.error-message span:first-child{
+  text-align: center;
+  margin-bottom: 2rem;
 }
 @media (max-width: 599px) {
   table thead {
