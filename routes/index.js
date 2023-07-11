@@ -23,7 +23,15 @@ router.get('/plans', (req, res, next) => {
 router.get('/', (req, res, next) => {
   try { return res.render('index') } catch (err) { next(err) }
 })
+
 router.use(errorHandler.errorLogger)
 router.use(errorHandler.errorResponder)
+router.get('*', (req, res) => {
+  res.status(404).render('error', {
+    status: 404,
+    errName: 'Error',
+    errMessage: 'Page not found!'
+  })
+})
 
 module.exports = router

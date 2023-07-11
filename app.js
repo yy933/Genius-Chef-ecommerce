@@ -49,13 +49,6 @@ app.use((req, res, next) => {
 })
 app.use('/', router)
 
-app.get('*', (req, res) => {
-  res.status(404).render('error', {
-    status: 404,
-    errName: 'Error',
-    errMessage: 'Page not found!'
-  })
-})
 
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${PORT}`)

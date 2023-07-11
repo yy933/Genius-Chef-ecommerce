@@ -5,15 +5,15 @@ const errorHandler = {
   },
   errorResponder: (err, req, res, next) => {
     res.header('Content-Type', 'application/json')
-    const status = err.status || 400
+    const status = err.statusCode || 400
     if (err instanceof Error) {
-      res.status(status).render('error', {
+      return res.status(status).render('error', {
         status,
         errName: err.name || 'Error',
-        errMessage: err.message
+        errMessage: err.message || 'Something went wrong'
       })
     } else {
-      res.status(status).render('error', {
+      return res.status(status).render('error', {
         status,
         errName: 'Error',
         errMessage: err
