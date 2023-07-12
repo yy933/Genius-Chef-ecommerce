@@ -36,7 +36,7 @@
 {{!-- Features --}}
 <section class="sec-features">
   <div class="features-container container">
-    <h1 class="features-title mb-4 text-center">Why cook with us?</h1>
+    <h1 class="features-title my-5 text-center">Why cook with us?</h1>
     <div class="row feat-cards-row">
       {{!-- Card 1 --}}
       <div class="col-12 col-md-4 my-2">
@@ -78,87 +78,225 @@
   </div>
   {{!-- try it button --}}
   <div class="text-center try-it-btn">
-    <a href="/plans" class="btn btn-success mt-3">Try it now !</a>
+    <a href="/plans" class="btn mt-3">Try it now !</a>
   </div>
 </section>
 
 {{!-- Commitment --}}
 <section class="sec-commitment">
   <div class="commitment-container container">
-    <h1 class="commitment-title my-4 text-center">Our Commitments</h1>
+    <h1 class="commitment-title my-5 text-center">Our Commitments</h1>
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-6 col-xl-4">
+        <div class="card mb-3" style="max-width: 540px;">
+          <div class="row g-0">
+            <div class="col-12">
+              <div class="accordion accordion-flush" id="qualityAccordion">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="qualityHeading">
+                      <button class="accordion-button" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#qualityCollapse"
+                        aria-expanded="true" aria-controls="qualityCollapse">
+                        Quality
+                      </button>
+                    </h2>
+                    <div id="qualityCollapse" class="accordion-collapse collapse
+                      show"
+                      aria-labelledby="qulaityHeading"
+                      data-bs-parent="#qualityAccordion">
+                      <div class="accordion-body">
+                        <strong>We are committed to providing high-quality ingredients sourced from trusted suppliers. </strong>
+                        From farm-fresh produce to sustainably caught seafood, we ensure that every ingredient in our meal kits meets our rigorous standards.
 
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-xl-4">
+        <div class="card mb-3" style="max-width: 540px;">
+          <div class="row g-0">
+            <div class="col-12">
+              <div class="accordion accordion-flush" id="nutritiousAccordion">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="nutritiousHeading">
+                      <button class="accordion-button" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#nutritiousCollapse"
+                        aria-expanded="true" aria-controls="nutritiousCollapse">
+                        Nutritious
+                      </button>
+                    </h2>
+                    <div id="nutritiousCollapse" class="accordion-collapse collapse
+                      show"
+                      aria-labelledby="nutritiousHeading"
+                      data-bs-parent="#nutritiousAccordion">
+                      <div class="accordion-body">
+                        <strong> We believe that healthy eating should never compromise on taste.</strong>
+                        Our meal kits are carefully crafted to provide a balance of nutrients, ensuring that every bite contributes to a healthy and fulfilling lifestyle.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-6 col-xl-4">
+        <div class="card mb-3" style="max-width: 540px;">
+          <div class="row g-0">
+            <div class="col-12">
+              <div class="accordion accordion-flush" id="sustainableAccordion">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="sustainableHeading">
+                      <button class="accordion-button" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#sustainableCollapse"
+                        aria-expanded="true" aria-controls="sustainableCollapse">
+                        Sustainable
+                      </button>
+                    </h2>
+                    <div id="sustainableCollapse" class="accordion-collapse collapse
+                      show"
+                      aria-labelledby="sustainableHeading"
+                      data-bs-parent="#sustainableAccordion">
+                      <div class="accordion-body">
+                        <strong>We are dedicated to minimizing our environmental impact.</strong>  
+                        From sourcing locally grown ingredients to using eco-friendly packaging, we prioritize sustainability throughout our entire supply chain. 
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-xl-4">
+        <div class="card mb-3" style="max-width: 540px;">
+          <div class="row g-0">
+            <div class="col-12">
+              <div class="accordion accordion-flush" id="customAccordion">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="customHeading">
+                      <button class="accordion-button" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#customCollapse"
+                        aria-expanded="true" aria-controls="customCollapse">
+                        Transparency
+                      </button>
+                    </h2>
+                    <div id="customCollapse" class="accordion-collapse collapse
+                      show"
+                      aria-labelledby="customHeading"
+                      data-bs-parent="#customAccordion">
+                      <div class="accordion-body">
+                        <strong>We believe in being open and honest with our customers.</strong>
+                         Our customers can trust that every meal they prepare with Genius Chef is made with the utmost care and attention to detail.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{!-- Menu button --}}
+  <div class="text-center menu-btn">
+    <a href="/menu" class="btn btn-lg mt-3">Check Menu</a>
+  </div>
   </div>
 </section>
 
 {{!-- Voice from customers --}}
 <section class="sec-feedback">
   <div class="feedback-container container-fluid">
-    <h1 class="feedback-title my-4 text-center">Voice from Customers</h1>
+    <h1 class="feedback-title mt-5 mb-2 text-center">Voice from Customers</h1>
     <div class="container-fluid mb-3 py-5 px-0">
       <div id="carouselFeedback" class="carousel slide">
-      <img src="https://images.unsplash.com/photo-1498522271744-cdd435c13f24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80" alt="">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <div class="row justify-content-center">
-            <div class="col-md-6">
-              <blockquote class="blockquote">
-                <p>We've been cooking with Genius Chef for over 6 months. No
-                  need for endless grocery shopping and laborious meal planning
-                  anymore. It brings together all the necessary ingredients into
-                  several compact packages, making cooking a breeze even for the
-                  novices among us. Embrace the joy of simplicity and bid
-                  farewell to the hassles of meal preparation!</p>
-                <p class="blockquote-footer mt-2">Chus Lihuén, 42, Architect</p>
-              </blockquote>
+        <img
+          src="https://images.unsplash.com/photo-1498522271744-cdd435c13f24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80"
+          alt="">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="row justify-content-center">
+              <div class="col-md-6">
+                <blockquote class="blockquote">
+                  <p>We've been cooking with Genius Chef for over 6 months. No
+                    need for endless grocery shopping and laborious meal
+                    planning
+                    anymore. It brings together all the necessary ingredients
+                    into
+                    several compact packages, making cooking a breeze even for
+                    the
+                    novices among us. Embrace the joy of simplicity and bid
+                    farewell to the hassles of meal preparation!</p>
+                  <p class="blockquote-footer mt-2">Chus L., 42, Architect</p>
+                </blockquote>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="row justify-content-center">
+              <div class="col-md-6">
+                <blockquote class="blockquote">
+                  <p>This convenient meal kit box from Genius Chef is packed
+                    with everything we need to create a masterpiece in the
+                    kitchen. From pre-measured ingredients to step-by-step
+                    instructions, even the most inexperienced cook can whip up a
+                    gourmet meal effortlessly.
+                  </p>
+                  <p class="blockquote-footer mt-2">Shani C., 55, Healthcare
+                    worker</p>
+                </blockquote>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="row justify-content-center">
+              <div class="col-md-6">
+                <blockquote class="blockquote">
+                  <p>
+                    I found that meal preparation with the Genius Chef meal box
+                    was really easy. My kids also had fun helping out in the
+                    kitchen. It was a great way to bond with them over cooking
+                    and
+                    the meal turned out delicious. I would highly recommend the
+                    Genius Chef meal box to
+                    anyone looking for a convenient and affordable way to make
+                    delicious meals at home.
+                  </p>
+                  <p class="blockquote-footer mt-2">Kalani N., 37, Housewife</p>
+                </blockquote>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="row justify-content-center">
+              <div class="col-md-6">
+                <blockquote class="blockquote">
+                  <p>
+                    I recently purchased the Genius Chef meal box and I am totally impressed with the quality and variety of food it offers. The box includes recipes, ingredients and step-by-step instructions to help me prepare delicious meals with minimum effort. It is perfect for people like me who lack confidence in the kitchen but still want to make yummy meals.
+                  </p>
+                  <p class="blockquote-footer mt-2">Leith S., 63, Estate agent</p>
+                </blockquote>
+              </div>
             </div>
           </div>
         </div>
-        <div class="carousel-item">
-          <div class="row justify-content-center">
-            <div class="col-md-6">
-              <blockquote class="blockquote">
-                <p>This convenient meal kit box from Genius Chef is packed
-                  with everything we need to create a masterpiece in the
-                  kitchen. From pre-measured ingredients to step-by-step
-                  instructions, even the most inexperienced cook can whip up a
-                  gourmet meal effortlessly.
-                </p>
-                <p class="blockquote-footer mt-2">Shani Chandra, 55, Childcare
-                  worker</p>
-              </blockquote>
-            </div>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <div class="row justify-content-center">
-            <div class="col-md-6">
-              <blockquote class="blockquote">
-                <p>
-                  I found that meal preparation with the Genius Chef meal box
-                  was really easy. My kids also had fun helping out in the
-                  kitchen. It was a great way to bond with them over cooking and
-                  the meal turned out delicious. I would highly recommend the Genius Chef meal box to
-                  anyone looking for a convenient and affordable way to make
-                  delicious meals at home. 
-                </p>
-                <p class="blockquote-footer mt-2">Kalani Ngawang, 37, Housewife</p>
-              </blockquote>
-            </div>
-          </div>
-
-        </div>
+        <button class="carousel-control-prev" type="button"
+          data-bs-target="#carouselFeedback" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button"
+          data-bs-target="#carouselFeedback" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
-      <button class="carousel-control-prev" type="button"
-        data-bs-target="#carouselFeedback" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button"
-        data-bs-target="#carouselFeedback" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
 
     </div>
   </div>
@@ -166,8 +304,7 @@
 <!-- Section: Form -->
 <section class="newsletter-form">
   <div class="container pt-4 mb-1">
-
-    <form action="">
+    <form class="needs-validation" action="/newsletter" method="post" novalidate>
       <!--Grid row-->
       <div class="row d-flex justify-content-center">
         <!--Grid column-->
@@ -186,7 +323,8 @@
           <!-- Email input -->
           <div class="form-outline form-white mb-4">
             <input type="email" id="newsletterSub" class="form-control"
-              placeholder="Enter your email address"/>
+              placeholder="Enter your email address" required>
+              <div class="invalid-feedback">Please provide a valid email.</div>
           </div>
         </div>
         <!--Grid column-->
@@ -202,4 +340,26 @@
   </div>
 </section>
 
-{{>footer}}
+<footer class="footer fixed-bottom">
+    <div class="container">
+      <div class="row">
+        <div class="col-8">
+          <p>© 2023 Copyright: Genius Chef. Chef hat icon credited to <a target="_blank" href="https://icons8.com/icon/49569/chef-hat" class="text-decoration-none">Icons8</a> </p>
+        </div>
+        <div class="col-4">
+          <ul class="list-inline mb-0 text-center">
+        <li class="list-inline-item">
+          <a href=""><span class="fa fa-twitter"></span></a>
+        </li>
+        <li class="list-inline-item">
+          <a href=""><span class="fa fa-facebook"></span></a>
+        </li>
+        <li class="list-inline-item">
+          <a href=""><span class="fa fa-instagram"></span></a>
+        </li>
+      </ul>
+        </div>
+      </div>
+      
+    </div>
+  </footer>
