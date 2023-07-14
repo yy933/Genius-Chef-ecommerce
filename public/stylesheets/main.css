@@ -839,6 +839,10 @@ footer li a:focus,footer li a:hover {
   #carouselFeedback .carousel-inner{
     top:25%;
   }
+
+  #how-it-works-banner{
+    height: 60%;
+  }
   
   .btn-contact {
     width: 50%;
@@ -883,6 +887,10 @@ footer li a:focus,footer li a:hover {
 
   .accordion-body{
   height: 300px;
+}
+
+#how-it-works-banner{
+  height: 75%;
 }
 
 #how-it-works .step-items{
