@@ -20,6 +20,11 @@ router.get('/plans', (req, res, next) => {
     return res.render('plans')
   } catch (err) { next(err) }
 })
+router.get('/instructions', (req, res, next) => {
+  try {
+    return res.render('how-it-works')
+  } catch (err) { next(err) }
+})
 router.get('/', (req, res, next) => {
   try { return res.render('index') } catch (err) { next(err) }
 })
