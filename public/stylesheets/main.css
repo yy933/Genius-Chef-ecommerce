@@ -344,15 +344,50 @@ td{
 }
 
 #how-it-works h4 {
-    color: #343a40;
+    color: rgb(37, 137, 125);
     margin-top: 1rem;
     font-family: "Roboto", "Lato", sans-serif;
     font-size: 1.8rem;
 }
 
 #how-it-works i {
-    color: rgb(102, 140, 102);
+    color: rgb(37, 137, 125);
     font-size: 45px;
+}
+
+#the-box {
+  margin: 2.5rem 0;
+}
+
+#the-box .row > div:nth-child(1){
+  height:60%;
+  display: flex;
+  justify-content: center;
+}
+
+#the-box .row > div:nth-child(2){
+  padding-left: 1.2rem;
+}
+
+#the-box .row h2{
+  color: rgb(37, 137, 125);
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  font-family: "Roboto", "Lato", sans-serif;
+  font-size: 2.2rem;
+}
+
+#the-box .row p{
+  font-size: 1.5rem;
+}
+
+#the-box ul {
+  padding-left: 20px;
+  margin-bottom: 4rem;
+}
+
+#the-box ul li {
+    margin: 10px 0;
 }
 
 
@@ -813,33 +848,7 @@ footer li a:focus,footer li a:hover {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
 
-  .form-container {
-    display: flex;
-  }
 
-  .form-image {
-    width: 40%;
-    height: auto;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-top-right-radius: 0px;
-  }
-
-  .form-image-title {
-    padding-inline: 20px;
-    font-size: 250%;
-  }
-
-  .preference-form {
-    width: 60%;
-    height: 100%;
-    border-bottom-left-radius: 0px;
-    border-top-right-radius: 10px;
-  }
-
-  .preference-form form {
-    padding-left: 20px;
-  }
 
   .order-confirm .confirm-title {
     font-size: 300%;
@@ -905,6 +914,42 @@ footer li a:focus,footer li a:hover {
 #how-it-works .step-item-text p{
   font-size: 1.1rem;
 }
+
+#the-box .row h2{
+  font-size: 2.2rem;
+}
+
+#the-box .row p{
+  font-size: 1.2rem;
+}
+
+  .form-container {
+    display: flex;
+  }
+
+  .form-image {
+    width: 40%;
+    height: auto;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 0px;
+  }
+
+  .form-image-title {
+    padding-inline: 20px;
+    font-size: 250%;
+  }
+
+  .preference-form {
+    width: 60%;
+    height: 100%;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 10px;
+  }
+
+  .preference-form form {
+    padding-left: 20px;
+  }
 
   .payment-container {
     flex-direction: row;
