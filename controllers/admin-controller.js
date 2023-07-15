@@ -17,7 +17,7 @@ const adminController = {
     try {
       if (req.user.role === 'user') {
         req.flash('warning_msg', 'Access denied.')
-        return res.redirect('/')
+        return res.redirect('/users/login')
       }
     } catch (err) {
       next(err)
@@ -151,7 +151,7 @@ const adminController = {
   },
   getAdminDashboardMain: (req, res, next) => {
     try {
-      return res.redirect('/admin/dashboard/users')
+      return res.redirect('/admin/dashboard/orders')
     } catch (error) {
       next(error)
     }
@@ -272,7 +272,7 @@ const adminController = {
           path: 'users'
         })
       }
-      const user = users.rows.map(user => ({
+      const userlist = users.rows.map(user => ({
         id: user.id,
         name: user.name,
         email: user.email,
@@ -283,7 +283,7 @@ const adminController = {
 
       return res.render('admin/dashboard-users', {
         path: 'users',
-        user,
+        userlist,
         pagination: getPagination(limit, page, users.count),
         sortBy,
         sortDir

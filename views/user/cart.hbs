@@ -111,8 +111,12 @@
       </div>
     </div>
     <div class="continue-btn col-12 text-center my-2">
+      {{#if isEmpty}}
+      <a href="/" class="btn btn-outline-success">Home</a>
+      {{else}}
       <button class="btn confirm-btn" type="submit">Confirm Order</button>
       <button class="btn btn-secondary" type="reset">Reset</button>
+      {{/if}}
     </div>
   </form>
 </div>

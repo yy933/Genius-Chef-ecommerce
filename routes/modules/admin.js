@@ -8,7 +8,7 @@ router.get('/login', adminController.getAdminLogin)
 router.post('/login',
   passport.authenticate('admin-local', {
     failureFlash: true,
-    successRedirect: '/admin/dashboard',
+    successRedirect: '/admin/dashboard/orders',
     failureRedirect: '/admin/login'
   }), adminController.adminLogin
 )

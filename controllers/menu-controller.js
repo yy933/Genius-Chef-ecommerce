@@ -20,7 +20,7 @@ const menuController = {
         headers: { 'Content-Type': 'application/json' },
         params: {
           limitLicense: true,
-          number: 50,
+          number: 63,
           tags,
           apiKey: process.env.API_KEY
         }

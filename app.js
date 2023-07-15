@@ -21,6 +21,7 @@ app.set('view engine', 'hbs')
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+app.use(cookieParser())
 app.set('trust proxy', 1) // trust first proxy
 app.use(
   session({
@@ -36,8 +37,6 @@ app.use(
 )
 app.use(passport.initialize())
 app.use(passport.session())
-
-app.use(cookieParser())
 app.use(methodOverride('_method'))
 app.use(flash())
 app.use((req, res, next) => {
@@ -48,7 +47,6 @@ app.use((req, res, next) => {
   return next()
 })
 app.use('/', router)
-
 
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${PORT}`)

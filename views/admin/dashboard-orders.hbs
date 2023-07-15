@@ -5,172 +5,170 @@
     <div class="profile-contents ms-3 col-10" id="v-pills-tabContent">
       {{!-- Orders Table --}}
       <div class="profile-section">
-        <div>
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th>
-                  <div class="d-flex justify-content-center">
-                    Order ID
-                    {{!-- Sort button --}}
-                    <div class="sort-btn d-flex flex-column
-                      justify-content-center ms-1">
-                      <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=id&sortDir=ASC&status={{statusOptions.name}}"><i
-                          class="fa-solid fa-sort-up fa-2xs"></i></a>
-                      <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=id&sortDir=DESC&status={{statusOptions.name}}"><i
-                          class="fa-solid fa-sort-down fa-2xs"></i></a>
-                    </div>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>
+                <div class="d-flex justify-content-center">
+                  Order ID
+                  {{!-- Sort button --}}
+                  <div class="sort-btn d-flex flex-column
+                    justify-content-center ms-1">
+                    <a
+                      href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=id&sortDir=ASC&status={{statusOptions.name}}"><i
+                        class="fa-solid fa-sort-up fa-2xs"></i></a>
+                    <a
+                      href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=id&sortDir=DESC&status={{statusOptions.name}}"><i
+                        class="fa-solid fa-sort-down fa-2xs"></i></a>
                   </div>
-                </th>
-                <th>
-                  <div class="d-flex justify-content-center">
-                    Order Number
-                    {{!-- Sort button --}}
-                    <div class="sort-btn d-flex flex-column
-                      justify-content-center ms-1">
-                      <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=show_id&sortDir=ASC&status={{statusOptions.name}}"><i
-                          class="fa-solid fa-sort-up fa-2xs"></i></a>
-                      <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=show_id&sortDir=DESC&status={{statusOptions.name}}"><i
-                          class="fa-solid fa-sort-down fa-2xs"></i></a>
-                    </div>
+                </div>
+              </th>
+              <th>
+                <div class="d-flex justify-content-center">
+                  Order Number
+                  {{!-- Sort button --}}
+                  <div class="sort-btn d-flex flex-column
+                    justify-content-center ms-1">
+                    <a
+                      href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=show_id&sortDir=ASC&status={{statusOptions.name}}"><i
+                        class="fa-solid fa-sort-up fa-2xs"></i></a>
+                    <a
+                      href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=show_id&sortDir=DESC&status={{statusOptions.name}}"><i
+                        class="fa-solid fa-sort-down fa-2xs"></i></a>
                   </div>
-                </th>
-                <th>User ID</th>
-                <th>
-                  <div class="d-flex justify-content-center">
-                    Order At
-                    {{!-- Sort button --}}
-                    <div class="sort-btn d-flex flex-column
-                      justify-content-center ms-1">
-                      <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=created_at&sortDir=ASC&status={{statusOptions.name}}"><i
-                          class="fa-solid fa-sort-up fa-2xs"></i></a>
-                      <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=created_at&sortDir=DESC&status={{statusOptions.name}}"><i
-                          class="fa-solid fa-sort-down fa-2xs"></i></a>
-                    </div>
+                </div>
+              </th>
+              <th>User ID</th>
+              <th>
+                <div class="d-flex justify-content-center">
+                  Order At
+                  {{!-- Sort button --}}
+                  <div class="sort-btn d-flex flex-column
+                    justify-content-center ms-1">
+                    <a
+                      href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=created_at&sortDir=ASC&status={{statusOptions.name}}"><i
+                        class="fa-solid fa-sort-up fa-2xs"></i></a>
+                    <a
+                      href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=created_at&sortDir=DESC&status={{statusOptions.name}}"><i
+                        class="fa-solid fa-sort-down fa-2xs"></i></a>
                   </div>
-                </th>
-                <th>
-                  <div class="d-flex justify-content-center">
-                    Status
-                    <div class="dropdown d-flex">
-                      <button class="status-filter btn dropdown-toggle
-                        w-100" type="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                      </button>
-                      <ul class="dropdown-menu">
+                </div>
+              </th>
+              <th>
+                <div class="d-flex justify-content-center">
+                  Status
+                  <div class="dropdown d-flex">
+                    <button class="status-filter btn dropdown-toggle
+                      w-100" type="button"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                    </button>
+                    <ul class="dropdown-menu">
 
-                        <li><a class="dropdown-item"
-                            href="/admin/dashboard/orders?page={{pagination.prev}}&sortBy={{sortBy}}&sortDir={{sortDir}}&status=">All</a></li>
-                        {{#each statusOptions}}
-                        <li><a class="dropdown-item"
-                            href="/admin/dashboard/orders?page={{pagination.prev}}&sortBy={{sortBy}}&sortDir={{sortDir}}&status={{this.name}}">{{this.name}}</a></li>
-                        {{/each}}
-                      </ul>
-                    </div>
+                      <li><a class="dropdown-item"
+                          href="/admin/dashboard/orders?page={{pagination.prev}}&sortBy={{sortBy}}&sortDir={{sortDir}}&status=">All</a></li>
+                      {{#each statusOptions}}
+                      <li><a class="dropdown-item"
+                          href="/admin/dashboard/orders?page={{pagination.prev}}&sortBy={{sortBy}}&sortDir={{sortDir}}&status={{this.name}}">{{this.name}}</a></li>
+                      {{/each}}
+                    </ul>
                   </div>
-                </th>
-                <th>Details</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="sort-filter-sm-screen">
-                <td class="fs-5">
-                  <strong>Sort By</strong>
-                </td>
-                <td class="d-flex">
-                  <div class="d-flex justify-content-center w-50">
-                    Order ID
-                    {{!-- Sort button --}}
-                    <div class="sort-btn d-flex flex-column
-                      justify-content-center ms-1">
-                      <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=id&sortDir=ASC&status={{statusOptions.name}}"><i
-                          class="fa-solid fa-sort-up fa-2xs"></i></a>
-                      <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=id&sortDir=DESC&status={{statusOptions.name}}"><i
-                          class="fa-solid fa-sort-down fa-2xs"></i></a>
-                    </div>
+                </div>
+              </th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="sort-filter-sm-screen">
+              <td class="fs-5">
+                <strong>Sort By</strong>
+              </td>
+              <td class="d-flex">
+                <div class="d-flex justify-content-center w-50">
+                  Order ID
+                  {{!-- Sort button --}}
+                  <div class="sort-btn d-flex flex-column
+                    justify-content-center ms-1">
+                    <a
+                      href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=id&sortDir=ASC&status={{statusOptions.name}}"><i
+                        class="fa-solid fa-sort-up fa-2xs"></i></a>
+                    <a
+                      href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=id&sortDir=DESC&status={{statusOptions.name}}"><i
+                        class="fa-solid fa-sort-down fa-2xs"></i></a>
                   </div>
-                  <div class="d-flex justify-content-center w-50">
-                    Order Number
-                    {{!-- Sort button --}}
-                    <div class="sort-btn d-flex flex-column
-                      justify-content-center ms-1">
-                      <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=show_id&sortDir=ASC&status={{statusOptions.name}}"><i
-                          class="fa-solid fa-sort-up fa-2xs"></i></a>
-                      <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=show_id&sortDir=DESC&status={{statusOptions.name}}"><i
-                          class="fa-solid fa-sort-down fa-2xs"></i></a>
-                    </div>
+                </div>
+                <div class="d-flex justify-content-center w-50">
+                  Order Number
+                  {{!-- Sort button --}}
+                  <div class="sort-btn d-flex flex-column
+                    justify-content-center ms-1">
+                    <a
+                      href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=show_id&sortDir=ASC&status={{statusOptions.name}}"><i
+                        class="fa-solid fa-sort-up fa-2xs"></i></a>
+                    <a
+                      href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=show_id&sortDir=DESC&status={{statusOptions.name}}"><i
+                        class="fa-solid fa-sort-down fa-2xs"></i></a>
                   </div>
-                </td>
-                <td class="d-flex">
-                  <div class="d-flex justify-content-center w-50">
-                    Order At
-                    {{!-- Sort button --}}
-                    <div class="sort-btn d-flex flex-column
-                      justify-content-center ms-1">
-                      <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=created_at&sortDir=ASC"><i
-                          class="fa-solid fa-sort-up fa-2xs"></i></a>
-                      <a
-                        href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=created_at&sortDir=DESC&status={{statusOptions.name}}"><i
-                          class="fa-solid fa-sort-down fa-2xs"></i></a>
-                    </div>
+                </div>
+              </td>
+              <td class="d-flex">
+                <div class="d-flex justify-content-center w-50">
+                  Order At
+                  {{!-- Sort button --}}
+                  <div class="sort-btn d-flex flex-column
+                    justify-content-center ms-1">
+                    <a
+                      href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=created_at&sortDir=ASC"><i
+                        class="fa-solid fa-sort-up fa-2xs"></i></a>
+                    <a
+                      href="/admin/dashboard/orders?page={{pagination.currentPage}}&sortBy=created_at&sortDir=DESC&status={{statusOptions.name}}"><i
+                        class="fa-solid fa-sort-down fa-2xs"></i></a>
                   </div>
-                </td>
-                <td class="fs-5">
-                  <strong>Filter By</strong>
-                </td>
-                <td>
-                  <div class="d-flex justify-content-center">
-                    Status
-                    <div class="dropdown d-flex">
-                      <button class="status-filter btn dropdown-toggle
-                        w-100" type="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                      </button>
-                      <ul class="dropdown-menu">
-                        <li><a class="dropdown-item"
-                            href="/admin/dashboard/orders?page={{pagination.prev}}&sortBy={{sortBy}}&sortDir={{sortDir}}&status=">All</a></li>
-                        {{#each statusOptions}}
-                        <li><a class="dropdown-item"
-                            href="/admin/dashboard/orders?page={{pagination.prev}}&sortBy={{sortBy}}&sortDir={{sortDir}}&status={{this.name}}">{{this.name}}</a></li>
-                        {{/each}}
-                      </ul>
-                    </div>
+                </div>
+              </td>
+              <td class="fs-5">
+                <strong>Filter By</strong>
+              </td>
+              <td>
+                <div class="d-flex justify-content-center">
+                  Status
+                  <div class="dropdown d-flex">
+                    <button class="status-filter btn dropdown-toggle
+                      w-100" type="button"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item"
+                          href="/admin/dashboard/orders?page={{pagination.prev}}&sortBy={{sortBy}}&sortDir={{sortDir}}&status=">All</a></li>
+                      {{#each statusOptions}}
+                      <li><a class="dropdown-item"
+                          href="/admin/dashboard/orders?page={{pagination.prev}}&sortBy={{sortBy}}&sortDir={{sortDir}}&status={{this.name}}">{{this.name}}</a></li>
+                      {{/each}}
+                    </ul>
                   </div>
-                </td>
-                <td>
+                </div>
+              </td>
+              <td>
 
-                </td>
-              </tr>
-              {{#each order}}
-              <tr>
-                <td data-label="Order ID">{{this.id}}</td>
-                <td data-label="Order Number">#{{this.showId}}</td>
-                <td data-label="User ID">{{this.userId}}</td>
-                <td data-label="Order At">{{this.orderAt}}</td>
-                <td data-label="Status">{{this.status}}</td>
-                <td data-label="Details">
-                  <button type="button" class="btn btn-sm details-btn"
-                    data-bs-toggle="modal"
-                    data-bs-target="#order{{this.showId}}">
-                    Details
-                  </button>
-                </td>
-              </tr>
-              {{/each}}
-            </tbody>
-          </table>
-        </div>
+              </td>
+            </tr>
+            {{#each order}}
+            <tr>
+              <td data-label="Order ID">{{this.id}}</td>
+              <td data-label="Order Number">#{{this.showId}}</td>
+              <td data-label="User ID">{{this.userId}}</td>
+              <td data-label="Order At">{{this.orderAt}}</td>
+              <td data-label="Status">{{this.status}}</td>
+              <td data-label="Details">
+                <button type="button" class="btn btn-sm details-btn"
+                  data-bs-toggle="modal"
+                  data-bs-target="#order{{this.showId}}">
+                  Details
+                </button>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
       </div>
       {{#each order}}
       <!-- Order Details Modal -->

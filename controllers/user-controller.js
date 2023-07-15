@@ -49,7 +49,7 @@ const userController = {
       req.logout(function (err) {
         if (err) return next(err)
         req.flash('success_msg', 'Successfully logged out.')
-        return res.redirect('/')
+        return res.redirect('/users/login')
       })
     } catch (err) { next(err) }
 
