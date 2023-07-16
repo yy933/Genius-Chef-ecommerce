@@ -105,25 +105,27 @@
         <ul class="pagination">
           <li class="page-item {{#is pagination.currentPage 1}}disabled{{/is}}">
             <a class="page-link"
-              href="/admin/dashboard/orders?page={{pagination.prev}}&sortBy={{sortBy}}&sortDir={{sortDir}}&status={{statusOptions.name}}"
+              href="/menu/{{preference}}?limit={{limit}}&page={{pagination.prev}}"
               aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
-          {{#each pagination.pages}}
+
+            {{#each pagination.pages}}
           {{#is this ../pagination.currentPage}}
           <li class="page-item active"><a class="page-link" href="#">{{this}}</a></li>
           {{else}}
           <li class="page-item">
             <a class="page-link"
-              href="/admin/dashboard/orders?page={{this}}&sortBy={{../sortBy}}&sortDir={{../sortDir}}&status={{../statusOptions.name}}">{{this}}</a>
+              href="/menu/{{../preference}}?limit={{../limit}}&page={{this}}">{{this}}</a>
           </li>
           {{/is}}
           {{/each}}
+          
           <li class="page-item {{#is pagination.currentPage
             pagination.totalPage}}disabled{{/is}}">
             <a class="page-link"
-              href="/admin/dashboard/orders?page={{pagination.next}}&sortBy={{sortBy}}&sortDir={{sortDir}}&status={{statusOptions.name}}"
+              href="/menu/{{preference}}?&limit={{limit}}&page={{pagination.next}}"
               aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
             </a>

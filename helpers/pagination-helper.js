@@ -13,6 +13,7 @@ const getPagination = (limit, page, total) => {
     next
   }
 }
+
 module.exports = {
   getOffset,
   getPagination
