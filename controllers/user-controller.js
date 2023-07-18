@@ -1,6 +1,6 @@
 const { User, ResetToken, Cart, Order, Delivery, Subscriptions, Payment, sequelize } = require('../models')
 const validator = require('email-validator')
-const { body, validationResult } = require('express-validator')
+const { validationResult } = require('express-validator')
 const bcrypt = require('bcryptjs')
 const crypto = require('crypto')
 const mailService = require('../helpers/email-helpers')
@@ -127,7 +127,15 @@ const userController = {
   forgetPassword: async (req, res, next) => {
     try {
       const email = req.body.email
-      const user = await User.findOne({ where: { email } })
+      const validationErrors = validationResult(req).formatWith(err => err.msg).array()
+      const errors = validationErrors.map(errorMsg => ({ message: errorMsg }))
+      if (errors.length) {
+        return res.render('user/forget-password', {
+          errors,
+          email
+        })
+      }
+      const user = await User.findOne({ where: { email, role: 'user' } })
       if (!user) {
         req.flash('warning_msg', `Email ${email} is not valid. Please try again.`)
         return res.redirect('/users/forgetPassword')
@@ -180,7 +188,7 @@ const userController = {
         }
       })
       if (!unusedToken) {
-        req.flash('warning_msg', 'Reset password link has expired. Please make a request again.')
+        req.flash('warning_msg', 'Reset password link has expired. Please make another request.')
         return res.redirect('/users/forgetPassword')
       }
       return res.render('user/reset-password', {
@@ -194,14 +202,11 @@ const userController = {
   },
   resetPassword: async (req, res, next) => {
     try {
-      const { password, confirmPassword, email, token } = req.body
-      const regex = /^(?=.*\d)(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,16}$/
-      if (!regex.test(password)) {
-        req.flash('warning_msg', 'The password must contain at least 8 and maximum 16 characters, including at least 1 uppercase, 1 lowercase, and one number.')
-        return res.redirect('back')
-      }
-      if (password !== confirmPassword) {
-        req.flash('warning_msg', 'Make sure password and confirm password match.')
+      const { password, email, token } = req.body
+      const validationErrors = validationResult(req).formatWith(err => err.msg).array()
+      const errors = validationErrors.map(errorMsg => ({ message: errorMsg }))
+      if (errors.length) {
+        req.flash('warning_msg', 'Please try again.')
         return res.redirect('back')
       }
 
@@ -214,7 +219,7 @@ const userController = {
         }
       })
       if (!unusedToken) {
-        req.flash('warning_msg', 'Reset password link has expired. Please make a request again.')
+        req.flash('warning_msg', 'Reset password link has expired. Please make another request.')
         return res.redirect('/users/forgetPassword')
       }
       Promise.allSettled([
