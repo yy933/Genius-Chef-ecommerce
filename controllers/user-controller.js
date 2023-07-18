@@ -343,7 +343,8 @@ const userController = {
         req.flash('warning_msg', 'Access denied.')
         return res.redirect('back')
       }
-      const errors = []
+      const validationErrors = validationResult(req).formatWith(err => err.msg).array()
+      const errors = validationErrors.map(errorMsg => ({ message: errorMsg }))
       const [user, checkedExistedUser] = await Promise.all([
         User.findByPk(userId,
           {
@@ -358,17 +359,11 @@ const userController = {
           errors
         })
       }
-      if (!name || !email || !recurringSub) {
-        errors.push({ message: 'All fields are required.' })
-      }
-      if (!validator.validate(email)) {
-        errors.push({ message: 'Please provide a valid email.' })
-      }
+
       if (checkedExistedUser && checkedExistedUser.id !== req.user.id) {
         errors.push({ message: 'This email has already been registered!' })
       }
       if (errors.length) {
-        console.log(errors)
         return res.render('user/editProfile', {
           errors,
           userId,
@@ -399,25 +394,25 @@ const userController = {
   changePassword: async (req, res, next) => {
     try {
       const { userId } = req.params
-      const { newPassword, confirmNewPassword } = req.body
-      const regex = /^(?=.*\d)(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,16}$/
-
+      const { password, confirmPassword } = req.body
       if (reqHelper.getUser(req).id.toString() !== userId) {
         req.flash('warning_msg', 'Access denied.')
         return res.redirect('back')
       }
-      if (!regex.test(newPassword)) {
-        req.flash('warning_msg', 'The password must contain at least 8 and maximum 16 characters, including at least 1 uppercase, 1 lowercase, and one number.')
-        return res.redirect('back')
-      }
-      if (newPassword !== confirmNewPassword) {
-        req.flash('warning_msg', 'Make sure password and confirm password match.')
-        return res.redirect('back')
+      const validationErrors = validationResult(req).formatWith(err => err.msg).array()
+      const errors = validationErrors.map(errorMsg => ({ message: errorMsg }))
+      if (errors.length) {
+        return res.render('user/editPassword', {
+          password,
+          confirmPassword,
+          errors,
+          userId
+        })
       }
 
       await bcrypt
         .genSalt(10)
-        .then(salt => bcrypt.hash(newPassword, salt))
+        .then(salt => bcrypt.hash(password, salt))
         .then(hash => User.update({
           password: hash
         }, {
