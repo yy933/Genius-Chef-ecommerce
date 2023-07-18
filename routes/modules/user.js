@@ -3,6 +3,8 @@ const router = express.Router()
 const passport = require('../../config/passport')
 const userController = require('../../controllers/user-controller')
 const { authenticator, authenticatedUser } = require('../../middleware/auth')
+const { signUpValidationSchema } = require('../../helpers/express-validator-helper')
+
 
 router.get('/login', userController.getSignIn)
 router.post('/login',
@@ -13,7 +15,7 @@ router.post('/login',
   }), userController.signIn
 )
 router.get('/signup', userController.getSignUp)
-router.post('/signup', userController.signUp)
+router.post('/signup', signUpValidationSchema, userController.signUp)
 router.get('/forgetPassword', userController.getForgetPassword)
 router.post('/forgetPassword', userController.forgetPassword)
 router.get('/resetPassword', userController.getResetPassword)

@@ -1,5 +1,6 @@
 const { User, ResetToken, Cart, Order, Delivery, Subscriptions, Payment, sequelize } = require('../models')
 const validator = require('email-validator')
+const { body, validationResult } = require('express-validator')
 const bcrypt = require('bcryptjs')
 const crypto = require('crypto')
 const mailService = require('../helpers/email-helpers')
@@ -66,23 +67,10 @@ const userController = {
   },
   signUp: async (req, res, next) => {
     try {
+      const validationErrors = validationResult(req).formatWith(err => err.msg).array()
+      const errors = validationErrors.map(errorMsg => ({ message: errorMsg }))
       const { name, email, password, confirmPassword } = req.body
-      const errors = []
-      const regex = /^(?=.*\d)(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,16}$/
-      if (!name || !email || !password || !confirmPassword) {
-        errors.push({ message: 'All fields are required.' })
-      }
-      if (!validator.validate(email)) {
-        errors.push({ message: 'Please provide a valid email.' })
-      }
-      if (password !== confirmPassword) {
-        errors.push({ message: 'Make sure password and confirm password match.' })
-      }
-      if (!regex.test(password)) {
-        errors.push({ message: 'The password must contain at least 8 and maximum 16 characters, including at least 1 uppercase, 1 lowercase, and one number.' })
-      }
       if (errors.length) {
-        console.log(errors)
         return res.render('user/signup', {
           errors,
           name,
@@ -91,6 +79,7 @@ const userController = {
           confirmPassword
         })
       }
+
       const user = await User.findOne({ where: { email } })
       if (user) {
         errors.push({ message: 'This email has already been registered.' })
@@ -102,6 +91,7 @@ const userController = {
           confirmPassword
         })
       }
+
       bcrypt
         .genSalt(10)
         .then(salt => bcrypt.hash(password, salt))
