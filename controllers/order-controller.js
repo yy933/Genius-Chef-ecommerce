@@ -1,23 +1,44 @@
 const { Order, User, Delivery, Payment, Cart, sequelize } = require('../models')
 const mailService = require('../helpers/email-helpers')
+const { validationResult } = require('express-validator')
+
 const orderController = {
   sendOrder: async (req, res, next) => {
     const t = await sequelize.transaction()
     try {
       const { userId } = req.params
+      const validationErrors = validationResult(req).formatWith(err => err.msg).array()
+      const errors = validationErrors.map(errorMsg => ({ message: errorMsg }))
       if (req.user.id.toString() !== userId) {
         return res.redirect('/')
       }
-      let { menu, preference, servings, meals, totalAmount, recurringSub, name, phone, email, address, preferredDay, preferredTime } = req.body
-      if (!req.body) {
-        req.flash('warning_msg', 'All fields are required!')
-        res.redirect(`/users/cart/${userId}`)
+      const { menu, preference, servings, meals, totalAmount, name, phone, email, address, preferredDay, preferredTime } = req.body
+      if (errors.length) {
+        console.log(validationResult(req))
+        return res.render('user/cart', {
+          errors,
+          menu,
+          preference,
+          servings,
+          meals,
+          totalAmount,
+          name,
+          phone,
+          email,
+          address,
+          preferredDay,
+          preferredTime
+        })
       }
-      if (recurringSub === 'yes') {
-        recurringSub = true
-      } else {
-        recurringSub = false
-      }
+      // if (!req.body) {
+      //   req.flash('warning_msg', 'All fields are required!')
+      //   res.redirect(`/users/cart/${userId}`)
+      // }
+      // if (recurringSub === 'yes') {
+      //   recurringSub = true
+      // } else {
+      //   recurringSub = false
+      // }
       const showId = (new Date().getTime().toString() + userId + (Math.random() + 1).toString(36).substring(7)).slice(0, 18)
 
       const order = await Order.create({

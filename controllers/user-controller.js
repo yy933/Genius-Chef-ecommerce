@@ -20,7 +20,7 @@ const userController = {
   signIn: (req, res, next) => {
     try {
       if (req.user.role === 'admin') {
-        req.flash('warning_msg', 'Access denied.')
+        req.flash('warning_msg', 'User not found.')
         return res.redirect('/')
       }
     } catch (err) {
@@ -433,8 +433,11 @@ const userController = {
       if (req.user.id.toString() !== userId) {
         return res.redirect('/')
       }
-      const cart = await Cart.findByPk(userId, {
-        include: { model: User, attributes: ['name', 'email'] }
+      const cart = await Cart.findOne({
+        where: { userId },
+        include: { model: User, attributes: ['name', 'email'] },
+        order: [['createdAt', 'DESC']],
+        limit: 1
       })
       if (!cart) {
         return res.render('user/cart', {
@@ -464,7 +467,11 @@ const userController = {
       if (!totalAmount) {
         totalAmount = priceRule(servings, meals)
       }
-      const oldCart = await Cart.findByPk(userId)
+      const oldCart = await Cart.findOne({
+        where: { userId },
+        order: [['createdAt', 'DESC']],
+        limit: 1
+      })
       if (oldCart) {
         await oldCart.update({
           menu,
