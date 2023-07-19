@@ -1,5 +1,4 @@
 const { User, ResetToken, Cart, Order, Delivery, Subscriptions, Payment, sequelize } = require('../models')
-const validator = require('email-validator')
 const { validationResult } = require('express-validator')
 const bcrypt = require('bcryptjs')
 const crypto = require('crypto')

@@ -14,7 +14,6 @@ const orderController = {
       }
       const { menu, preference, servings, meals, totalAmount, name, phone, email, address, preferredDay, preferredTime } = req.body
       if (errors.length) {
-        console.log(validationResult(req))
         return res.render('user/cart', {
           errors,
           menu,
@@ -25,20 +24,10 @@ const orderController = {
           name,
           phone,
           email,
-          address,
-          preferredDay,
-          preferredTime
+          address
         })
       }
-      // if (!req.body) {
-      //   req.flash('warning_msg', 'All fields are required!')
-      //   res.redirect(`/users/cart/${userId}`)
-      // }
-      // if (recurringSub === 'yes') {
-      //   recurringSub = true
-      // } else {
-      //   recurringSub = false
-      // }
+
       const showId = (new Date().getTime().toString() + userId + (Math.random() + 1).toString(36).substring(7)).slice(0, 18)
 
       const order = await Order.create({

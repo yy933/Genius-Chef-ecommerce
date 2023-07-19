@@ -3,8 +3,7 @@ const router = express.Router()
 const passport = require('../../config/passport')
 const userController = require('../../controllers/user-controller')
 const { authenticator, authenticatedUser } = require('../../middleware/auth')
-const { profileValidationSchema, loginValidationSchema ,emailValidationSchema, passwordValidationSchema, manageSettingValidationSchema } = require('../../helpers/express-validator-helper')
-
+const { profileValidationSchema, loginValidationSchema, emailValidationSchema, passwordValidationSchema, manageSettingValidationSchema } = require('../../helpers/express-validator-helper')
 
 router.get('/login', userController.getSignIn)
 router.post('/login', loginValidationSchema,
