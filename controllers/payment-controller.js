@@ -136,7 +136,7 @@ const paymentController = {
             <h3>Sincerely,<br>Genius Chef Customer Service Team</h3>`
       }
       console.log(req.body)
-      if (RtnCode === 1) {
+      if (RtnCode === '1') {
         await sequelize.transaction(async (t) => {
           const order = await Order.findOne({
             attributes: ['id'],

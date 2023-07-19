@@ -1,20 +1,24 @@
 const { Newsletter } = require('../models')
 const mailService = require('../helpers/email-helpers')
-const validator = require('email-validator')
-
+const { validationResult } = require('express-validator')
 const newsletterController = {
   signUpNewsletter: async (req, res, next) => {
     try {
       const { email } = req.body
-      const errors = []
-      if (!email) {
-        errors.push({ message: 'All fields are required.' })
-      }
-      if (!validator.validate(email)) {
-        errors.push({ message: 'Please provide a valid email.' })
-      }
+      const validationErrors = validationResult(req).formatWith(err => err.msg).array()
+      const errors = validationErrors.map(errorMsg => ({ message: errorMsg }))
+      // const errors = []
+      // if (!email) {
+      //   errors.push({ message: 'All fields are required.' })
+      // }
+      // if (!validator.validate(email)) {
+      //   errors.push({ message: 'Please provide a valid email.' })
+      // }
       if (errors.length) {
-        return res.redirect('/')
+        return res.render('index', {
+          errors,
+          email
+        })
       }
       const user = await Newsletter.findOne({ where: { email } })
       if (user) {
@@ -38,7 +42,7 @@ const newsletterController = {
             <h3>Sincerely,<br>Genius Chef Customer Service Team</h3>`
       }
       await Promise.all([Newsletter.create({ email }), mailService(mailOptions)])
-      req.flash('success_msg', 'Successfully created an account!')
+      req.flash('success_msg', 'Successfully subscribed!')
       return res.redirect('/')
     } catch (err) { next(err) }
   }

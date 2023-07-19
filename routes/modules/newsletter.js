@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const newletterController = require('../../controllers/newsletter-controller')
-
-router.post('/', newletterController.signUpNewsletter)
+const { emailValidationSchema } =require('../../helpers/express-validator-helper')
+router.post('/', emailValidationSchema, newletterController.signUpNewsletter)
 
 module.exports = router
