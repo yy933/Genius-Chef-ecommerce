@@ -114,6 +114,11 @@ td{
   font-weight: 600;
 }
 
+/* index page alert */
+.index-alert div{
+  margin-bottom: 0%;
+}
+
 /* carousel  */
 .carousel-item img {
   opacity: 0.5;
