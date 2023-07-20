@@ -13,7 +13,7 @@ dayjs().format()
 const userController = {
   getSignIn: (req, res, next) => {
     try {
-      return res.render('user/login')
+      return res.render('user/login', { csrfToken: req.csrfToken() })
     } catch (err) { next(err) }
   },
   signIn: (req, res, next) => {
@@ -120,7 +120,7 @@ const userController = {
   },
   getForgetPassword: (req, res, next) => {
     try {
-      return res.render('user/forget-password')
+      return res.render('user/forget-password', { csrfToken: req.csrfToken() })
     } catch (err) { next(err) }
   },
   forgetPassword: async (req, res, next) => {
@@ -131,7 +131,8 @@ const userController = {
       if (errors.length) {
         return res.render('user/forget-password', {
           errors,
-          email
+          email,
+          csrfToken: req.csrfToken()
         })
       }
       const user = await User.findOne({ where: { email, role: 'user' } })
@@ -192,7 +193,8 @@ const userController = {
       }
       return res.render('user/reset-password', {
         email,
-        token
+        token,
+        csrfToken: req.csrfToken()
       })
     } catch (error) {
       next(error)
@@ -312,14 +314,16 @@ const userController = {
           userId: user.id,
           name: user.name,
           email: user.email,
-          recurringSub: user.Subscription.recurringSub
+          recurringSub: user.Subscription.recurringSub,
+          csrfToken: req.csrfToken()
         })
       }
       if (section === 'changePassword') {
         return res.render('user/editPassword', {
           path: 'settings',
           userId,
-          email: user.email
+          email: user.email,
+          csrfToken: req.csrfToken()
         })
       }
 
@@ -369,7 +373,8 @@ const userController = {
           path: 'settings',
           name,
           email,
-          recurringSub
+          recurringSub,
+          csrfToken: req.csrfToken()
         })
       }
 
@@ -405,7 +410,8 @@ const userController = {
           password,
           confirmPassword,
           errors,
-          userId
+          userId,
+          csrfToken: req.csrfToken()
         })
       }
 
@@ -451,7 +457,8 @@ const userController = {
         meals: cart.meals,
         totalAmount: cart.totalAmount,
         email: cart.User.email,
-        name: cart.User.name
+        name: cart.User.name,
+        csrfToken: req.csrfToken()
       }
       return res.render('user/cart', cartData)
     } catch (err) { next(err) }
@@ -495,7 +502,9 @@ const userController = {
         preference,
         servings,
         meals,
-        totalAmount
+        totalAmount,
+        csrfToken: req.csrfToken()
+
       })
     } catch (err) {
       next(err)

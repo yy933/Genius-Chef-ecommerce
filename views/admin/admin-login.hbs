@@ -12,6 +12,8 @@
                 <form class="needs-validation" action="/admin/login" method="post" novalidate>
                     <h5 class="fw-bold mt-2 mb-1 pb-3" style="letter-spacing: 1px;color:rgb(125, 117, 117)">Admin Console</h5>
                     <h1 class="fw-bold mb-3 pb-3" style="letter-spacing: 1px;">Log in</h1>
+                    {{!-- Csrf token  --}}
+                    <input type="hidden" name="_csrf" value="{{csrfToken}}">
                     <!-- Email input -->
                     <div class="form-outline mb-4">
                         <label class="form-label" for="email">Email</label>

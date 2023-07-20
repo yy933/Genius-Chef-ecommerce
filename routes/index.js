@@ -9,6 +9,7 @@ const order = require('./modules/order')
 const admin = require('./modules/admin')
 const newsletter = require('./modules/newsletter')
 const errorHandler = require('../middleware/error-handler')
+const { csrfProtection } = require('../middleware/csrf-token')
 
 router.use('/users', user)
 router.use('/auth', auth)
@@ -19,9 +20,9 @@ router.use('/admin', admin)
 router.use('/newsletter', newsletter)
 
 // non-authenticated routes
-router.get('/plans', (req, res, next) => {
+router.get('/plans', csrfProtection, (req, res, next) => {
   try {
-    return res.render('plans')
+    return res.render('plans', { csrfToken: req.csrfToken() })
   } catch (err) { next(err) }
 })
 
@@ -32,7 +33,9 @@ router.get('/instructions', (req, res, next) => {
 })
 
 router.get('/', (req, res, next) => {
-  try { return res.render('index') } catch (err) { next(err) }
+  try {
+    return res.render('index')
+  } catch (err) { next(err) }
 })
 
 router.use(errorHandler.errorLogger)

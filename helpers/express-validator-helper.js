@@ -1,4 +1,4 @@
-const { checkSchema, checkExact } = require('express-validator')
+const { checkSchema } = require('express-validator')
 const profileOptions = {
   name: {
     notEmpty: {
@@ -71,7 +71,10 @@ const orderOptions = {
   preference: {
     notEmpty: true,
     isString: true,
-    escape: true
+    escape: true,
+    unescape: {
+      options: '/'
+    }
   },
   servings: {
     notEmpty: true,
@@ -128,21 +131,49 @@ const orderOptions = {
   }
 }
 
-const profileValidationSchema = checkExact(checkSchema({
+const contactOptions = {
+  message: {
+    notEmpty: {
+      errorMessage: 'Phone is required.'
+    },
+    isString: {
+      errorMessage: 'Please check the format of field phone.'
+    },
+    isLength: {
+      options: { max: 500 },
+      errorMessage: 'Message should contain maximum 500 words.'
+    },
+    trim: true,
+    escape: true
+  },
+  subject: {
+    notEmpty: {
+      errorMessage: 'Subject is required.'
+    },
+    isString: {
+      errorMessage: 'Please check the format of field subject.'
+    },
+    trim: true,
+    escape: true
+  }
+
+}
+
+const profileValidationSchema = checkSchema({
   name: profileOptions.name,
   email: profileOptions.email,
   password: profileOptions.password,
   confirmPassword: profileOptions.confirmPassword
-}))
+})
 
-const loginValidationSchema = checkExact(checkSchema({
+const loginValidationSchema = checkSchema({
   email: profileOptions.email,
   password: profileOptions.password
-}))
+})
 
-const emailValidationSchema = checkExact(checkSchema({
+const emailValidationSchema = checkSchema({
   email: profileOptions.email
-}))
+})
 
 const passwordValidationSchema = checkSchema({
   password: profileOptions.password,
@@ -169,11 +200,19 @@ const orderValidationSchema = checkSchema({
   preferredTime: orderOptions.preferredTime
 })
 
+const contactValidationSchema = checkSchema({
+  name: profileOptions.name,
+  email: profileOptions.email,
+  subject: contactOptions.subject,
+  message: contactOptions.message
+})
+
 module.exports = {
   profileValidationSchema,
   loginValidationSchema,
   emailValidationSchema,
   passwordValidationSchema,
   manageSettingValidationSchema,
-  orderValidationSchema
+  orderValidationSchema,
+  contactValidationSchema
 }

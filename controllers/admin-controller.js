@@ -10,7 +10,7 @@ dayjs().format()
 const adminController = {
   getAdminLogin: (req, res, next) => {
     try {
-      return res.render('admin/admin-login')
+      return res.render('admin/admin-login', { csrfToken: req.csrfToken() })
     } catch (err) { next(err) }
   },
   adminLogin: (req, res, next) => {
@@ -34,7 +34,7 @@ const adminController = {
   },
   getAdminForgetPassword: (req, res, next) => {
     try {
-      return res.render('admin/admin-forgetPassword')
+      return res.render('admin/admin-forgetPassword', { csrfToken: req.csrfToken() })
     } catch (err) { next(err) }
   },
   forgetAdminPassword: async (req, res, next) => {
@@ -98,7 +98,8 @@ const adminController = {
       }
       return res.render('admin/admin-resetPassword', {
         email,
-        token
+        token,
+        csrfToken: req.csrfToken()
       })
     } catch (err) {
       next(err)

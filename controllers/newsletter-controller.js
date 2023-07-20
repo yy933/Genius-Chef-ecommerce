@@ -7,13 +7,6 @@ const newsletterController = {
       const { email } = req.body
       const validationErrors = validationResult(req).formatWith(err => err.msg).array()
       const errors = validationErrors.map(errorMsg => ({ message: errorMsg }))
-      // const errors = []
-      // if (!email) {
-      //   errors.push({ message: 'All fields are required.' })
-      // }
-      // if (!validator.validate(email)) {
-      //   errors.push({ message: 'Please provide a valid email.' })
-      // }
       if (errors.length) {
         return res.render('index', {
           errors,

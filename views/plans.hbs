@@ -11,6 +11,8 @@
         
         <form class="row g-3 needs-validation" action="{{#if user}}/users/cart/{{user.id}}{{else}}/users/login{{/if}}" method="post"
             novalidate>
+            {{!-- Csrf token  --}}
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
             <h4 class="text-muted mt-4">1. Choose your menu </h4>
             <div class="col-md-4 my-4 ">
                 <div class="menu-row mb-2 fs-5">

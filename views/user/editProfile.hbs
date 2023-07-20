@@ -7,6 +7,8 @@
       <div class="profile-section">
         <h4 class="profile-subtitle d-inline">Manage Settings</h4>
       <form class="needs-validation" action="/users/profile/{{userId}}/settings?_method=PUT" method="post" novalidate>
+      {{!-- Csrf token  --}}
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <ul class="profile-item my-3">
           <li>
           <strong><label for="editName" class="mb-3">Name:</label></strong>

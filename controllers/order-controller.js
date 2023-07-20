@@ -24,7 +24,8 @@ const orderController = {
           name,
           phone,
           email,
-          address
+          address,
+          csrfToken: req.csrfToken()
         })
       }
 

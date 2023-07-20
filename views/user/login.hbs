@@ -8,6 +8,8 @@
             <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
                 <form class="needs-validation" action="/users/login" method="post" novalidate>
                     <h1 class="fw-bold mb-3 pb-3" style="letter-spacing: 1px;">Log in</h1>
+                    {{!-- Csrf token  --}}
+                    <input type="hidden" name="_csrf" value="{{csrfToken}}">
                     <!-- Email input -->
                     <div class="form-outline mb-4">
                         <label class="form-label" for="email">Email</label>
