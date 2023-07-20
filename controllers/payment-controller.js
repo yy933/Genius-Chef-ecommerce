@@ -1,5 +1,4 @@
 const { Order, User, Delivery, Payment, Subscriptions, sequelize } = require('../models')
-const paypal = require('paypal-rest-sdk')
 const mailService = require('../helpers/email-helpers')
 const dayjs = require('dayjs')
 dayjs().format()
@@ -7,6 +6,7 @@ const Ecpay = require('ecpay_aio_nodejs')
 const options = require('ecpay_aio_nodejs/conf/config-example')
 const { showIdGenerator } = require('../helpers/ecpay-helper')
 const { error } = require('console')
+const paypal = require('paypal-rest-sdk')
 paypal.configure({
   mode: 'sandbox',
   client_id: process.env.PAYPAL_CLIENT_ID,
