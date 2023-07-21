@@ -1,4 +1,5 @@
 const { User, ResetToken, Order, Delivery, Payment, Subscriptions } = require('../models')
+const { validationResult } = require('express-validator')
 const mailService = require('../helpers/email-helpers')
 const crypto = require('crypto')
 const bcrypt = require('bcryptjs')
@@ -34,13 +35,21 @@ const adminController = {
   },
   getAdminForgetPassword: (req, res, next) => {
     try {
-      return res.render('admin/admin-forgetPassword', { csrfToken: req.csrfToken() })
+      return res.render('admin/admin-forgetPassword')
     } catch (err) { next(err) }
   },
   forgetAdminPassword: async (req, res, next) => {
     try {
       const email = req.body.email
-      const user = await User.findOne({ where: { email } })
+      const validationErrors = validationResult(req).formatWith(err => err.msg).array()
+      const errors = validationErrors.map(errorMsg => ({ message: errorMsg }))
+      if (errors.length) {
+        return res.render('admin/admin-forgetPassword', {
+          errors,
+          email
+        })
+      }
+      const user = await User.findOne({ where: { email, role: 'admin' } })
       if (!user) {
         req.flash('warning_msg', `Email ${email} is not valid. Please try again.`)
         return res.redirect('/admin/forgetPassword')
@@ -98,8 +107,7 @@ const adminController = {
       }
       return res.render('admin/admin-resetPassword', {
         email,
-        token,
-        csrfToken: req.csrfToken()
+        token
       })
     } catch (err) {
       next(err)
@@ -108,14 +116,11 @@ const adminController = {
   },
   resetAdminPassword: async (req, res, next) => {
     try {
-      const { password, confirmPassword, email, token } = req.body
-      const regex = /^(?=.*\d)(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,16}$/
-      if (!regex.test(password)) {
-        req.flash('warning_msg', 'The password must contain at least 8 and maximum 16 characters, including at least 1 uppercase, 1 lowercase, and one number.')
-        return res.redirect('back')
-      }
-      if (password !== confirmPassword) {
-        req.flash('warning_msg', 'Make sure password and confirm password match.')
+      const { password, email, token } = req.body
+      const validationErrors = validationResult(req).formatWith(err => err.msg).array()
+      const errors = validationErrors.map(errorMsg => ({ message: errorMsg }))
+      if (errors.length) {
+        req.flash('warning_msg', 'Please try again!')
         return res.redirect('back')
       }
 

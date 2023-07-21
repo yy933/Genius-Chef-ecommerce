@@ -3,7 +3,7 @@ const router = express.Router()
 const orderController = require('../../controllers/order-controller')
 const paymentController = require('../../controllers/payment-controller')
 const { authenticator, authenticatedUser } = require('../../middleware/auth')
-const { orderValidationSchema } = require('../../helpers/express-validator-helper')
+const { orderValidationSchema } = require('../../middleware/express-validator-helper')
 const { formParser, csrfProtection } = require('../../middleware/csrf-token')
 
 router.get('/:showId/payment/:userId/paypal/success', authenticator, authenticatedUser, paymentController.checkoutWithPaypalSuccess)

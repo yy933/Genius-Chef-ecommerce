@@ -120,7 +120,7 @@ const userController = {
   },
   getForgetPassword: (req, res, next) => {
     try {
-      return res.render('user/forget-password', { csrfToken: req.csrfToken() })
+      return res.render('user/forget-password')
     } catch (err) { next(err) }
   },
   forgetPassword: async (req, res, next) => {
@@ -131,8 +131,7 @@ const userController = {
       if (errors.length) {
         return res.render('user/forget-password', {
           errors,
-          email,
-          csrfToken: req.csrfToken()
+          email
         })
       }
       const user = await User.findOne({ where: { email, role: 'user' } })
@@ -193,8 +192,7 @@ const userController = {
       }
       return res.render('user/reset-password', {
         email,
-        token,
-        csrfToken: req.csrfToken()
+        token
       })
     } catch (error) {
       next(error)
@@ -207,7 +205,7 @@ const userController = {
       const validationErrors = validationResult(req).formatWith(err => err.msg).array()
       const errors = validationErrors.map(errorMsg => ({ message: errorMsg }))
       if (errors.length) {
-        req.flash('warning_msg', 'Please try again.')
+        req.flash('warning_msg', 'Please try again!')
         return res.redirect('back')
       }
 

@@ -12,6 +12,7 @@ const flash = require('connect-flash')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const helmet = require('helmet')
+const cookieExpiry = new Date(Date.now() + 60 * 60 * 1000 * 24) // 1 day
 
 const app = express()
 const PORT = process.env.PORT || 8080
@@ -23,20 +24,25 @@ app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cookieParser())
-
+app.disable('x-powered-by')
 app.use(helmet({
-  contentSecurityPolicy: false
+  contentSecurityPolicy: false,
+  referrerPolicy: {
+    policy: ['strict-origin-when-cross-origin']
+  }
 }))
 app.set('trust proxy', 1) // trust first proxy
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
+    name: 'sessionId',
     resave: false,
     saveUninitialized: true,
     cookie: {
       httpOnly: true,
       secure: true, // set to true on production
-      sameSite: 'none'
+      sameSite: 'none',
+      expires: cookieExpiry
     }
   })
 )
