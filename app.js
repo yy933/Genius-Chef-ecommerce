@@ -33,8 +33,9 @@ app.use(helmet({
       'script-src': ["'self'", "'unsafe-inline'", 'cdn.jsdelivr.net/npm/bootstrap@5.0.2/'],
       'style-src': ["'self'", "'unsafe-inline'", 'fonts.googleapis.com', 'cdn.jsdelivr.net/npm/bootstrap@5.0.2/'],
       'font-src': ["'self'", 'fonts.gstatic.com'],
-      'img-src': ["'self'", 'img.icons8.com', 'images.unsplash.com', 'spoonacular.com'],
-      'script-src-attr': ["'self'", "'unsafe-inline'"]
+      'img-src': ["'self'", 'img.icons8.com', 'images.unsplash.com', 'spoonacular.com', '* data:'],
+      'script-src-attr': ["'self'", "'unsafe-inline'"],
+      'form-action': ["'self'", 'payment-stage.ecpay.com.tw/']
     }
   },
   referrerPolicy: {

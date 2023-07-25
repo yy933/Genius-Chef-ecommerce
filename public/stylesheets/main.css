@@ -103,7 +103,6 @@ td{
 .navbar-scroll {
   background-color: #7ceece;
   -webkit-box-shadow: 0 8px 6px -6px #999;
-  -moz-box-shadow: 0 8px 6px -6px #999;
   box-shadow: 0 8px 6px -6px #999;
 }
 
@@ -114,14 +113,6 @@ td{
   font-weight: 600;
 }
 
-.navbar-light .navbar-toggler-icon{
-  background-image: none;
-}
-
-.navbar-toggler-icon .fa-bars{
-  position: relative;
-  top: 17%;
-}
 
 /* index page alert */
 .index-alert div{
@@ -166,7 +157,6 @@ td{
   overflow: hidden;
   position: relative;
   -webkit-box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  -moz-box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
