@@ -114,6 +114,15 @@ td{
   font-weight: 600;
 }
 
+.navbar-light .navbar-toggler-icon{
+  background-image: none;
+}
+
+.navbar-toggler-icon .fa-bars{
+  position: relative;
+  top: 17%;
+}
+
 /* index page alert */
 .index-alert div{
   margin-bottom: 0%;

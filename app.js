@@ -26,7 +26,17 @@ app.use(express.json())
 app.use(cookieParser())
 app.disable('x-powered-by')
 app.use(helmet({
-  contentSecurityPolicy: false,
+  contentSecurityPolicy: {
+    useDefaults: true,
+    directives: {
+      'default-src': ["'self'"],
+      'script-src': ["'self'", "'unsafe-inline'", 'cdn.jsdelivr.net/npm/bootstrap@5.0.2/'],
+      'style-src': ["'self'", "'unsafe-inline'", 'fonts.googleapis.com', 'cdn.jsdelivr.net/npm/bootstrap@5.0.2/'],
+      'font-src': ["'self'", 'fonts.gstatic.com'],
+      'img-src': ["'self'", 'img.icons8.com', 'images.unsplash.com', 'spoonacular.com'],
+      'script-src-attr': ["'self'", "'unsafe-inline'"]
+    }
+  },
   referrerPolicy: {
     policy: ['strict-origin-when-cross-origin']
   }
@@ -57,6 +67,7 @@ app.use((req, res, next) => {
   res.locals.warning_msg = req.flash('warning_msg')
   return next()
 })
+
 app.use('/', router)
 
 app.listen(PORT, () => {
