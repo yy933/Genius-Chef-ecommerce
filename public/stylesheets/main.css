@@ -732,8 +732,16 @@ footer li a:focus,footer li a:hover {
 }
 
 /* admin dashboard  */
+.sort-btn{
+    position: relative;
+    padding-left: 8px;
+}
+.sort-btn a{
+    position: absolute;
+    color: #666666;
+}
 .sort-btn a:first-child{
-  margin-bottom: 3px;
+  margin-bottom: 8px;
 }
 
 .active-filter{
@@ -744,6 +752,8 @@ footer li a:focus,footer li a:hover {
 .recurSub-filter, .status-filter{
   padding: 0%;
 }
+
+
 
 /* paginator */
 .nav-pagination{
