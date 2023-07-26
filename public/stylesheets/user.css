@@ -1,4 +1,6 @@
-/* signIn page  */
+/* This file contains css settings of elements on user/admin related pages, including profile, cart, sign in, and admin dashboard.  */
+
+/* sign in page  */
 .divider:after,
 .divider:before {
   content: "";
@@ -16,6 +18,7 @@
   font-family: "Roboto", sans-serif;
 }
 
+/* cart  */
 .reselect-plan {
   color: #06716e;
   font-size: 1.3rem;
@@ -49,11 +52,11 @@
 }
 
 /* profile  */
-.profile-container{
+.profile-container {
   min-height: 100%;
 }
 
-.profile-container .nav{
+.profile-container .nav {
   justify-content: center;
   margin-bottom: 1.5rem;
 }
@@ -79,55 +82,64 @@
 
 .profile-contents {
   display: table;
-  height:auto
+  height: auto
 }
 
-.confirm-btn, .try-it-btn a, .menu-btn a{
+.confirm-btn,
+.try-it-btn a,
+.menu-btn a {
   background-color: rgb(37, 137, 125);
   color: #fff;
 }
 
-.details-btn{
+.details-btn {
   background-color: #76d8bd;
   border: #76d8bd;
 }
-.cancelOrder-btn, .editOrder-btn{
+
+.cancelOrder-btn,
+.editOrder-btn {
   cursor: pointer;
 }
+
 .profile-item li {
   margin-top: 18px;
   margin-right: 5px;
 }
 
-.profile-item strong{
+.profile-item strong {
   font-size: 1.1rem;
   margin-right: 0.5rem;
 }
 
 /* admin dashboard  */
-.sort-btn{
-    position: relative;
-    padding-left: 8px;
+.sort-btn {
+  position: relative;
+  padding-left: 8px;
 }
-.sort-btn a{
-    position: absolute;
-    color: #666666;
+
+.sort-btn a {
+  position: absolute;
+  color: #666666;
 }
-.sort-btn a:first-child{
+
+.sort-btn a:first-child {
   margin-bottom: 14px;
 }
 
-.active-filter{
+.active-filter {
   padding-inline: 0%;
   padding-top: 50%;
 }
 
-.recurSub-filter, .status-filter{
+.recurSub-filter,
+.status-filter {
   padding: 0%;
 }
 
 /* RWD settings */
 @media (max-width: 599px) {
+
   /* admin dashboard */
   table thead {
     display: none;
@@ -139,29 +151,35 @@
     border: 3px solid white;
     padding: 1px;
   }
-  
+
 
   table td[data-label] {
     display: flex;
     font-weight: bold;
   }
-  table td[data-label=Email]{
+
+  table td[data-label=Email] {
     word-break: break-all;
   }
+
   table td[data-label]::before {
     content: attr(data-label);
     color: #06716e;
     font-weight: 100;
     width: 50%;
   }
-  .details-btn, .editOrder-btn-container{
+
+  .details-btn,
+  .editOrder-btn-container {
     margin-left: auto;
     margin-right: auto;
   }
-  
+
 }
 
 @media screen and (min-width: 600px) {
+
+  /* profile  */
   .profile-container {
     display: flex;
     align-items: flex-start;
@@ -170,9 +188,10 @@
   .profile-container .nav {
     flex-direction: column;
   }
-  .sort-filter-sm-screen{
+
+  /* admin dashboard  */
+  .sort-filter-sm-screen {
     display: none;
   }
-  
-}
 
+}
