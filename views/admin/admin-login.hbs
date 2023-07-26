@@ -11,21 +11,7 @@
             <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
                 <form class="needs-validation" action="/admin/login" method="post" novalidate>
                     <h5 class="fw-bold mt-2 mb-1 pb-3" style="letter-spacing: 1px;color:rgb(125, 117, 117)">Admin Console</h5>
-                    <h1 class="fw-bold mb-3 pb-3" style="letter-spacing: 1px;">Log in</h1>
-                    {{!-- Csrf token  --}}
-                    <input type="hidden" name="_csrf" value="{{csrfToken}}">
-                    <!-- Email input -->
-                    <div class="form-outline mb-4">
-                        <label class="form-label" for="email">Email</label>
-                        <input type="email" id="email" name="email" class="form-control form-control-lg" value="{{email}}" required>
-                        <div class="invalid-feedback">Please enter a valid email.</div>
-                    </div>
-                    <!-- Password input -->
-                    <div class="form-outline mb-4">
-                        <label class="form-label" for="password">Password</label>
-                        <input type="password" id="password" name="password" class="form-control form-control-lg" pattern="^(?=.*\d)(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,16}$" required>
-                        <div class="invalid-feedback">Please enter your password. The password must contain at least 8 and maximum 16 characters, including at least 1 uppercase, 1 lowercase, and one number.</div>
-                    </div>
+                    {{> login-input}}
                     <div class="text-center align-items-center mb-4">
                         <a href="/admin/forgetPassword">Forgot password?</a>
                     </div>
