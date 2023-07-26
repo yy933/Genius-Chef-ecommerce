@@ -117,6 +117,23 @@ td {
   font-weight: 600;
 }
 
+/* loading modal  */
+
+#loading-modal .modal-dialog{
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+#loading-modal h2{
+  color: #06716e;
+  font-weight: 600;
+  font-family: "Roboto", "Lato", sans-serif;
+}
+
+#loading-modal .spinner-border{
+  height: 3.5rem;
+  width: 3.5rem;
+}
+
 /* footer */
 
 .footer {
