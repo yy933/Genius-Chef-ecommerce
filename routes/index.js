@@ -12,7 +12,7 @@ const errorHandler = require('../middleware/error-handler')
 const cookieParser = require('cookie-parser')
 const { doubleCsrfProtection } = require('../middleware/csrf-token')
 
-router.use(cookieParser('cookieSecret'))
+router.use(cookieParser(process.env.CSRF_COOKIE_SECRET))
 // router.use(doubleCsrfProtection)
 router.use('/users', user)
 router.use('/auth', auth)
