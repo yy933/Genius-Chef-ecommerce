@@ -4,10 +4,12 @@ const mailService = require('../helpers/email-helpers')
 const crypto = require('crypto')
 const bcrypt = require('bcryptjs')
 const { getOffset, getPagination } = require('../helpers/pagination-helper')
+const { getUser } = require('../helpers/req-helpers')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 const dayjs = require('dayjs')
 dayjs().format()
+
 const adminController = {
   getAdminLogin: (req, res, next) => {
     try {
@@ -16,7 +18,7 @@ const adminController = {
   },
   adminLogin: (req, res, next) => {
     try {
-      if (req.user.role === 'user') {
+      if (getUser(req).role === 'user') {
         req.flash('warning_msg', 'Access denied.')
         return res.redirect('/users/login')
       }
@@ -176,7 +178,7 @@ const adminController = {
         raw: true,
         nest: true
       })
-      if (!admin || req.user.role === 'user') {
+      if (!admin || getUser(req).role === 'user') {
         req.flash('warning_msg', 'User not found!')
         return res.redirect('/users/login')
       }
@@ -249,7 +251,7 @@ const adminController = {
         raw: true,
         nest: true
       })
-      if (!admin || req.user.role === 'user') {
+      if (!admin || getUser(req).role === 'user') {
         req.flash('warning_msg', 'User not found!')
         return res.redirect('/users/login')
       }

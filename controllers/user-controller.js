@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs')
 const crypto = require('crypto')
 const mailService = require('../helpers/email-helpers')
 const priceRule = require('../helpers/price-calculation')
-const reqHelper = require('../req_helpers')
+const { getUser } = require('../helpers/req-helpers')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 const dayjs = require('dayjs')
@@ -18,7 +18,7 @@ const userController = {
   },
   signIn: (req, res, next) => {
     try {
-      if (req.user.role === 'admin') {
+      if (getUser(req).role === 'admin') {
         req.flash('warning_msg', 'User not found.')
         return res.redirect('/')
       }
@@ -259,7 +259,7 @@ const userController = {
         req.flash('warning_msg', 'User not found!')
         return res.redirect('/')
       }
-      if (req.user.id.toString() !== userId) {
+      if (getUser(req).id.toString() !== userId) {
         req.flash('warning_msg', 'Access denied.')
         return res.redirect(`/users/profile/${req.user.id}`)
       }
@@ -340,7 +340,7 @@ const userController = {
     try {
       let { name, email, recurringSub } = req.body
       const { userId } = req.params
-      if (req.user.id.toString() !== userId) {
+      if (getUser(req).id.toString() !== userId) {
         req.flash('warning_msg', 'Access denied.')
         return res.redirect('back')
       }
@@ -361,7 +361,7 @@ const userController = {
         })
       }
 
-      if (checkedExistedUser && checkedExistedUser.id !== req.user.id) {
+      if (checkedExistedUser && checkedExistedUser.id !== getUser(req).id) {
         errors.push({ message: 'This email has already been registered!' })
       }
       if (errors.length) {
@@ -397,7 +397,7 @@ const userController = {
     try {
       const { userId } = req.params
       const { password, confirmPassword } = req.body
-      if (reqHelper.getUser(req).id.toString() !== userId) {
+      if (getUser(req).id.toString() !== userId) {
         req.flash('warning_msg', 'Access denied.')
         return res.redirect('back')
       }
@@ -433,7 +433,7 @@ const userController = {
   getCart: async (req, res, next) => {
     try {
       const { userId } = req.params
-      if (req.user.id.toString() !== userId) {
+      if (getUser(req).id.toString() !== userId) {
         return res.redirect('/')
       }
       const cart = await Cart.findOne({
@@ -464,7 +464,7 @@ const userController = {
   sendPlansToCart: async (req, res, next) => {
     try {
       const { userId } = req.params
-      if (req.user.id.toString() !== userId) {
+      if (getUser(req).id.toString() !== userId) {
         return res.redirect('/')
       }
       let { menu, preference, servings, meals, totalAmount } = req.body

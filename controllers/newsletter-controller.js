@@ -1,6 +1,7 @@
 const { Newsletter } = require('../models')
 const mailService = require('../helpers/email-helpers')
 const { validationResult } = require('express-validator')
+
 const newsletterController = {
   signUpNewsletter: async (req, res, next) => {
     try {

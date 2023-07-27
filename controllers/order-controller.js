@@ -1,6 +1,7 @@
 const { Order, User, Delivery, Payment, Cart, sequelize } = require('../models')
 const mailService = require('../helpers/email-helpers')
 const { validationResult } = require('express-validator')
+const { getUser } = require('../helpers/req-helpers')
 
 const orderController = {
   sendOrder: async (req, res, next) => {
@@ -9,7 +10,7 @@ const orderController = {
       const { userId } = req.params
       const validationErrors = validationResult(req).formatWith(err => err.msg).array()
       const errors = validationErrors.map(errorMsg => ({ message: errorMsg }))
-      if (req.user.id.toString() !== userId) {
+      if (getUser(req).id.toString() !== userId) {
         return res.redirect('/')
       }
       const { menu, preference, servings, meals, totalAmount, name, phone, email, address, preferredDay, preferredTime } = req.body

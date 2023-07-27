@@ -1,5 +1,6 @@
 const { Order, User, Delivery, Payment, Subscriptions, sequelize } = require('../models')
 const mailService = require('../helpers/email-helpers')
+const { getUser } = require('../helpers/req-helpers')
 const dayjs = require('dayjs')
 dayjs().format()
 const Ecpay = require('ecpay_aio_nodejs')
@@ -28,7 +29,7 @@ const paymentController = {
         req.flash('warning_msg', 'Order does not exist!')
         return res.redirect(`/users/profile/${req.user.id}`)
       }
-      if (req.user.id.toString() !== userId) {
+      if (getUser(req).id.toString() !== userId) {
         req.flash('warning_msg', 'User not found!')
         return res.redirect(`/users/profile/${req.user.id}`)
       }
@@ -68,7 +69,7 @@ const paymentController = {
         req.flash('warning_msg', 'Order does not exist!')
         return res.redirect(`/users/profile/${req.user.id}`)
       }
-      if (req.user.id.toString() !== userId) {
+      if (getUser(req).id.toString() !== userId) {
         req.flash('warning_msg', 'User not found!')
         return res.redirect(`/users/profile/${req.user.id}`)
       }
@@ -221,7 +222,7 @@ const paymentController = {
         req.flash('warning_msg', 'Order does not exist!')
         return res.redirect(`/users/profile/${req.user.id}`)
       }
-      if (req.user.id.toString() !== userId) {
+      if (getUser(req).id.toString() !== userId) {
         req.flash('warning_msg', 'User not found!')
         return res.redirect(`/users/profile/${req.user.id}`)
       }

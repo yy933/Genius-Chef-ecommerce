@@ -1,4 +1,4 @@
-const helpers = require('../req_helpers')
+const helpers = require('../helpers/req-helpers')
 
 const authenticator = (req, res, next) => {
   if (helpers.authenticator(req)) {
