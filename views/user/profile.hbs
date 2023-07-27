@@ -39,6 +39,7 @@
                     </a>
                     <span class="badge bg-secondary d-inline-block my-2 cancelOrder-btn"
                       data-bs-toggle="modal" data-bs-target="#cancelOrder{{this.showId}}">Cancel Order</span>
+                    <form action="/orders/{{this.showId}}/cancel/{{this.userId}}" method="post">
                     <!--  Cancel Order Modal -->
                     <div class="modal fade" id="cancelOrder{{this.showId}}" tabindex="-1"
                       aria-labelledby="cancelOrderModalLabel" aria-hidden="true">
@@ -50,8 +51,7 @@
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, keep my order.</button>
-                            <form action="/orders/{{this.showId}}/cancel/{{this.userId}}"
-                              method="post">
+
                               <button type="submit" class="btn btn-primary">Yes, please
                                 cancel my order.</button>
                             </form>
@@ -59,6 +59,7 @@
                         </div>
                       </div>
                     </div>
+                    </form>
                     {{/is}}
                   </div>
                   

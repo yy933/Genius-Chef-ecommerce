@@ -4,10 +4,10 @@ const passport = require('../../config/passport')
 const adminController = require('../../controllers/admin-controller')
 const { authenticator, authenticatedAdmin } = require('../../middleware/auth')
 const { loginValidationSchema, emailValidationSchema, passwordValidationSchema } = require('../../middleware/express-validator-helper')
-const { csrfProtection, formParser } = require('../../middleware/csrf-token')
+const { doubleCsrfProtection } = require('../../middleware/csrf-token')
 
-router.get('/login', csrfProtection, adminController.getAdminLogin)
-router.post('/login', formParser, csrfProtection, loginValidationSchema,
+router.get('/login', doubleCsrfProtection, adminController.getAdminLogin)
+router.post('/login', doubleCsrfProtection, loginValidationSchema,
   passport.authenticate('admin-local', {
     failureFlash: true,
     successRedirect: '/admin/dashboard/orders',

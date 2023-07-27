@@ -59,6 +59,9 @@
         <td align="center">
           <form action="/orders/{{showId}}/payment/{{userId}}/paypal"
             method="post">
+            {{!-- Csrf token  --}}
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            {{!-- order details  --}}
             <input type="hidden" name="userId" value={{userId}}>
             <input type="hidden" name="showId" value={{showId}}>
             <input type="hidden" name="totalAmount" value={{totalAmount}}>

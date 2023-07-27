@@ -51,8 +51,8 @@ const paymentController = {
         phone: order.Delivery.phone,
         address: order.Delivery.address,
         preferredDay: order.Delivery.preferredDay,
-        preferredTime: order.Delivery.preferredTime
-
+        preferredTime: order.Delivery.preferredTime,
+        csrfToken: req.csrfToken()
       })
     } catch (err) { next(err) }
   },

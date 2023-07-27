@@ -9,8 +9,11 @@ const order = require('./modules/order')
 const admin = require('./modules/admin')
 const newsletter = require('./modules/newsletter')
 const errorHandler = require('../middleware/error-handler')
-const { csrfProtection } = require('../middleware/csrf-token')
+const cookieParser = require('cookie-parser')
+const { doubleCsrfProtection } = require('../middleware/csrf-token')
 
+router.use(cookieParser('cookieSecret'))
+// router.use(doubleCsrfProtection)
 router.use('/users', user)
 router.use('/auth', auth)
 router.use('/menu', menu)
@@ -20,7 +23,7 @@ router.use('/admin', admin)
 router.use('/newsletter', newsletter)
 
 // non-authenticated routes
-router.get('/plans', csrfProtection, (req, res, next) => {
+router.get('/plans', doubleCsrfProtection, (req, res, next) => {
   try {
     return res.render('plans', { csrfToken: req.csrfToken() })
   } catch (err) { next(err) }

@@ -23,7 +23,7 @@ app.set('view engine', 'hbs')
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(cookieParser())
+app.use(cookieParser('secret'))
 app.disable('x-powered-by')
 app.use(helmet({
   contentSecurityPolicy: {
@@ -57,6 +57,7 @@ app.use(
     }
   })
 )
+
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOverride('_method'))
