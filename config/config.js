@@ -1,5 +1,5 @@
 require('dotenv').config()
-const { DB_PASSWORD, REMOTE_DB_URL } = process.env
+const { DB_PASSWORD } = process.env
 module.exports = {
   development: {
     username: 'postgres',
