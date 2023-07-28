@@ -1,9 +1,7 @@
-
-const { DB_PASSWORD, REMOTE_DB_URL } = process.env
 module.exports = {
   development: {
     username: 'postgres',
-    password: DB_PASSWORD,
+    password: process.env.DB_PASSWORD,
     database: 'genius_chef_dev',
     host: '127.0.0.1',
     dialect: 'postgres'
@@ -16,6 +14,14 @@ module.exports = {
     dialect: 'postgres'
   },
   production: {
-    use_env_variable: REMOTE_DB_URL
+    use_env_variable: process.env.REMOTE_DB_URL,
+    dialect: 'postgres',
+    logging: false,
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000,
+    }
   }
 }
