@@ -1,5 +1,5 @@
-require('dotenv').config()
-const { DB_PASSWORD } = process.env
+
+const { DB_PASSWORD, REMOTE_DB_URL } = process.env
 module.exports = {
   development: {
     username: 'postgres',
@@ -16,6 +16,6 @@ module.exports = {
     dialect: 'postgres'
   },
   production: {
-    use_env_variable: 'REMOTE_DB_URL'
+    use_env_variable: REMOTE_DB_URL
   }
 }
