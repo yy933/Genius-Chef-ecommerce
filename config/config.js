@@ -14,14 +14,17 @@ module.exports = {
     dialect: 'postgres'
   },
   production: {
-    use_env_variable: process.env.REMOTE_DB_URL,
+    username: process.env.REMOTE_DB_USERNAME,
+    password: process.env.REMOTE_DB_PASSWORD,
+    database: process.env.REMOTE_DB,
+    host: process.env.REMOTE_DB_HOST,
     dialect: 'postgres',
     logging: false,
     pool: {
       max: 5,
       min: 0,
       acquire: 30000,
-      idle: 10000,
+      idle: 10000
     }
   }
 }
