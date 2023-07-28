@@ -16,6 +16,6 @@ module.exports = {
     dialect: 'postgres'
   },
   production: {
-    use_env_variable: REMOTE_DB_URL
+    use_env_variable: 'REMOTE_DB_URL'
   }
 }
