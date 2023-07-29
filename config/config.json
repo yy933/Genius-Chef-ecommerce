@@ -1,0 +1,20 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "champions",
+    "database": "genius_chef_dev",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "root",
+    "password": "password",
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "logging": false
+  },
+  "production": {
+    "use_env_variable": "REMOTE_DB_URL"
+  }
+}
