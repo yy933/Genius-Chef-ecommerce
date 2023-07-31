@@ -102,7 +102,7 @@ const paymentController = {
       if (RtnCode === 1 && SimulatePaid === 1) {
         res.write('1|OK').end()
       } else {
-        console.log(RtnMsg)
+        console.log('RtnMsg: ', RtnMsg)
         res.write('0|err')
         throw error
       }
@@ -110,7 +110,7 @@ const paymentController = {
   },
   checkoutWithCreditCardResult: async (req, res, next) => {
     try {
-      const { MerchantTradeNo, TradeNo, TradeAmt, PaymentDate, PaymentType, RtnCode, RtnMsg, SimulatePaid, CustomField1 } = req.body
+      const { MerchantTradeNo, TradeNo, TradeAmt, PaymentDate, PaymentType, RtnCode, RtnMsg, CustomField1 } = req.body
       const { userId, showId } = req.params
       const mailOptions = {
         from: process.env.EMAIL,
@@ -136,7 +136,6 @@ const paymentController = {
             <br>
             <h3>Sincerely,<br>Genius Chef Customer Service Team</h3>`
       }
-      console.log(req.body)
       if (RtnCode === '1') {
         await sequelize.transaction(async (t) => {
           const order = await Order.findOne({
@@ -176,6 +175,7 @@ const paymentController = {
           status: 'Payment confirmed'
         })
       } else {
+        console.log('RtnCode: ' + RtnCode + 'RtnMsg: ' + RtnMsg)
         await sequelize.transaction(async (t) => {
           const order = await Order.findOne({
             attributes: ['id'],
@@ -205,7 +205,6 @@ const paymentController = {
           status: 'Payment failed'
         })
       }
-      console.log(RtnCode, RtnMsg, SimulatePaid)
     } catch (err) { next(err) }
   },
   checkoutWithPaypal: async (req, res, next) => {
@@ -275,7 +274,7 @@ const paymentController = {
         executePaymentJson,
         async function (error, payment) {
           if (error) {
-            console.log(error.response)
+            console.log('Error: ', error.response)
             next(error)
             res.redirect(`users/profile/${userId}`)
           } else {
@@ -292,7 +291,6 @@ const paymentController = {
             <br>
             <h3>Sincerely,<br>Genius Chef Customer Service Team</h3>`
             }
-            console.log(payment.transactions[0])
             await sequelize.transaction(async (t) => {
               const order = await Order.findOne({
                 attributes: ['id'],
