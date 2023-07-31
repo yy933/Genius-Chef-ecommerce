@@ -153,7 +153,7 @@ const paymentController = {
             }, { where: { orderId: order.id }, transaction: t }),
             Payment.update({
               status: 'Payment confirmed',
-              paymentMethod: PaymentType,
+              paymentMethod: 'Credit Card',
               paidAt: PaymentDate,
               totalAmount: TradeAmt,
               ecpayMerchantTradeNo: MerchantTradeNo,
