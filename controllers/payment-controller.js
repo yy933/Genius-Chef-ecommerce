@@ -312,7 +312,7 @@ const paymentController = {
                   status: 'Payment confirmed',
                   paymentMethod: 'Paypal',
                   paidAt: payment.update_time,
-                  totalAmount: payment.transactions[0].amount,
+                  totalAmount: payment.transactions[0].amount.total,
                   paypalPaymentId: payment.id
                 }, { where: { orderId: order.id }, transaction: t }),
                 Subscriptions.update({
