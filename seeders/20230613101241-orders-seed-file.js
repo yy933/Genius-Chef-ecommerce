@@ -24,13 +24,6 @@ const plansPrice = [
   { servings: 4, meals: 2, totalAmount: 1984 }
 ]
 
-// const randomPlanPrice = (servings, meals) => {
-//   const randomServings = randomItem(servings)
-//   const randomMeals = randomItem(meals)
-//   const totalAmount = priceRule(servings, meals)
-//   return { servings: randomServings, meals: randomMeals, totalAmount }
-// }
-// const priceResults = Array.from({ length: 11 }).map(() => (randomPlanPrice(orderOptions.servings, orderOptions.meals)))
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {

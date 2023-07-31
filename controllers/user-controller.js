@@ -25,24 +25,6 @@ const userController = {
     } catch (err) {
       next(err)
     }
-  // async (req, res, next) => {
-  //   try {
-  //     const userData = req.user.toJSON()
-  //     delete userData.password
-  //     const token = jwt.sign(userData, process.env.JWT_KEY, { expiresIn: '10d' })
-  //     return res.status(200).cookie('jwt', token, {
-  //       path: '/',
-  //       httpOnly: true,
-  //       secure: false, // set to true on production
-  //       sameSite: 'Lax',
-  //       maxAge: 2592000000
-  //     }).redirect('/')
-  //   } catch (error) {
-  //     console.log('Error:', error)
-  //     req.flash('warning_msg', 'Error')
-  //     res.redirect('/login')
-  //   }
-  // }
   },
   logOut: (req, res, next) => {
     try {
@@ -52,12 +34,6 @@ const userController = {
         return res.redirect('/users/login')
       })
     } catch (err) { next(err) }
-
-  // if (req.cookies.jwt) {
-  //   res.clearCookie('jwt', { path: '/' }).status(200).redirect('/login')
-  // } else {
-  //   res.status(401).json({ message: 'Invalid token.' })
-  // }
   },
   getSignUp: (req, res, next) => {
     try {

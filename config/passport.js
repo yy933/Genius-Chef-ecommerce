@@ -2,10 +2,8 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const GoogleStrategy = require('passport-google-oauth2').Strategy
 const TwitterStrategy = require('passport-twitter').Strategy
-const passportJWT = require('passport-jwt')
 const bcrypt = require('bcryptjs')
 const { User, Subscriptions, sequelize } = require('../models')
-const JWTStrategy = passportJWT.Strategy
 
 passport.use('user-local', new LocalStrategy({ usernameField: 'email', passwordField: 'password', passReqToCallback: true }, (req, email, password, cb) => {
   User.findOne({ where: { email, role: 'user' } })
@@ -113,41 +111,11 @@ async function (token, tokenSecret, profile, cb) {
 
     return cb(null, newUser)
   } catch (err) {
-    console.log(err)
+    console.log('Error: ', err)
     await t.rollback()
     return cb(err, false)
   }
 }
 ))
-
-// JWT Strategy
-const cookieExtractor = req => {
-  let jwt = null
-  if (req && req.cookies) {
-    jwt = req.cookies.jwt
-  }
-  return jwt
-}
-const jwtOptions = {
-  jwtFromRequest: cookieExtractor,
-  secretOrKey: process.env.JWT_KEY
-}
-passport.use('jwt', new JWTStrategy(jwtOptions, async (jwtPayload, cb) => {
-  try {
-    const { exp } = jwtPayload
-    if (Date.now() / 1000 > exp) {
-      cb(null, false, { message: 'Token has expired.' })
-    }
-    const user = await User.findByPk(jwtPayload.id)
-    if (user) {
-      return cb(null, user)
-    } else {
-      return cb(null, false)
-    }
-  } catch (err) {
-    return cb(err, null)
-  }
-})
-)
 
 module.exports = passport

@@ -13,7 +13,6 @@ const cookieParser = require('cookie-parser')
 const { doubleCsrfProtection } = require('../middleware/csrf-token')
 
 router.use(cookieParser(process.env.CSRF_COOKIE_SECRET))
-// router.use(doubleCsrfProtection)
 router.use('/users', user)
 router.use('/auth', auth)
 router.use('/menu', menu)
@@ -23,26 +22,32 @@ router.use('/admin', admin)
 router.use('/newsletter', newsletter)
 
 // non-authenticated routes
+// plans
 router.get('/plans', doubleCsrfProtection, (req, res, next) => {
   try {
     return res.render('plans', { csrfToken: req.csrfToken() })
   } catch (err) { next(err) }
 })
 
+// how it works
 router.get('/instructions', (req, res, next) => {
   try {
     return res.render('how-it-works')
   } catch (err) { next(err) }
 })
 
+// home
 router.get('/', (req, res, next) => {
   try {
     return res.render('index')
   } catch (err) { next(err) }
 })
 
+// error handling
 router.use(errorHandler.errorLogger)
 router.use(errorHandler.errorResponder)
+
+// Error page will be rendered in case of errors or unknown routes
 router.get('*', (req, res) => {
   res.status(404).render('error', {
     status: 404,
