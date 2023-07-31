@@ -36,7 +36,7 @@ app.use(helmet({
       'font-src': ["'self'", 'fonts.gstatic.com'],
       'img-src': ["'self'", 'img.icons8.com', 'images.unsplash.com', 'spoonacular.com', '* data:'],
       'script-src-attr': ["'self'", "'unsafe-inline'"],
-      'form-action': ["'self'", 'payment-stage.ecpay.com.tw/']
+      'form-action': ["'self'", 'payment-stage.ecpay.com.tw/', 'www.paypal.com']
     }
   },
   referrerPolicy: {
