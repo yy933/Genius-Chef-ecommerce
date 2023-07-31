@@ -292,6 +292,7 @@ const paymentController = {
             <br>
             <h3>Sincerely,<br>Genius Chef Customer Service Team</h3>`
             }
+            console.log(payment.transactions[0])
             await sequelize.transaction(async (t) => {
               const order = await Order.findOne({
                 attributes: ['id'],
