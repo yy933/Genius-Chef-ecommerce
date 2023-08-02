@@ -41,7 +41,7 @@
 | Email  | Password  | Role  | 
 | ------------- | ------------- |:-------------: |
 | user1@example.com | Password12345 | user | 
-| geniuschef@example.com | Geniuschef2023 | admin | 
+| geniuschef2023@gmail.com | Geniuschef2023 | admin | 
 ### **Payment** 
 >  **Note: Both credit card and Paypal payments are in testing mode and no real payments will be made. Using payment info other than info below might lead to payment failure.**
 
