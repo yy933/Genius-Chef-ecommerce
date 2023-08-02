@@ -143,5 +143,8 @@ npm run dev
 
 <br/>
 
+## **Developers** :
+[Emily Yu](https://github.com/yy933)
+
 
 
