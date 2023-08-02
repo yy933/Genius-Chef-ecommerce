@@ -7,7 +7,7 @@ module.exports = {
     return await Promise.all([
       queryInterface.bulkInsert('Users', [{
         name: 'Admin',
-        email: process.env.EMAIL,
+        email: 'geniuschef@example.com',
         password: await bcrypt.hash(process.env.ADMIN_PASSWORD, 10),
         role: 'admin',
         created_at: new Date(),
