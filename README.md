@@ -12,9 +12,11 @@
 ### Genius Chef is a meal-kit delivery service. This full-stack web app is built with Node.js (Express.js framework) and PostgreSQL, and views are rendered through template engine express-handlebars. Users can create an account, browse weekly menu, subscribe to different plans, and make payments with credit card or Paypal. ###
 
 ## <div style="text-align: center;">See live demo [here](https://genius-chef.onrender.com/) !</div>
+
+### <div style="text-align: center;">For admin console, click [me](https://genius-chef.onrender.com/admin/login). </div>
 ![index](./public/images/readme_images/index.gif)
 ![login](./public/images/readme_images/login_addcart.gif)
-<div style="text-align:center; height:400px;"><img src="./public/images/readme_images/index_RWD.gif" alt="RWD" style="margin-right:10px"><img src="./public/images/readme_images/Order_RWD.gif" alt="RWD"></div>
+<div style="display:flex; justify-content:center; height:400px;"><img src="./public/images/readme_images/index_RWD.gif" alt="RWD" style="margin-right:10px"><img src="./public/images/readme_images/Order_RWD.gif" alt="RWD"></div>
 
 
 ## **Function**
