@@ -12,6 +12,10 @@
 ### Genius Chef is a meal-kit delivery service. This full-stack web app is built with Node.js (Express.js framework) and PostgreSQL, and views are rendered through template engine express-handlebars. Users can create an account, browse weekly menu, subscribe to different plans, and make payments with credit card or Paypal. ###
 
 ## <div style="text-align: center;">See live demo [here](https://genius-chef.onrender.com/) !</div>
+![index](./public/images/readme_images/index.gif)
+![login](./public/images/readme_images/login_addcart.gif)
+<div style="text-align:center; height:400px;"><img src="./public/images/readme_images/index_RWD.gif" alt="RWD" style="margin-right:10px"><img src="./public/images/readme_images/Order_RWD.gif" alt="RWD"></div>
+
 
 ## **Function**
 * ### Users :
@@ -29,6 +33,20 @@
   - View, sort, and filter user info ( including user name, ID, account created date, email, current active status, subscription status).
   - View, sort, and filter order info ( including  order ID, user ID, order created date, current status, and order details).
   - Reset password with unique links sent to admin's email.
+
+## **Test accounts for live demo** 
+### **User** 
+| Email  | Password  | Role  | 
+| ------------- | ------------- |:-------------: |
+| user1@example.com | Password12345 | user | 
+| geniuschef@example.com | Geniuschef2023 | admin | 
+### **Payment** 
+>  **Note: Both credit card and Paypal payments are in testing mode and no real payments will be made. Using payment info other than info below might lead to payment failure.**
+
+| Payment method  | details  | 
+| ------------- |:-------------: |
+| Credit Card | <p style="text-align:start;">Card number : 4311-9522-2222-2222 <br> CVV code : 222 <br> Card expiry(MM/YYYY) : Any valid date that is  greater than the test date.</p> | 
+| Paypal | <p style="text-align:start;">Email: sb-8oexo26947509@personal.example.com <br> Password: Abcde12345 </p>
 
 ## **Features**
 * Website is built with Node.js (Express framework)
@@ -67,7 +85,12 @@
 | **PAYPAL_CLIENT_ID**      | Paypal uses a client ID and client secret to authenticate API calls in Paypal integrations. | Your Paypal client ID | For more details, please check [Paypal API docs](https://developer.paypal.com/api/rest/). 
 | **PAYPAL_SECRET_KEY**      | Paypal uses a client ID and client secret to authenticate API calls in Paypal integrations.      | Your Paypal client secret | For more details, please check [Paypal API docs](https://developer.paypal.com/api/rest/).  
 | **CSRF_COOKIE_SECRET**      | This secret will be hashed with the random csrf token and set in the cookie. | Define a random string that is hard to guess. | DO NOT use the same secret as SESSION_SECRET. 
-| **REMOTE_DB_URL**      | The url of the remote database used in production.  | Your database url     
+| **REMOTE_DB_URL**      | The url of the remote database used in production.  | Your database url  |
+
+
+<br>
+
+### <p style="color: #EE4F2D;">  Note: It is highly recommended to use [ngrok](https://ngrok.com/) or similar services to generate a tunnel URL when developing. When using http://localhost:8080 url in some browsers, session cookie and csrf token cookie might not be successfully set. In that case, modify the cookie settings in [session cookie](app.js) and [csrf token cookie](./middleware/csrf-token.js).  </p>    
 
 <br>
 
