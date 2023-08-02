@@ -9,7 +9,7 @@
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 
-Genius Chef is a meal-kit delivery service. This full-stack web app is built with Node.js (Express.js framework) and PostgreSQL, and views are rendered through template engine express-handlebars. Users can create an account, browse weekly menu, subscribe to different plans, and make payments with credit card or Paypal.
+### Genius Chef is a meal-kit delivery service. This full-stack web app is built with Node.js (Express.js framework) and PostgreSQL, and views are rendered through template engine express-handlebars. Users can create an account, browse weekly menu, subscribe to different plans, and make payments with credit card or Paypal. ###
 
 ## <div style="text-align: center;">See live demo [here](https://genius-chef.onrender.com/) !</div>
 
@@ -42,10 +42,14 @@ Genius Chef is a meal-kit delivery service. This full-stack web app is built wit
 * Responsive web design (RWD)
 
 ## **Setting up** :
+<br>
+
 ### **Pre-requisites** :
 * [Node.js](https://nodejs.org/en/download/package-manager) @16.14.1
 * [npm](https://www.npmjs.com/) @8.5.0
 * [PostgreSQL](https://www.postgresql.org/download/) @15
+
+<br>
 
 ### **Environment variables** :
 | Name  | Description  | Value  | Note |
@@ -65,6 +69,8 @@ Genius Chef is a meal-kit delivery service. This full-stack web app is built wit
 | **CSRF_COOKIE_SECRET**      | This secret will be hashed with the random csrf token and set in the cookie. | Define a random string that is hard to guess. | DO NOT use the same secret as SESSION_SECRET. 
 | **REMOTE_DB_URL**      | The url of the remote database used in production.  | Your database url     
 
+<br>
+
 ### **Getting Started** :
 1. Open the terminal and clone the project :
 ```
@@ -75,62 +81,41 @@ git clone https://github.com/yy933/Genius-Chef-ecommerce
 cd Genius-chef-ecommerce
 npm install
 ```
-3. Create your own .env file (refer to .env.example). For environment variables details, please check [Environment variables](#environment-variables) section. 
-
-
-
-
-
-<br/>
-
-## 安裝與執行步驟 Installation and Execution
-1. 請先確認有安裝 Node.js、npm、MySQL workbench
-2. 打開終端機(Terminal)，將專案 clone 至本機位置
-
+3. Create your own .env file (refer to .env.example). For environment variables details, please check [Environment variables](#environment-variables) section.
+4. Database setting :
+    Create a connection with config vars in  [config.json](./config/config.json). Then create a database for development and name it genius_chef_dev.  
+You can create it with PostgreSQL GUI (e.g. [pgAdmin](https://www.pgadmin.org/)) or CLI ([psql](https://www.postgresql.org/docs/current/app-psql.html#:~:text=Description,or%20from%20command%20line%20arguments.)).
 ```
-git clone https://github.com/yy933/twitter-api-2020
-```
-3. 進入存放此專案的資料夾
+// psql commands
 
-```
-cd twitter-api-2020
-```
-4. 安裝 npm 套件
+// Create a database
+CREATE DATABASE genius_chef_dev;
 
+// Connect to a database
+\c genius_chef_dev
 ```
-npm install
+5. Run migrations and seeders with following commands in the terminal:
 ```
-5. 建立 .env 檔 (參照.env.example)
+// run all migrations
+npm run migrate
 
-
-6. 使用 MySQL Workbench 建立資料庫
-
+// run all seeders
+npm run seed
 ```
-create database ac_twitter_workspace;
-create database ac_twitter_workspace_test;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Undo migrations and seeders:
 ```
+// undo all migrations
+npm run dmigrate
 
-6. 建立資料表並載入種子資料
-
+// undo all seeders
+npm run dseed
 ```
-npx sequelize db:migrate
-npx sequelize db:seed:all
-```
-7. 執行
-
+6. Build and run the project:
 ```
 npm run dev
 ```
-8. 若看見此行訊息則代表順利運行，打開瀏覽器進入到以下網址
+7. The message `App is running on http://localhost:8080` will be shown on the console if app executes successfully. Navigate to http://localhost:8080 to check the result. 
 
-```
-Example app listening on port 3000!
-```
-9. 若要暫停使用，則輸入
-
-```
-ctrl + c
-```
 <br/>
 
 
