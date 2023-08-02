@@ -1,4 +1,4 @@
-# Genius Chef 
+# **<div style="text-align: center;">Genius Chef</div>** 
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white
@@ -6,12 +6,14 @@
 ![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white)
 ![Eslint](https://img.shields.io/badge/eslint-3A33D1?style=for-the-badge&logo=eslint&logoColor=white
 )
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
 
 Genius Chef is a meal-kit delivery service. This full-stack web app is built with Node.js (Express.js framework) and PostgreSQL, and views are rendered through template engine express-handlebars. Users can create an account, browse weekly menu, subscribe to different plans, and make payments with credit card or Paypal.
 
-### [Click me](https://genius-chef.onrender.com/) for live demo 
+## <div style="text-align: center;">See live demo [here](https://genius-chef.onrender.com/) !</div>
 
-## Function
+## **Function**
 * ### Users :
   - Create an account or login with Google or Twitter account.
   - Reset password with unique links sent to users' email.
@@ -22,14 +24,15 @@ Genius Chef is a meal-kit delivery service. This full-stack web app is built wit
   - View or change personal info in the user profile.
   - Subscribe to newsletters.
   - Check weekly menu and recipes.
-  - Contact the customer service team with online contact form.
+  - Contact the customer service team via online contact form.
 * ### Admin :
   - View, sort, and filter user info ( including user name, ID, account created date, email, current active status, subscription status).
   - View, sort, and filter order info ( including  order ID, user ID, order created date, current status, and order details).
   - Reset password with unique links sent to admin's email.
 
-## Features
+## **Features**
 * Website is built with Node.js (Express framework)
+* Cookie-based authentication
 * Implement CSRF token to prevent CSRF attacks
 * Use [express-validator](https://express-validator.github.io/docs) to validate and sanitize form contents
 * Protect app with [helmet](https://helmetjs.github.io/) package from security issues
@@ -38,19 +41,31 @@ Genius Chef is a meal-kit delivery service. This full-stack web app is built wit
 * Database management: PostgreSQL and Sequelize ORM 
 * Responsive web design (RWD)
 
-## Set up :
-### Pre-requisites :
+## **Setting up** :
+### **Pre-requisites** :
 * [Node.js](https://nodejs.org/en/download/package-manager) @16.14.1
-* [npm](https://www.npmjs.com/)
+* [npm](https://www.npmjs.com/) @8.5.0
 * [PostgreSQL](https://www.postgresql.org/download/) @15
 
-### Environment variables:
-| 登入權限  | 角色  | 帳號  | 密碼 |
-| ------------- | ------------- | ------------- |:-------------:|
-| 後台      | admin      | root      | 12345678     |
-| 前台      | user      | user1      | 12345678     |
+### **Environment variables** :
+| Name  | Description  | Value  | Note |
+| ------------- | ------------- | ------------- |:-------------: |
+| **EMAIL**             | Customer service email address of the shop.      | Your Gmail address | <p style="text-align: start"> If using services other than Gmail, please modify settings in [email helper](./helpers/email-helpers.js). For more details, please check [Nodemailer doc](https://nodemailer.com/smtp/). </p>   
+| **APP_PASSWORD**      | App password of Google account.  | Your Google app password |Click [me](https://support.google.com/accounts/answer/185833?hl=en) for more details.
+| **SESSION_SECRET**    | Secret is used to signed the session id cookie.       | Define a random string that is hard to guess | DO NOT use the same secret as CSRF_COOKIE_SECRET. 
+| **API_KEY**      | This key is to request recipe data from spoonacular API. | Your spoonacular API key      | Get API key from [here](https://spoonacular.com/food-api/docs#Authentication) 
+| **ADMIN_PASSWORD**      | Admin password for logging into admin console.      | Define your own password. 
+| **BASE_URL**      | The root of the website address.      | Default: http://localhost:8080 |<p style="text-align:start;"> [Twitter doesn't accept localhost as a callback URL.](https://developer.twitter.com/en/docs/apps/callback-urls) For https address, consider using [ngrok](https://ngrok.com/) or similar services to generate a tunnel URL. </p>
+| **GOOGLE_CLIENT_ID**      | Google uses a client ID to identify users and call Google API.      | Your Google client ID | For more details, please check [Google Identity](https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid). 
+| **GOOGLE_CLIENT_SECRET**      | The secret that only known to the app and Google authorization server.      | Your Google client secret |  For more details, please check [Google Identity](https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid). 
+| **TWITTER_CLIENT_ID**      | Twitter uses a client ID to identify users and call Twitter API. | Your Twitter API key | For more details, please check [Twitter API docs](https://developer.twitter.com/en/docs/authentication/oauth-1-0a/api-key-and-secret). 
+| **TWITTER_CLIENT_SECRET**      | The secret that only known to the app and Twitter authorization server. | Your Twitter API secret | For more details, please check [Twitter API docs](https://developer.twitter.com/en/docs/authentication/oauth-1-0a/api-key-and-secret). 
+| **PAYPAL_CLIENT_ID**      | Paypal uses a client ID and client secret to authenticate API calls in Paypal integrations. | Your Paypal client ID | For more details, please check [Paypal API docs](https://developer.paypal.com/api/rest/). 
+| **PAYPAL_SECRET_KEY**      | Paypal uses a client ID and client secret to authenticate API calls in Paypal integrations.      | Your Paypal client secret | For more details, please check [Paypal API docs](https://developer.paypal.com/api/rest/).  
+| **CSRF_COOKIE_SECRET**      | This secret will be hashed with the random csrf token and set in the cookie. | Define a random string that is hard to guess. | DO NOT use the same secret as SESSION_SECRET. 
+| **REMOTE_DB_URL**      | The url of the remote database used in production.  | Your database url     
 
-### Getting Started :
+### **Getting Started** :
 1. Open the terminal and clone the project :
 ```
 git clone https://github.com/yy933/Genius-Chef-ecommerce
@@ -118,12 +133,5 @@ ctrl + c
 ```
 <br/>
 
-## 環境建置與需求 Prerequisites
-
-* Node.js 18.12.1
-* Express 4.16.4
-* mysql2 1.6.4
-* sequelize 6.29.3
-* sequelize-cli 5.5.0
 
 
