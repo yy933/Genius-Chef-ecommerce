@@ -9,7 +9,7 @@
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 
-### Genius Chef is a meal-kit delivery service. This full-stack web app is built with Node.js (Express.js framework) and PostgreSQL, and views are rendered through template engine express-handlebars. Users can create an account, browse weekly menu, subscribe to different plans, and make payments with credit card or Paypal. ###
+### Genius Chef is a meal-kit delivery service. This full-stack web app is built with Node.js (Express.js framework) and PostgreSQL, and views are rendered through the template engine express-handlebars. Users can create an account, browse the weekly menu, subscribe to different plans, and make payments with credit cards or Paypal. ###
 
 ## <div style="text-align: center;">See live demo [here](https://genius-chef.onrender.com/) !</div>
 
@@ -21,18 +21,18 @@
 
 ## **Function**
 * ### Users :
-  - Create an account or login with Google or Twitter account.
+  - Create an account or log in with Google or Twitter account.
   - Reset password with unique links sent to users' email.
-  - Choose customized plans based on weekly menu and add them to cart.
+  - Choose customized plans based on the weekly menu and add them to the cart.
   - Get order and payment confirmation emails when completing orders.
   - Checkout with credit card (powered by [ECpay](https://www.ecpay.com.tw/Intro/Ecpay_en)) or [Paypal](https://www.paypal.com/).
   - View or cancel orders in the user profile.
   - View or change personal info in the user profile.
   - Subscribe to newsletters.
   - Check weekly menu and recipes.
-  - Contact the customer service team via online contact form.
+  - Contact the customer service team via a online contact form.
 * ### Admin :
-  - View, sort, and filter user info ( including user name, ID, account created date, email, current active status, subscription status).
+  - View, sort, and filter user info ( including user name, ID, account created date, email, current active status, and subscription status).
   - View, sort, and filter order info ( including  order ID, user ID, order created date, current status, and order details).
   - Reset password with unique links sent to admin's email.
 
@@ -43,7 +43,7 @@
 | user1@example.com | Password12345 | user | 
 | geniuschef2023@gmail.com | Geniuschef2023 | admin | 
 ### **Payment** 
->  **Note: Both credit card and Paypal payments are in testing mode and no real payments will be made. Using payment info other than info below might lead to payment failure.**
+>  **Note: Both credit card and Paypal payments are in testing mode and no real payments will be made. Using payment info other than the info below might lead to payment failure.**
 
 | Payment method  | details  | 
 | ------------- |:-------------: |
@@ -78,7 +78,7 @@
 | **APP_PASSWORD**      | App password of Google account.  | Your Google app password |Click [me](https://support.google.com/accounts/answer/185833?hl=en) for more details.
 | **SESSION_SECRET**    | Secret is used to signed the session id cookie.       | Define a random string that is hard to guess | DO NOT use the same secret as CSRF_COOKIE_SECRET. 
 | **API_KEY**      | This key is to request recipe data from spoonacular API. | Your spoonacular API key      | Get API key from [here](https://spoonacular.com/food-api/docs#Authentication) 
-| **ADMIN_PASSWORD**      | Admin password for logging into admin console.      | Define your own password. 
+| **ADMIN_PASSWORD**      | Admin password for logging into admin console.      | Define your password. 
 | **BASE_URL**      | The root of the website address.      | Default: http://localhost:8080 |<p style="text-align:start;"> [Twitter doesn't accept localhost as a callback URL.](https://developer.twitter.com/en/docs/apps/callback-urls) For https address, consider using [ngrok](https://ngrok.com/) or similar services to generate a tunnel URL. </p>
 | **GOOGLE_CLIENT_ID**      | Google uses a client ID to identify users and call Google API.      | Your Google client ID | For more details, please check [Google Identity](https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid). 
 | **GOOGLE_CLIENT_SECRET**      | The secret that only known to the app and Google authorization server.      | Your Google client secret |  For more details, please check [Google Identity](https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid). 
@@ -92,7 +92,7 @@
 
 <br>
 
-### <p style="color: #EE4F2D;">  Note: It is highly recommended to use [ngrok](https://ngrok.com/) or similar services to generate a tunnel URL when developing. When using http://localhost:8080 url in some browsers, session cookie and csrf token cookie might not be successfully set. In that case, modify the cookie settings in [session cookie](app.js) and [csrf token cookie](./middleware/csrf-token.js).  </p>    
+### <p style="color: #EE4F2D;">  Note: It is highly recommended using [ngrok](https://ngrok.com/) or similar services to generate a tunnel URL when developing. When using http://localhost:8080 URL in some browsers, the session cookie and the csrf token cookie might not be successfully set. In that case, modify the cookie settings in [session cookie](app.js) and [csrf token cookie](./middleware/csrf-token.js).  </p>    
 
 <br>
 
@@ -106,8 +106,8 @@ git clone https://github.com/yy933/Genius-Chef-ecommerce
 cd Genius-chef-ecommerce
 npm install
 ```
-3. Create your own .env file (refer to .env.example). For environment variables details, please check [Environment variables](#environment-variables) section.
-4. Database setting :
+3. Create your .env file (refer to .env.example). For environment variables details, please check [Environment variables](#environment-variables) section.
+4. Database settings :
     Create a connection with config vars in  [config.json](./config/config.json). Then create a database for development and name it genius_chef_dev.  
 You can create it with PostgreSQL GUI (e.g. [pgAdmin](https://www.pgadmin.org/)) or CLI ([psql](https://www.postgresql.org/docs/current/app-psql.html#:~:text=Description,or%20from%20command%20line%20arguments.)).
 ```
@@ -139,7 +139,7 @@ npm run dseed
 ```
 npm run dev
 ```
-7. The message `App is running on http://localhost:8080` will be shown on the console if app executes successfully. Navigate to http://localhost:8080 to check the result. 
+7. The message `App is running on http://localhost:8080` will be shown on the console if the app executes successfully. Navigate to http://localhost:8080 to check the result. 
 
 <br/>
 
