@@ -14,9 +14,6 @@
 ## <div style="text-align: center;">See live demo [here](https://genius-chef.onrender.com/) !</div>
 
 ### <div style="text-align: center;">For admin console, click [me](https://genius-chef.onrender.com/admin/login). </div>
-![index](./public/images/readme_images/index.gif)
-![login](./public/images/readme_images/login_addcart.gif)
-<div style="display:flex; justify-content:center; height:250px;"><img src="./public/images/readme_images/index_RWD.gif" alt="RWD" style="margin-right:10px"><img src="./public/images/readme_images/Order_RWD.gif" alt="RWD"></div>
 
 
 ## **Function**
