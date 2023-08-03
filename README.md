@@ -17,8 +17,8 @@
 
 ![index](https://s11.gifyu.com/images/ScQZd.gif)
 ![login](https://s11.gifyu.com/images/ScQZI.gif)
-![RWD_index](https://s11.gifyu.com/images/ScQZ7.md.gif)
-![RWD_cart](https://s11.gifyu.com/images/ScQZq.md.gif)
+![RWD_index](https://s11.gifyu.com/images/ScQZ7.gif)
+![RWD_cart](https://s11.gifyu.com/images/ScQZq.gif)
 
 
 ## **Function**
