@@ -15,6 +15,11 @@
 
 ### <div style="text-align: center;">For admin console, click [me](https://genius-chef.onrender.com/admin/login). </div>
 
+![index](https://s11.gifyu.com/images/ScQZd.gif)
+![login](https://s11.gifyu.com/images/ScQZI.gif)
+![RWD_index](https://s11.gifyu.com/images/ScQZ7.md.gif)
+![RWD_cart](https://s11.gifyu.com/images/ScQZq.md.gif)
+
 
 ## **Function**
 * ### Users :
