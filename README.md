@@ -114,12 +114,17 @@ npm install
 You can create it with PostgreSQL GUI (e.g. [pgAdmin](https://www.pgadmin.org/)) or CLI ([psql](https://www.postgresql.org/docs/current/app-psql.html#:~:text=Description,or%20from%20command%20line%20arguments.)).
 ```
 // psql commands
+psql postgres --u postgres
 
-// Create a database
-CREATE DATABASE genius_chef_dev;
+postgres-# CREATE ROLE root WITH LOGIN PASSWORD 'champions';
+postgres-# ALTER ROLE root CREATEDB;
+postgres-# \q
 
-// Connect to a database
-\c genius_chef_dev
+psql postgres -U root
+
+postgres=> CREATE DATABASE genius_chef_dev;
+postgres=> GRANT ALL PRIVILEGES ON DATABASE genius_chef_dev TO root;
+postgres=> \q
 ```
 5. Run migrations and seeders with following commands in the terminal:
 ```
