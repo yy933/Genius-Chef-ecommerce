@@ -108,8 +108,8 @@ git clone https://github.com/yy933/Genius-Chef-ecommerce
 cd Genius-chef-ecommerce
 npm install
 ```
-3. Create your .env file (refer to .env.example). For environment variables details, please check [Environment variables](#environment-variables) section.
-4. Database settings :
+3. Create your own .env file (refer to .env.example). For environment variables details, please check [Environment variables](#environment-variables) section.
+4. Database setting up :
     Create a connection with config vars in  [config.json](./config/config.json). Then create a database for development and name it genius_chef_dev.  
 You can create it with PostgreSQL GUI (e.g. [pgAdmin](https://www.pgadmin.org/)) or CLI ([psql](https://www.postgresql.org/docs/current/app-psql.html#:~:text=Description,or%20from%20command%20line%20arguments.)).
 ```
