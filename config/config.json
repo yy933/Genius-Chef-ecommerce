@@ -1,6 +1,6 @@
 {
   "development": {
-    "username": "postgres",
+    "username": "root",
     "password": "champions",
     "database": "genius_chef_dev",
     "host": "127.0.0.1",
