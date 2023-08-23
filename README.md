@@ -4,6 +4,7 @@
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white
 )
 ![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white)
+![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?&style=for-the-badge&logo=redis&logoColor=white)
 ![Eslint](https://img.shields.io/badge/eslint-3A33D1?style=for-the-badge&logo=eslint&logoColor=white
 )
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
@@ -53,13 +54,14 @@
 | Paypal | <p style="text-align:start;">Email: sb-8oexo26947509@personal.example.com <br> Password: Abcde12345 </p>
 
 ## **Features**
-* Website is built with Node.js (Express framework)
+* Website is built with Node.js (Express framework).
 * Cookie-based authentication
-* Implement CSRF token to prevent CSRF attacks
-* Use [express-validator](https://express-validator.github.io/docs) to validate and sanitize form contents
-* Protect app with [helmet](https://helmetjs.github.io/) package from security issues
-* Request menu and recipe data from [spoonacular API](https://spoonacular.com/food-api) through [axios](https://www.npmjs.com/package/axios)
-* Integrate Paypal and credit card checkout using [Paypal APIs](https://developer.paypal.com/api/rest/) and [ECPay API](https://developers.ecpay.com.tw/?p=2509) 
+* Implement CSRF token to prevent CSRF attacks.
+* Use [express-validator](https://express-validator.github.io/docs) to validate and sanitize form contents.
+* Protect app with [helmet](https://helmetjs.github.io/) package from security issues.
+* Request menu and recipe data from [spoonacular API](https://spoonacular.com/food-api) through [axios](https://www.npmjs.com/package/axios).
+* Cache menu data on the first request to [spoonacular API](https://spoonacular.com/food-api) and save the results in Redis.
+* Integrate Paypal and credit card checkout using [Paypal APIs](https://developer.paypal.com/api/rest/) and [ECPay API](https://developers.ecpay.com.tw/?p=2509).
 * Database management: PostgreSQL and Sequelize ORM 
 * Responsive web design (RWD)
 
@@ -70,6 +72,7 @@
 * [Node.js](https://nodejs.org/en/download/package-manager) @16.14.1
 * [npm](https://www.npmjs.com/) @8.5.0
 * [PostgreSQL](https://www.postgresql.org/download/) @15
+* [Redis](https://redis.io/) @7.0.11
 
 <br>
 
@@ -89,8 +92,8 @@
 | **PAYPAL_CLIENT_ID**      | Paypal uses a client ID and client secret to authenticate API calls in Paypal integrations. | Your Paypal client ID | For more details, please check [Paypal API docs](https://developer.paypal.com/api/rest/). 
 | **PAYPAL_SECRET_KEY**      | Paypal uses a client ID and client secret to authenticate API calls in Paypal integrations.      | Your Paypal client secret | For more details, please check [Paypal API docs](https://developer.paypal.com/api/rest/).  
 | **CSRF_COOKIE_SECRET**      | This secret will be hashed with the random csrf token and set in the cookie. | Define a random string that is hard to guess. | DO NOT use the same secret as SESSION_SECRET. 
-| **REMOTE_DB_URL**      | The url of the remote database used in production.  | Your database url  |
-
+| **REMOTE_DB_URL**      | The url of the remote **PostgreSQL database** used in production.  | Your database url  |
+| **REDIS_DB_URI**      | The url of the remote **Redis database** used in production.  | Your database url  |
 
 <br>
 
@@ -110,6 +113,7 @@ npm install
 ```
 3. Create your own .env file (refer to .env.example). For environment variables details, please check [Environment variables](#environment-variables) section.
 4. Database setting up :
+* **PostgreSQL:**
     Create a connection with config vars in  [config.json](./config/config.json). Then create a database for development and name it genius_chef_dev.  
 You can create it with PostgreSQL GUI (e.g. [pgAdmin](https://www.pgadmin.org/)) or CLI ([psql](https://www.postgresql.org/docs/current/app-psql.html#:~:text=Description,or%20from%20command%20line%20arguments.)).
 ```
@@ -126,6 +130,29 @@ postgres=> CREATE DATABASE genius_chef_dev;
 postgres=> GRANT ALL PRIVILEGES ON DATABASE genius_chef_dev TO root;
 postgres=> \q
 ```
+* **Redis:**
+    Create a connection with config in [redis.js](./config/redis.js).  You can create it with Redis GUI (e.g. [RedisInsight](https://github.com/RedisInsight/RedisInsight)) or CLI ([redis-cli](https://redis.io/docs/ui/cli/)).
+```
+// redis-cli commands
+
+// connect to Redis remote server, running on host 127.0.0.1 and port 6379
+$redis-cli -h 127.0.0.1 -p 6379 
+
+// testing if the connection is alive. PONG will be returned if the Redis server is up and has no errors.
+redis 127.0.0.1:6379> PING  
+PONG
+
+// Do some tests to make sure data can be successfully written into the database.
+redis 127.0.0.1:6379> SET food "Yummy"
+"OK"
+redis 127.0.0.1:6379> GET food
+"Yummy"  
+redis 127.0.0.1:6379> DEL food
+(integer) 1
+redis 127.0.0.1:6379> GET food
+(nil)
+```
+
 5. Run migrations and seeders with following commands in the terminal:
 ```
 // run all migrations
