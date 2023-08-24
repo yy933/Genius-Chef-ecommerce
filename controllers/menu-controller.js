@@ -19,7 +19,7 @@ const menuController = {
       const offset = getOffset(limit, page)
 
       // Check the redis store first
-      redis.get(preference, async (err, menus) => {
+      await redis.get(preference, async (err, menus) => {
         if (err) {
           console.log(err)
         }
@@ -68,7 +68,7 @@ const menuController = {
 
           const recipesData = recipesRawData.slice(offset, offset + limit)
           // save recipe data in cache
-          redis.set(preference, JSON.stringify(recipesRawData), 'EX', 86400, err => {
+          await redis.set(preference, JSON.stringify(recipesRawData), 'EX', 86400, err => {
             if (err) console.log(err)
           })
           return res.render('menu', {
