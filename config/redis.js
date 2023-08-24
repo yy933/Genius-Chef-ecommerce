@@ -1,6 +1,10 @@
 require('dotenv').config()
 const Redis = require('ioredis')
-const redis = new Redis(process.env.REDIS_DB_URI)
+// development
+const redis = new Redis() // connect to 127.0.0.1:6379
+
+// production
+// const redis = new Redis(process.env.REDIS_DB_URI)
 
 redis.on('error', (error) => {
   console.log('Redis client error: ', error)
