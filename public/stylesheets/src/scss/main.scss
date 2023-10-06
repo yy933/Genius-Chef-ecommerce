@@ -1,8 +1,6 @@
-$bg_color : #c1d996;
-$font_color : rgb(63, 20, 220);
-body{
-  background-color:$bg_color;
-  .nav-item {
-    color: $font_color
-  }
-}
+@use 'abstracts';
+@use 'base';
+@use 'components';
+@use 'layout';
+@use 'pages';
+@use 'utilities';
