@@ -1,0 +1,23 @@
+@use '../base/color' as color;
+@use '../base/typography' as font;
+
+$loadModalShadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+$spinnerSize: 3.5rem;
+
+/* loading modal */
+
+#loading-modal {
+  .modal-dialog {
+    box-shadow: $loadModalShadow;
+  }
+  h2 {
+    color: color.$majorTitleColor;
+    font-weight: font.$bold;
+    font-family: font.$subtitleFont;
+  }
+  .spinner-border {
+    height: $spinnerSize;
+    width: $spinnerSize;
+  }
+}
+

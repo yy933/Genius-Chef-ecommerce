@@ -1,10 +1,12 @@
 /* This file contains css settings which are shared/public in the project  */
 
+/* typography */
 @font-face {
   font-family: "ChenYuluoyan";
   src: url("../fonts/ChenYuluoyan-Thin.woff") format("woff");
 }
 
+/* reset css start */
 *,
 *::before,
 *::after {
@@ -20,18 +22,6 @@ body {
   box-sizing: border-box;
   position: relative;
   overflow-y: scroll;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background-color: #f6fcf9;
-  font-family: "Lora", "Roboto", "Lato", sans-serif;
-  font-size: 1rem;
-  line-height: 1.4;
-  padding-bottom: 70px;
 }
 
 h1,
@@ -59,13 +49,30 @@ a {
   cursor: pointer;
 }
 
-.container {
-  width: 90%;
-}
+/* reset css end */
 
 main {
   height: 100%;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #f6fcf9;
+  font-family: "Lora", "Roboto", "Lato", sans-serif;
+  font-size: 1rem;
+  line-height: 1.4;
+  padding-bottom: 70px;
+}
+
+
+.container {
+  width: 90%;
+}
+
+
 
 header {
   width: 100%;

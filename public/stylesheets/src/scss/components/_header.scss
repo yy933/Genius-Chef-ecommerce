@@ -1,0 +1,40 @@
+@use '../base/typography' as font;
+@use '../base/color' as color;
+
+$navbarBoxShadow: 0 8px 6px -6px #999;
+
+header {
+  width: 100%;
+  z-index: 999;
+}
+
+/* navbar */
+nav {
+  width: 100%;
+}
+
+.navbar-brand {
+  letter-spacing: 2px;
+  color: color.$majorTitleColor;
+  &:hover{
+    color: color.$majorContrastColor;
+  }
+}
+
+.navbar-scroll {
+  background-color: color.$majorThemeColor;
+  -webkit-box-shadow: $navbarBoxShadow;
+  box-shadow: $navbarBoxShadow;
+  .nav-link{
+    color: color.$majorTitleColor;
+    font-size: 1.3rem;
+    font-weight: font.$bold;
+    &:hover{
+      color: color.$majorContrastColor;
+    }
+  }
+  .fa-bars {
+    @extend .nav-link
+  }
+}
+
