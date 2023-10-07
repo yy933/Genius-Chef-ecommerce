@@ -17,7 +17,7 @@
   text-align: center;
   margin-bottom: 2rem;
   span {
-    font-family: font.$subtitleFont;
+    font-family: font.$Roboto;
     color: color.$primary-green;
     &:first-child {
       @extend %span-settings;
@@ -32,7 +32,7 @@
 .error-message {
   @extend %flexColumn;
   height: 40%;
-  font-family: font.$subtitleFont;
+  font-family: font.$Roboto;
   color: color.$primary-contrast-brown;
   span {
     @extend %span-settings;
