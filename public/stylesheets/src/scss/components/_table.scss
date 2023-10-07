@@ -1,13 +1,15 @@
+@use '../base/color' as color;
+
 table {
   text-align: center;
 }
 
 thead {
-  border-bottom: 1.8px solid lightgrey;
+  border-bottom: 1.8px solid color.$light-grey;
 }
 
 thead th {
-  color: #06716e;
+  color: color.$primary-green;
 }
 
 td {

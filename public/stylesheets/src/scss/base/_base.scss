@@ -16,7 +16,7 @@ html {
 
 body {
   @extend %mainBody;
-  background-color: color.$mainColor;
+  background-color: color.$primary-white;
   font-family: font.$mainFont;
   font-size: 1rem;
   line-height: 1.4;

@@ -18,7 +18,7 @@
   margin-bottom: 2rem;
   span {
     font-family: font.$subtitleFont;
-    color: color.$majorTitleColor;
+    color: color.$primary-green;
     &:first-child {
       @extend %span-settings;
     }
@@ -33,9 +33,10 @@
   @extend %flexColumn;
   height: 40%;
   font-family: font.$subtitleFont;
-  color: color.$majorContrastColor;
+  color: color.$primary-contrast-brown;
   span {
     @extend %span-settings;
+    color: color.$primary-contrast-brown;
     &:first-child {
       text-align: center;
       margin-bottom: 2rem;
@@ -45,6 +46,6 @@
     @extend %message-settings;
     font-size: 2rem;
     padding-left: 1.5rem;
-    color: color.$majorContrastColor;
+    color: color.$primary-contrast-brown;
   }
 }

@@ -6,7 +6,7 @@ $iconMargin: 8px;
 $footerPadding: 24px;
 
 .footer {
-  background-color: color.$secondaryThemeColor;
+  background-color: color.$light-secondary-green;
   padding : {
     top: $footerPadding;
     bottom: $footerPadding;
@@ -24,7 +24,7 @@ $footerPadding: 24px;
         transition: color .235s ease-in-out;
         color: rgba(29, 27, 27, 0.285);
         &:focus, &:hover{
-          color: rgba(79, 115, 88, 0.984);
+          color:color.$primary-green;
         }
     }
   }

@@ -15,22 +15,22 @@ nav {
 
 .navbar-brand {
   letter-spacing: 2px;
-  color: color.$majorTitleColor;
+  color: color.$primary-green;
   &:hover{
-    color: color.$majorContrastColor;
+    color: color.$primary-contrast-brown;
   }
 }
 
 .navbar-scroll {
-  background-color: color.$majorThemeColor;
+  background-color: color.$secondary-green;
   -webkit-box-shadow: $navbarBoxShadow;
   box-shadow: $navbarBoxShadow;
   .nav-link{
-    color: color.$majorTitleColor;
+    color: color.$primary-green;
     font-size: 1.3rem;
     font-weight: font.$bold;
     &:hover{
-      color: color.$majorContrastColor;
+      color: color.$primary-contrast-brown;
     }
   }
   .fa-bars {
