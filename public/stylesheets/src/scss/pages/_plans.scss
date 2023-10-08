@@ -1,9 +1,11 @@
-@use '../abstracts/placeholders' as placeholder;
-@use '../base/color' as color;
-@use '../base/typography' as font;
+@use "../abstracts/placeholders" as placeholder;
+@use "../base/color" as color;
+@use "../base/typography" as font;
 
-$formImgBoxShadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-/* plan form */
+$formImgBoxShadow:
+  rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+  rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+// plan form
 .form-container {
   width: 100%;
 }
@@ -21,11 +23,11 @@ $formImgBoxShadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 
     position: center;
     size: cover;
     repeat: no-repeat;
-  };
+  }
   border: {
     top-left-radius: 10px;
     top-right-radius: 10px;
-  };
+  }
   box-shadow: $formImgBoxShadow;
   &::after {
     content: "";
@@ -37,7 +39,6 @@ $formImgBoxShadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 
     background-color: color.$light-secondary-green;
     opacity: 0.4;
   }
-
 }
 
 .form-image-title {

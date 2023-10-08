@@ -1,0 +1,9 @@
+@use "../base/color" as color;
+
+%input-area {
+  width: 100%;
+  border: 1px solid color.$pure-white;
+  border-radius: 3px;
+  color: color.$secondary-black;
+  background: color.$pure-white;
+}
