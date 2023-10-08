@@ -1,0 +1,71 @@
+@use '../abstracts/placeholders' as placeholder;
+@use '../base/color' as color;
+@use '../base/typography' as font;
+
+$formImgBoxShadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+/* plan form */
+.form-container {
+  width: 100%;
+}
+
+.form-image {
+  @extend %flexColumn;
+  width: 100%;
+  height: 30%;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  background: {
+    image: url("https://images.unsplash.com/photo-1454944338482-a69bb95894af?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=873&q=80");
+    position: center;
+    size: cover;
+    repeat: no-repeat;
+  };
+  border: {
+    top-left-radius: 10px;
+    top-right-radius: 10px;
+  };
+  box-shadow: $formImgBoxShadow;
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: color.$light-secondary-green;
+    opacity: 0.4;
+  }
+
+}
+
+.form-image-title {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding-top: 20px;
+  font: {
+    size: 215%;
+    weight: font.$extraBold;
+    family: font.$ChenYuluoyan;
+  }
+  color: color.$primary-black;
+}
+
+// preference form
+.preference-form {
+  background-color: color.$extra-light-secondary-green;
+  padding: 10px;
+  border: {
+    bottom-left-radius: 10px;
+    bottom-right-radius: 10px;
+  }
+  h4 {
+    font-family: font.$Roboto;
+  }
+}
+
+.preference-row span {
+  white-space: nowrap;
+}

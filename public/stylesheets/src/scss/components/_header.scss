@@ -1,7 +1,7 @@
 @use '../base/typography' as font;
 @use '../base/color' as color;
 
-$navbarBoxShadow: 0 8px 6px -6px #999;
+$navBoxShadow: 0 8px 6px -6px #999;
 
 header {
   width: 100%;
@@ -23,8 +23,8 @@ nav {
 
 .navbar-scroll {
   background-color: color.$secondary-green;
-  -webkit-box-shadow: $navbarBoxShadow;
-  box-shadow: $navbarBoxShadow;
+  -webkit-box-shadow: $navBoxShadow;
+  box-shadow: $navBoxShadow;
   .nav-link{
     color: color.$primary-green;
     font-size: 1.3rem;
