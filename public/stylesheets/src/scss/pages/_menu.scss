@@ -1,0 +1,35 @@
+@use '../base/color' as color;
+@use '../components/card' as card;
+
+// menu tab  
+.menu-tab .nav-link {
+  text-decoration: none;
+  color: color.$primary-green;
+}
+
+// menu card  
+.menu-cards {
+  @extend %cards-container;
+}
+
+.card-img-top {
+  @extend %card-img-top;
+}
+
+.card-title {
+  color: color.$primary-green;
+}
+
+// menu details modal
+.modal-title, .modal-details-title {
+  color: color.$primary-green;
+}
+
+.modal-details-list {
+  margin: 0;
+  padding: 0;
+}
+
+.modal-details-instruction-list {
+  list-style-type: decimal;
+}
