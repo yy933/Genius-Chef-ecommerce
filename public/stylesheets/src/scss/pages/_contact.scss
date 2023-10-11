@@ -1,5 +1,5 @@
 @use "../base/color" as color;
-@use '../base/typography' as font;
+@use "../base/typography" as font;
 @use "../components/form" as form;
 
 $social-media-size: 60px;
@@ -9,11 +9,10 @@ $btn-border-radius: $social-media-size/2;
   width: $border-length;
   height: $border-length;
   line-height: $border-length;
-  border-radius: $border-radius
+  border-radius: $border-radius;
 }
 
-.contact input,
-.contact textarea {
+.contact {
   input,
   textarea {
     @extend %input-area;
@@ -34,9 +33,6 @@ $btn-border-radius: $social-media-size/2;
   font-weight: font.$bold;
   background: color.$secondary-green;
   cursor: pointer;
-}
-
-.btn-contact {
   &:hover,
   &:focus {
     background: color.$secondary-green-hover;
@@ -62,9 +58,8 @@ $btn-border-radius: $social-media-size/2;
     opacity: 0.8;
     font-size: 24px;
     box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.1);
-    &:hover{
+    &:hover {
       color: color.$secondary-black;
     }
   }
-
 }
