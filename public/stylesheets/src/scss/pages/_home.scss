@@ -1,0 +1,131 @@
+@use "../base/color" as color;
+@use "../base/typography" as font;
+@use "../components/buttons";
+@use "../abstracts/placeholders";
+
+$feat-card-box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+$flip-card-border-color: rgb(210, 208, 208);
+$flip-card-position: 1.5rem;
+$flip-card-border-style: 1px solid $flip-card-border-color;
+%flip-card {
+  content: "";
+  position: absolute;
+  top: $flip-card-position;
+  bottom: $flip-card-position;
+  left: $flip-card-position;
+  right: $flip-card-position;
+  transition: transform 0.4s ease-out;
+}
+// index page alert
+.index-alert div {
+  margin-bottom: 0%;
+}
+
+// carousel
+.carousel-item img {
+  opacity: 0.5;
+}
+
+.carousel-caption {
+  top: 35%;
+  font-family: font.$Roboto;
+  font-size: 2rem;
+  font-weight: font.$extraBold;
+  p {
+    color: color.$dark-green;
+  }
+}
+
+/* try it btn  */
+.try-it-btn a {
+  @extend %main-green-btn-text;
+}
+
+// features section (why cook with us section)
+// title
+.features-title,
+.commitment-title,
+.feedback-title {
+  font-family: font.$ChenYuluoyan;
+  font-size: 3.5rem;
+  font-weight: font.$extraBold;
+}
+
+// features cards
+.feat-cards-row {
+  @extend %flexColumn;
+  align-items: center;
+}
+
+.card {
+  overflow: hidden;
+  position: relative;
+  -webkit-box-shadow: $feat-card-box-shadow;
+  box-shadow: $feat-card-box-shadow;
+}
+
+.feat-card {
+  @extend .card;
+  height: auto;
+  border-radius: 5%;
+  &::before {
+    @extend %flip-card;
+    border: {
+      top: $flip-card-border-style;
+      bottom: $flip-card-border-style;
+    }
+    transform: scale(0, 1);
+  }
+  &::after {
+    @extend %flip-card;
+    border: {
+      left: $flip-card-border-style;
+      right: $flip-card-border-style;
+    }
+    transform: scale(1, 0);
+  }
+  &:hover {
+    img {
+      opacity: 0.4;
+    }
+    .card-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.2em;
+    }
+    .card-text {
+      opacity: 1;
+    }
+    &::before {
+      transform: scale(1.05, 1);
+    }
+    &::after {
+      transform: scale(1, 1.05);
+    }
+  }
+}
+
+.card-img {
+  position: relative;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.2s ease-out;
+}
+
+.card-text {
+  position: absolute;
+  width: 70%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: color.$dark-green;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  font-family: font.$Roboto;
+}
+
+.card-description,
+.accordion-body,
+blockquote p {
+  font-size: 1.3rem;
+}
