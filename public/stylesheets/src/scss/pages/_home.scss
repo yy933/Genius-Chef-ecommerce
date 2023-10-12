@@ -36,7 +36,7 @@ $flip-card-border-style: 1px solid $flip-card-border-color;
   }
 }
 
-/* try it btn  */
+// try it btn
 .try-it-btn a {
   @extend %main-green-btn-text;
 }
@@ -128,4 +128,44 @@ $flip-card-border-style: 1px solid $flip-card-border-color;
 .accordion-body,
 blockquote p {
   font-size: 1.3rem;
+}
+
+// commitment section
+.accordion-button {
+  color: color.$matcha-green;
+  font-size: 2rem;
+  font-weight: font.$extraBold;
+  font-family: font.$Roboto;
+}
+
+.accordion-button:not(.collapsed) {
+  @extend .accordion-button;
+  background-color: color.$pure-white;
+}
+
+.accordion-item button {
+  background-image: linear-gradient(to right bottom, #f6f9f8, #f0faf6, #ebfaf3, #e6fbf0, #e2fbec);
+}
+
+.accordion-body {
+  height: 200px;
+  overflow-y: scroll;
+}
+
+// feedback section
+#carouselFeedback {
+  position: relative;
+  img {
+    @extend #carouselFeedback;
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    opacity: 0.3;
+  }
+  .carousel-inner {
+    position: absolute;
+    width: 95%;
+    top: 10%;
+    left: 3%;
+  }
 }
