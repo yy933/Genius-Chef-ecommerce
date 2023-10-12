@@ -175,6 +175,7 @@ npm run dev
 ```
 7. The message `App is running on http://localhost:8080` will be shown on the console if the app executes successfully. Navigate to http://localhost:8080 to check the result. 
 
+> Note: Run `npm run build` command after updating style settings in any scss file. A new [`main.css`](./public/stylesheets/src/dist/main.css) file will be generated. 
 <br/>
 
 ## **Developers** :
