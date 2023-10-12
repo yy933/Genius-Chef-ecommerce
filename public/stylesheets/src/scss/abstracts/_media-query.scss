@@ -1,5 +1,33 @@
 // RWD settings
 @media screen and (min-width: 600px) {
+  // home page 
+  // main carousel  
+  .carousel-caption {
+    font-size: 3rem;
+  }
+
+  // try it btn  
+  .try-it-btn a {
+    width: 20%;
+    font-size: 1.1rem;
+  }
+
+  // feature section  
+  .features-title,
+  .commitment-title {
+    font-size: 5rem;
+  }
+
+  // feedback section  
+  .feedback-title {
+    font-size: 4.5rem;
+  }
+
+  #carouselFeedback .carousel-inner {
+    top: 25%;
+  }
+
+  // how it works page
   // how it works banner
   #how-it-works-banner {
     height: 60%;
@@ -21,6 +49,28 @@
 }
 
 @media screen and (min-width: 768px) {
+  // home page
+  // feature cards  
+  .feat-cards-row {
+    flex-direction: row;
+  }
+
+  // commitment section  
+  .accordion-body {
+    height: 300px;
+  }
+
+  // feedback section
+  .feedback-title {
+    font-size: 5rem;
+  }
+
+  #carouselFeedback .carousel-inner {
+    width: 100%;
+    top: 12%;
+  }
+
+  // how it works page
   // how it works banner
   #how-it-works-banner {
     height: 75%;
@@ -109,6 +159,29 @@
 }
 
 @media screen and (min-width: 960px) {
+  // home page
+  // main carousel  
+  .carousel-caption {
+    font-size: 3.5rem;
+  }
+
+  // try it btn  
+  .try-it-btn a {
+    width: 19%;
+    font-size: 1.4rem;
+  }
+
+  // feedback section 
+  #carouselFeedback img {
+    height: 390px;
+  }
+
+  #carouselFeedback .carousel-inner {
+    top: 20%;
+  }
+
+
+  // menu page
   // menu cards
   .menu-cards {
     grid-template-columns: repeat(3, 1fr);
@@ -132,6 +205,28 @@
 }
 
 @media screen and (min-width: 992px) {
+  // home page
+  // main carousel  
+  .carousel-caption {
+    top: 25%;
+    font-size: 4rem;
+  }
+
+  // try it btn  
+  .try-it-btn a {
+    width: 15%;
+  }
+
+  // feedback section  
+  #carouselFeedback img {
+    height: 350px;
+  }
+
+  #carouselFeedback .carousel-inner {
+    top: 20%;
+  }
+
+  // how it works page
   // how it works main
   #how-it-works .step-items > div {
     width: 30%;
