@@ -1,24 +1,24 @@
 // RWD settings
 @media screen and (min-width: 600px) {
-  // home page 
-  // main carousel  
+  // home page
+  // main carousel
   .carousel-caption {
     font-size: 3rem;
   }
 
-  // try it btn  
+  // try it btn
   .try-it-btn a {
     width: 20%;
     font-size: 1.1rem;
   }
 
-  // feature section  
+  // feature section
   .features-title,
   .commitment-title {
     font-size: 5rem;
   }
 
-  // feedback section  
+  // feedback section
   .feedback-title {
     font-size: 4.5rem;
   }
@@ -46,16 +46,21 @@
   .btn-contact {
     width: 50%;
   }
+
+  // confirm order  page
+  .order-confirm .confirm-title {
+    font-size: 300%;
+  }
 }
 
 @media screen and (min-width: 768px) {
   // home page
-  // feature cards  
+  // feature cards
   .feat-cards-row {
     flex-direction: row;
   }
 
-  // commitment section  
+  // commitment section
   .accordion-body {
     height: 300px;
   }
@@ -156,22 +161,27 @@
       font-size: 1.3rem;
     }
   }
+
+  // payment page
+  .payment-container {
+    flex-direction: row;
+  }
 }
 
 @media screen and (min-width: 960px) {
   // home page
-  // main carousel  
+  // main carousel
   .carousel-caption {
     font-size: 3.5rem;
   }
 
-  // try it btn  
+  // try it btn
   .try-it-btn a {
     width: 19%;
     font-size: 1.4rem;
   }
 
-  // feedback section 
+  // feedback section
   #carouselFeedback img {
     height: 390px;
   }
@@ -179,7 +189,6 @@
   #carouselFeedback .carousel-inner {
     top: 20%;
   }
-
 
   // menu page
   // menu cards
@@ -202,22 +211,27 @@
       padding-left: 40px;
     }
   }
+
+  // confirm order page
+  .order-confirm .confirm-title {
+    font-size: 350%;
+  }
 }
 
 @media screen and (min-width: 992px) {
   // home page
-  // main carousel  
+  // main carousel
   .carousel-caption {
     top: 25%;
     font-size: 4rem;
   }
 
-  // try it btn  
+  // try it btn
   .try-it-btn a {
     width: 15%;
   }
 
-  // feedback section  
+  // feedback section
   #carouselFeedback img {
     height: 350px;
   }

@@ -1,0 +1,32 @@
+@use "../base/typography" as font;
+
+// confirm order
+.order-confirm {
+  > * {
+    margin-top: 1.5rem;
+  }
+  .confirm-title {
+    font-family: font.$ChenYuluoyan;
+    font-size: 250%;
+    font-weight: font.$extraBold;
+  }
+  h4 {
+    line-height: 1.5rem;
+    font-family: font.$Lato;
+  }
+}
+
+// payments
+.payment-container {
+  font-size: large;
+  ol {
+    padding-left: 0.5rem;
+  }
+  label {
+    display: block;
+  }
+  input {
+    width: 75%;
+    height: 2.3rem;
+  }
+}
