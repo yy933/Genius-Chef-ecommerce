@@ -1,4 +1,12 @@
+@use '../base/color' as color;
+@use '../base/typography' as font;
+
 %main-green-btn-text {
-  font-family: "Lora", sans-serif;
+  font-family: font.$Lora;
   font-size: 1.5rem;
+}
+
+%main-green-btn-color {
+  background-color: color.$light-primary-green;
+  color: color.$pure-white;
 }

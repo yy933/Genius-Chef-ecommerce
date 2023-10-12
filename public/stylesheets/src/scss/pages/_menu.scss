@@ -1,5 +1,6 @@
 @use '../base/color' as color;
 @use '../components/card' as card;
+@use '../components/buttons';
 
 // menu tab  
 .menu-tab {
@@ -20,6 +21,10 @@
 
 .card-title {
   color: color.$primary-green;
+}
+
+.menu-btn a {
+  @extend %main-green-btn-color; 
 }
 
 // menu details modal

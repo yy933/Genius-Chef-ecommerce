@@ -39,6 +39,7 @@ $flip-card-border-style: 1px solid $flip-card-border-color;
 // try it btn
 .try-it-btn a {
   @extend %main-green-btn-text;
+  @extend %main-green-btn-color; 
 }
 
 // features section (why cook with us section)
