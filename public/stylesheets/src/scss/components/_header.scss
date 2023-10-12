@@ -1,5 +1,5 @@
-@use '../base/typography' as font;
-@use '../base/color' as color;
+@use "../base/typography" as font;
+@use "../base/color" as color;
 
 $navBoxShadow: 0 8px 6px -6px #999;
 
@@ -16,7 +16,7 @@ nav {
 .navbar-brand {
   letter-spacing: 2px;
   color: color.$primary-green;
-  &:hover{
+  &:hover {
     color: color.$primary-contrast-brown;
   }
 }
@@ -25,16 +25,15 @@ nav {
   background-color: color.$secondary-green;
   -webkit-box-shadow: $navBoxShadow;
   box-shadow: $navBoxShadow;
-  .nav-link{
+  .nav-link {
     color: color.$primary-green;
     font-size: 1.3rem;
     font-weight: font.$bold;
-    &:hover{
+    &:hover {
       color: color.$primary-contrast-brown;
     }
   }
   .fa-bars {
-    @extend .nav-link
+    @extend .nav-link;
   }
 }
-

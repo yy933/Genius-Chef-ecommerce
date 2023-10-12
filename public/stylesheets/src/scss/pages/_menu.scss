@@ -1,8 +1,8 @@
-@use '../base/color' as color;
-@use '../components/card' as card;
-@use '../components/buttons';
+@use "../base/color" as color;
+@use "../components/card" as card;
+@use "../components/buttons";
 
-// menu tab  
+// menu tab
 .menu-tab {
   .nav-link {
     text-decoration: none;
@@ -10,7 +10,7 @@
   }
 }
 
-// menu card  
+// menu card
 .menu-cards {
   @extend %cards-container;
 }
@@ -24,11 +24,12 @@
 }
 
 .menu-btn a {
-  @extend %main-green-btn-color; 
+  @extend %main-green-btn-color;
 }
 
 // menu details modal
-.modal-title, .modal-details-title {
+.modal-title,
+.modal-details-title {
   color: color.$primary-green;
 }
 

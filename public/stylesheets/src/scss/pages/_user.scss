@@ -1,6 +1,6 @@
 @use "../base/color" as color;
 @use "../base/typography" as font;
-@use '../components/buttons';
+@use "../components/buttons";
 
 %nav-link-settings {
   width: 150px;
@@ -98,7 +98,7 @@
 
 .cancelOrder-btn,
 .editOrder-btn {
-  cursor: pointer;
+  @extend %cursor-pointer;
 }
 
 .profile-item {

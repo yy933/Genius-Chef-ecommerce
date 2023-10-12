@@ -1,9 +1,6 @@
-@use './typography' as font;
-@use './color' as color;
-@use './reset' as reset;
-
-
-
+@use "./typography" as font;
+@use "./color" as color;
+@use "./reset" as reset;
 
 main {
   height: 100%;

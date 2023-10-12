@@ -1,0 +1,24 @@
+@use "../base/color" as color;
+
+// admin dashboard
+.sort-btn {
+  position: relative;
+  padding-left: 8px;
+  a {
+    position: absolute;
+    color: color.$medium-grey;
+    &:first-child {
+      margin-bottom: 14px;
+    }
+  }
+}
+
+.status-filter {
+  padding: 0%;
+}
+
+.active-filter {
+  @extend .status-filter;
+  padding-inline: 0%;
+  padding-top: 50%;
+}

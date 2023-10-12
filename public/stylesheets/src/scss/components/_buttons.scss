@@ -1,5 +1,5 @@
-@use '../base/color' as color;
-@use '../base/typography' as font;
+@use "../base/color" as color;
+@use "../base/typography" as font;
 
 %main-green-btn-text {
   font-family: font.$Lora;
@@ -9,4 +9,8 @@
 %main-green-btn-color {
   background-color: color.$light-primary-green;
   color: color.$pure-white;
+}
+
+%cursor-pointer {
+  cursor: pointer;
 }

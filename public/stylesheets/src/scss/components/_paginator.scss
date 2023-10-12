@@ -1,4 +1,4 @@
-@use '../base/color' as color;
+@use "../base/color" as color;
 
 .nav-pagination {
   display: flex;
@@ -18,5 +18,3 @@
   background-color: color.$primary-green;
   color: color.$primary-white;
 }
-
-

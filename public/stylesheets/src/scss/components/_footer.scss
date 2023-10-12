@@ -1,6 +1,5 @@
-@use '../base/color' as color;
-@use '../abstracts/placeholders';
-
+@use "../base/color" as color;
+@use "../abstracts/placeholders";
 
 $iconMargin: 8px;
 $footerPadding: 24px;
@@ -16,18 +15,17 @@ $footerPadding: 24px;
   }
   li {
     margin-left: $iconMargin;
-    &:nth-of-type(n+2) {
+    &:nth-of-type(n + 2) {
       margin-left: $iconMargin;
     }
     a {
-        font-size: 18px;
-        transition: color .235s ease-in-out;
-        color: rgba(29, 27, 27, 0.285);
-        &:focus, &:hover{
-          color:color.$primary-green;
-        }
+      font-size: 18px;
+      transition: color 0.235s ease-in-out;
+      color: rgba(29, 27, 27, 0.285);
+      &:focus,
+      &:hover {
+        color: color.$primary-green;
+      }
     }
   }
 }
-
-
