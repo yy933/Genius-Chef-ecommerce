@@ -1,0 +1,20 @@
+@use "../base/color" as color;
+
+.nav-pagination {
+  display: flex;
+  .pagination {
+    margin-inline: auto;
+  }
+}
+
+.page-link {
+  color: color.$primary-green;
+  span {
+    color: color.$primary-green;
+  }
+}
+
+.page-item.active .page-link {
+  background-color: color.$primary-green;
+  color: color.$primary-white;
+}

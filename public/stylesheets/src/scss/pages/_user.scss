@@ -1,0 +1,113 @@
+@use "../base/color" as color;
+@use "../base/typography" as font;
+@use "../components/buttons";
+
+%nav-link-settings {
+  width: 150px;
+  font-size: 1.3rem;
+}
+
+// sign in page
+.divider {
+  &::before,
+  &::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: color.$pure-white;
+  }
+}
+
+// cart and profile
+.reselect-plan,
+.scroll-title,
+.scroll-body strong,
+.scroll-body select,
+.profile-subtitle {
+  font-family: font.$Roboto;
+}
+
+// cart
+.reselect-plan {
+  color: color.$primary-green;
+  font-size: 1.3rem;
+}
+
+.cart-form-container {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 85%;
+  width: 100%;
+}
+
+.empty-cart-container {
+  height: 75%;
+}
+
+.scroll-title,
+.profile-subtitle {
+  margin-bottom: 0.8rem;
+  color: color.$primary-green;
+}
+
+.scroll-body {
+  strong,
+  select {
+    margin-bottom: 0.85rem;
+    font-size: 1.18rem;
+  }
+  li {
+    margin-bottom: 0.3rem;
+  }
+}
+
+// profile
+.profile-container {
+  min-height: 100%;
+  .nav {
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+  details {
+    margin-bottom: 40px;
+  }
+  .nav-link {
+    @extend %nav-link-settings;
+    color: color.$primary-black;
+  }
+  .nav-link.active {
+    @extend %nav-link-settings;
+    background-color: color.$secondary-green-hover;
+    opacity: 0.9;
+  }
+}
+
+.profile-contents {
+  display: table;
+  height: auto;
+}
+
+.confirm-btn {
+  @extend %main-green-btn-color;
+}
+
+.details-btn {
+  background-color: color.$secondary-green;
+  border: color.$secondary-green;
+}
+
+.cancelOrder-btn,
+.editOrder-btn {
+  @extend %cursor-pointer;
+}
+
+.profile-item {
+  li {
+    margin-top: 18px;
+    margin-right: 5px;
+  }
+  strong {
+    font-size: 1.1rem;
+    margin-right: 0.5rem;
+  }
+}

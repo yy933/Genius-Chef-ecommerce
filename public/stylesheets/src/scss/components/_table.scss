@@ -1,0 +1,17 @@
+@use "../base/color" as color;
+
+table {
+  text-align: center;
+}
+
+thead {
+  border-bottom: 1.8px solid color.$light-grey;
+}
+
+thead th {
+  color: color.$primary-green;
+}
+
+td {
+  vertical-align: middle;
+}

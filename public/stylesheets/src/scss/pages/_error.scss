@@ -1,0 +1,51 @@
+@use "../abstracts/placeholders";
+@use "../base/typography" as font;
+@use "../base/color" as color;
+
+%span-settings {
+  font-size: 4.8rem;
+  font-weight: font.$extraBold;
+  letter-spacing: 2.8px;
+}
+
+%message-settings {
+  letter-spacing: 2px;
+  line-height: 1.2;
+}
+
+.error-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  span {
+    font-family: font.$Roboto;
+    color: color.$primary-green;
+    &:first-child {
+      @extend %span-settings;
+    }
+    &:last-child {
+      @extend %message-settings;
+      font-size: 2.5rem;
+    }
+  }
+}
+
+.error-message {
+  @extend %flexColumn;
+  height: 40%;
+  font-family: font.$Roboto;
+  color: color.$primary-contrast-brown;
+  span {
+    @extend %span-settings;
+    color: color.$primary-contrast-brown;
+    &:first-child {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+  }
+  p {
+    @extend %message-settings;
+    font-size: 2rem;
+    padding-left: 1.5rem;
+    color: color.$primary-contrast-brown;
+  }
+}

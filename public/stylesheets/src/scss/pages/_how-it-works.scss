@@ -1,0 +1,115 @@
+@use "../base/typography" as font;
+@use "../base/color" as color;
+@use "../abstracts/placeholders" as placeholder;
+
+@mixin banner-settings($width, $height) {
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: $width;
+  height: $height;
+}
+
+// how it works banner
+#how-it-works-banner {
+  @include banner-settings(100%, 50%);
+  background: url("https://images.unsplash.com/photo-1446611720526-39d16597055c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80")
+    center center no-repeat;
+  background-size: cover;
+  .shadow {
+    @include banner-settings(100%, 100%);
+    background: color.$light-grey;
+    opacity: 0.4;
+  }
+  .how-it-works-banner-text {
+    position: absolute;
+    top: 50%;
+    margin: auto;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    color: color.$pure-white;
+    width: 100%;
+    text-align: center;
+    h1 {
+      font-size: 2.7rem;
+    }
+  }
+}
+
+// how it works main contents
+#how-it-works {
+  padding: 3rem 0;
+  background: color.$grey;
+  text-align: center;
+  .step-items {
+    @extend %flexColumn;
+    justify-content: center;
+    align-items: center;
+    > div {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 260px;
+    }
+  }
+  .step-item-icon {
+    width: 15%;
+  }
+  .step-item-text {
+    @extend %flexColumn;
+    margin-left: 1rem;
+    width: 85%;
+    p {
+      align-self: center;
+      text-align: start;
+      margin-top: 1rem;
+      width: 90%;
+      font-size: 1.1rem;
+    }
+  }
+  h4 {
+    color: color.$light-primary-green;
+    font-family: font.$Roboto;
+    margin-top: 1rem;
+    font-size: 1.6rem;
+  }
+  i {
+    color: color.$light-primary-green;
+    font-size: 45px;
+  }
+}
+
+#the-box {
+  margin: 2.5rem 0;
+  .row {
+    > div {
+      &:nth-child(1) {
+        height: 60%;
+        display: flex;
+        justify-content: center;
+      }
+      &:nth-child(2) {
+        padding-left: 1.2rem;
+      }
+    }
+    h2 {
+      color: color.$light-primary-green;
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+      font-family: font.$Roboto;
+      font-size: 2.2rem;
+    }
+    p {
+      font-size: 1.5rem;
+    }
+  }
+  ul {
+    padding-left: 20px;
+    margin-bottom: 4rem;
+    li {
+      margin: 10px 0;
+    }
+  }
+}

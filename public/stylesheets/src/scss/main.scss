@@ -1,0 +1,9 @@
+@use "base";
+@use "pages";
+@use "abstracts";
+@use "components";
+
+@font-face {
+  font-family: "ChenYuluoyan";
+  src: url("./assets/fonts/ChenYuluoyan-Thin.woff") format("woff");
+}

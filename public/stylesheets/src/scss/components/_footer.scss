@@ -1,0 +1,31 @@
+@use "../base/color" as color;
+@use "../abstracts/placeholders";
+
+$iconMargin: 8px;
+$footerPadding: 24px;
+
+.footer {
+  background-color: color.$light-secondary-green;
+  padding : {
+    top: $footerPadding;
+    bottom: $footerPadding;
+  }
+  ul {
+    @extend %flexCenter;
+  }
+  li {
+    margin-left: $iconMargin;
+    &:nth-of-type(n + 2) {
+      margin-left: $iconMargin;
+    }
+    a {
+      font-size: 18px;
+      transition: color 0.235s ease-in-out;
+      color: rgba(29, 27, 27, 0.285);
+      &:focus,
+      &:hover {
+        color: color.$primary-green;
+      }
+    }
+  }
+}

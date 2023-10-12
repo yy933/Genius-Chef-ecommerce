@@ -1,0 +1,21 @@
+@use "./typography" as font;
+@use "./color" as color;
+@use "./reset" as reset;
+
+main {
+  height: 100%;
+}
+
+html {
+  @extend %mainBody;
+  scroll-behavior: smooth;
+}
+
+body {
+  @extend %mainBody;
+  background-color: color.$primary-white;
+  font-family: font.$Lora;
+  font-size: 1rem;
+  line-height: 1.4;
+  padding-bottom: 70px;
+}
