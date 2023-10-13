@@ -1,6 +1,7 @@
 @use "../base/color" as color;
 @use "../base/typography" as font;
 @use "../components/form" as form;
+@use "../components/buttons";
 
 $social-media-size: 60px;
 $btn-border-radius: $social-media-size/2;
@@ -25,6 +26,7 @@ $btn-border-radius: $social-media-size/2;
 }
 
 .btn-contact {
+  @extend %cursor-pointer;
   width: 100%;
   border-radius: $btn-border-radius;
   padding: 15px 27px;
@@ -32,7 +34,6 @@ $btn-border-radius: $social-media-size/2;
   opacity: 0.8;
   font-weight: font.$bold;
   background: color.$secondary-green;
-  cursor: pointer;
   &:hover,
   &:focus {
     background: color.$secondary-green-hover;
@@ -50,9 +51,9 @@ $btn-border-radius: $social-media-size/2;
   }
   i {
     @include social-media-sizing($social-media-size, $btn-border-radius);
+    @extend %cursor-pointer;
     margin: 0 14px 20px 0;
     text-align: center;
-    cursor: pointer;
     background: color.$extra-light-grey;
     color: color.$medium-grey;
     opacity: 0.8;
